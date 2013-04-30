@@ -1,12 +1,10 @@
 # Roadmap
-Here’s the plan, let’s see how it goes. Completed tasks will be appended with `@done`.
+Here’s the plan, let’s see how it goes. I’m pretty sure it’s going to be coded in [Laravel](http://laravel.com/) with a dash of [Node.js](http://nodejs.org/) added later.
 
 ## Stage One (Pre-Code)
 
-1. Determine if it should be PHP and Node.js or Express.js and Node.js.
-2. Plan out a file roadmap and determine how things will talk to each other.
-3. Sketch out a design.
-4. Update this roadmap.
+1. Sketch out a design.
+2. Determine which features will make it into the first full release.
 
 ## Stage Two (Alpha)
 
