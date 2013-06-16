@@ -1,0 +1,28 @@
+{
+	"name": "Torch CMS V2",
+	"version": "0.0.0",
+	"author": "Zackary Corbett <zackary@corbett.im>",
+	"description": "The CMS for the Pine View Torch",
+	"contributors": [
+		{
+			"name": "Zackary Corbett",
+			"email": "zackary@corbett.im",
+			"twitter": "@ZackaryCorbett",
+			"App.net": "@Zackary"
+		}
+	],
+	"repository": {
+    	"type": "git",
+   		"url": "https://github.com/PineViewTorch/V2.git"
+  	},
+  	"keywords": [
+   		"cms",
+    	"Torch"
+  	],
+  	"dependencies" : {
+    	
+  	},
+  	"engines": {
+   		"node": ">=0.10.11"
+  	}
+}
