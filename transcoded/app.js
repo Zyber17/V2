@@ -36,8 +36,16 @@
 
   app = express();
 
-  app.configre(function() {
+  app.configure(function() {
     app.use(express.cookieParser('g8GJ3xBtIBv34LbFev09eCAEvOC3wt'));
+    app.use(express["static"](path.join(__dirname, 'public')));
+    app.use(express.favicon('./public/images/favicon.ico'));
+    app.use(express.bodyParser);
+    app.use(function(req, res, next) {
+      return res.status(404).render('errors/404');
+    });
+    app.set('view engine', 'jade');
+    app.disable('x-powered-by');
     return true;
   });
 

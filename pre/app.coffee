@@ -19,8 +19,18 @@ staff.users        =  require './routes/staff/users'
 
 app = express()
 
-app.configre ->
+app.configure ->
 	app.use express.cookieParser('g8GJ3xBtIBv34LbFev09eCAEvOC3wt')
+	app.use express.static(path.join(__dirname, 'public'))
+	app.use express.favicon('./public/images/favicon.ico')
+	app.use express.bodyParser
+	app.use (req, res, next) ->
+		res.status(404).render 'errors/404'
+
+	app.set 'view engine', 'jade'
+
+	app.disable 'x-powered-by'
+
 	true # CoffeeScript automatically returns the last line of any function. So, we're returning true when eveything works (last line excuted).
 
 app.get '/', index.view
