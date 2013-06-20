@@ -74,6 +74,8 @@
 
   app.post('/staff/articles/new', auth.staff, staff.articles["new"]);
 
+  app.post('/staff/articles/:id/delete', auth.staff, staff.articles["delete"]);
+
   app.get('/staff/issues', auth.staff, staff.issues.list);
 
   app.get('/staff/issues/:id', auth.staff, staff.issues.view);
@@ -85,6 +87,8 @@
   app.get('/staff/issues/new', auth.staff, staff.issues["new"]);
 
   app.post('/staff/issues/new', auth.staff, staff.issues["new"]);
+
+  app.post('/staff/issues/:id/delete', auth.staff, staff.issues["delete"]);
 
   app.get('/staff/permissions', auth.staff, staff.permissions.list);
 
@@ -98,6 +102,8 @@
 
   app.post('/staff/permissions/new', auth.staff, staff.permissions["new"]);
 
+  app.post('/staff/permissions/:id/delete', auth.staff, staff.permissions["delete"]);
+
   app.get('/staff/planners/:id', auth.staff, staff.planners.view);
 
   app.get('/staff/planners/view/:section', auth.staff, staff.planners.list);
@@ -110,6 +116,8 @@
 
   app.post('/staff/planners/new', auth.staff, staff.planners["new"]);
 
+  app.post('/staff/planners/:id/delete', auth.staff, staff.permissions["delete"]);
+
   app.get('/staff/rotator', auth.staff, staff.rotator.list);
 
   app.get('/staff/rotator/:id/edit', auth.staff, staff.rotator.edit);
@@ -120,6 +128,8 @@
 
   app.post('/staff/rotator/new', auth.staff, staff.rotator["new"]);
 
+  app.post('/staff/rotator/:id/delete', auth.staff, staff.rotator["delete"]);
+
   app.get('/staff/users', auth.staff, staff.users.list);
 
   app.get('/staff/users/:id', auth.staff, staff.users.view);
@@ -128,9 +138,11 @@
 
   app.post('/staff/users/:id/edit', auth.staff, staff.users.edit);
 
-  app.get('/staff/users/new', auth.staff, staff.rotator["new"]);
+  app.get('/staff/users/new', auth.staff, staff.users["new"]);
 
-  app.post('/staff/users/new', auth.staff, staff.rotator["new"]);
+  app.post('/staff/users/new', auth.staff, staff.users["new"]);
+
+  app.post('/staff/users/:id/delete', auth.staff, staff.users["delete"]);
 
   /*
   End Staff Suff
