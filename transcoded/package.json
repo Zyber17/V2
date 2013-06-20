@@ -1,6 +1,6 @@
 {
-	"name": "Torch CMS V2",
-	"version": "0.0.0",
+	"name": "phlogiston",
+	"version": "0.0.1",
 	"author": "Zackary Corbett <zackary@corbett.im>",
 	"description": "The CMS for the Pine View Torch",
 	"contributors": [
@@ -8,7 +8,7 @@
 			"name": "Zackary Corbett",
 			"email": "zackary@corbett.im",
 			"twitter": "@ZackaryCorbett",
-			"App.net": "@Zackary"
+			"app.net": "@Zackary"
 		}
 	],
 	"repository": {
@@ -20,7 +20,9 @@
     	"Torch"
   	],
   	"dependencies" : {
-    	
+    	"express": "~3.2.6",
+    	"redis": "~0.8.3",
+    	"mongodb": "~1.3.10"
   	},
   	"engines": {
    		"node": ">=0.10.11"
