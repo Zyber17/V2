@@ -78,6 +78,14 @@
 
   app.get('/staff/issues/:id', auth.staff, staff.issues.view);
 
+  app.get('/staff/issues/:id/edit', auth.staff, staff.issues.edit);
+
+  app.post('/staff/issues/:id/edit', auth.staff, staff.issues.edit);
+
+  app.get('/staff/issues/new', auth.staff, staff.issues["new"]);
+
+  app.post('/staff/issues/new', auth.staff, staff.issues["new"]);
+
   app.get('/staff/permissions', auth.staff, staff.permissions.list);
 
   app.get('/staff/permissions/:id', auth.staff, staff.permissions.view);
@@ -94,13 +102,13 @@
 
   app.get('/staff/planners/view/:section', auth.staff, staff.planners.list);
 
-  app.get('/staff/planners/new', auth.staff, staff.planners["new"]);
-
-  app.post('/staff/planners/new', auth.staff, staff.planners["new"]);
-
   app.get('/staff/planners/:id/edit', auth.staff, staff.planners.edit);
 
   app.post('/staff/planners/:id/edit', auth.staff, staff.planners.edit);
+
+  app.get('/staff/planners/new', auth.staff, staff.planners["new"]);
+
+  app.post('/staff/planners/new', auth.staff, staff.planners["new"]);
 
   app.get('/staff/rotator', auth.staff, staff.rotator.list);
 

@@ -9,13 +9,13 @@ section  =  require './routes/section'
 user     =  require './routes/user'
 
 staff = []
-staff.articles = require './routes/staff/articles'
-staff.index = require './routes/staff/index'
-staff.issues = require './routes/staff/issues'
-staff.permissions = require './routes/staff/permissions'
-staff.rotator = require './routes/staff/rotator'
-staff.sections = require './routes/staff/sections'
-staff.users = require './routes/staff/users'
+staff.articles     =  require './routes/staff/articles'
+staff.index        =  require './routes/staff/index'
+staff.issues       =  require './routes/staff/issues'
+staff.permissions  =  require './routes/staff/permissions'
+staff.rotator      =  require './routes/staff/rotator'
+staff.sections     =  require './routes/staff/sections'
+staff.users        =  require './routes/staff/users'
 
 app = express()
 
@@ -62,6 +62,14 @@ app.get '/staff/issues', auth.staff, staff.issues.list
 
 app.get '/staff/issues/:id', auth.staff, staff.issues.view
 
+app.get '/staff/issues/:id/edit', auth.staff, staff.issues.edit
+
+app.post '/staff/issues/:id/edit', auth.staff, staff.issues.edit
+
+app.get '/staff/issues/new', auth.staff, staff.issues.new
+
+app.post '/staff/issues/new', auth.staff, staff.issues.new
+
 
 app.get '/staff/permissions', auth.staff, staff.permissions.list
 
@@ -80,13 +88,13 @@ app.get '/staff/planners/:id', auth.staff, staff.planners.view
 
 app.get '/staff/planners/view/:section', auth.staff, staff.planners.list
 
-app.get '/staff/planners/new', auth.staff, staff.planners.new
-
-app.post '/staff/planners/new', auth.staff, staff.planners.new
-
 app.get '/staff/planners/:id/edit', auth.staff, staff.planners.edit
 
 app.post '/staff/planners/:id/edit', auth.staff, staff.planners.edit
+
+app.get '/staff/planners/new', auth.staff, staff.planners.new
+
+app.post '/staff/planners/new', auth.staff, staff.planners.new
 
 
 app.get '/staff/rotator', auth.staff, staff.rotator.list
