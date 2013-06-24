@@ -1,0 +1,47 @@
+!!!5
+html
+	head
+		-if !title
+			title Pine View Torch
+		-else
+			title #{title} - Pine View Torch
+		meta(name='viewport', content='initial-scale=1.0, maximum-scale=1.0, user-scalable=0')
+		//link(rel='stylesheet', href='/stylesheets/type.css')
+		block stylesheets
+
+	body
+		#wrapper
+			header#header
+				h1 The Torch
+				ul
+					li
+						form
+							search(placeholder='Search…')
+							input(type='submit') Go
+					li
+						a(href='/issues/') Read the print edition online
+				nav#nav
+					ul
+						each section in sections
+							li
+								a(href='/'+section) section
+			#content
+				block content
+			footer#footer
+				#login
+					ul
+						- if logged.in
+							- if logged.staff
+								li
+									a(href='/staff/') Staff Panel
+							li
+								a(href='/settings/') Settings
+							li
+								a(href='/logout/') Log out
+					- else
+						li
+							a(href='/login/') Log in
+				#copyright
+					p All content, unless otherwise noted, is the property of the Pine View Torch &copy;
+						= new Date().getFullYear();
+
