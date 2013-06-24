@@ -28,6 +28,8 @@
 
   staff.permissions = require('./routes/staff/permissions');
 
+  staff.photos = require('./routes/staff/photos');
+
   staff.rotator = require('./routes/staff/rotator');
 
   staff.sections = require('./routes/staff/sections');
