@@ -46,11 +46,15 @@ app.get '/login', auth.login
 
 app.get '/logout', auth.logout
 
+app.get '/rss', rss.view
+
 app.get '/search/:query', search.search
 
 app.get '/section/:name', section.view
 
-app.get '/settings', auth.any, issues.list
+app.get '/settings', auth.any, settings.edit.get
+
+app.post '/settings', auth.any, settings.edit.post
 
 app.get '/user/:name', user.view
 
