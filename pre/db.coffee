@@ -5,7 +5,7 @@ ObjectId =  Schema.ObjectId
         
 mongoose.connect 'localhost','torch'
 
-users = new Schema({
+users = new Schema {
 	_id:
 		type: ObjectId
 
@@ -31,9 +31,9 @@ users = new Schema({
 	status:
 		type: Number
 		default: 0
-})
+}
 
-articles = new Schema({
+articles = new Schema {
 	_id:
 		type: ObjectId
 
@@ -59,19 +59,25 @@ articles = new Schema({
 		type: ObjectId
 		ref: 'sections'
 
-	publishDate:
-		type: Date
-		default: null
-
 	issue:
 		type: ObjectId
 		ref: 'issues'
 
-	comments:
-		# ???????
-})
+	publishDate:
+		type: Date
+		default: null
+}
 
-sections = new Schema({
+photos = new Schema {
+	_id:
+		type: ObjectId
+
+	parentID:
+		type: ObjectId
+		ref: 'articles'
+}
+
+sections = new Schema {
 	_id:
 		type: ObjectId
 
@@ -82,9 +88,9 @@ sections = new Schema({
 	plannerFormat:
 		type: String
 
-})
+}
 
-issues = new Schema({
+issues = new Schema {
 	_id:
 		type: ObjectId
 
@@ -95,9 +101,9 @@ issues = new Schema({
 	releaseDate:
 		type: Date
 
-})
+}
 
-planners = new Schema({
+planners = new Schema {
 	_id:
 		type: ObjectId
 
@@ -109,7 +115,7 @@ planners = new Schema({
 		type: ObjectId
 		ref: 'issues'
 
-	user:
+	author:
 		type: ObjectId
 		ref: 'users'
 
@@ -119,12 +125,27 @@ planners = new Schema({
 	body:
 		editable:
 			type: String
+		rendered:
+			type: String
+}
 
-	comments:
-		# ???????
-})
+comments = new Schema {
+	_id:
+		type: ObjectId
 
+	body:
+		type: String
 
+	author:
+		type: ObjectId
+		ref: 'users'
+
+	kind:
+		type: Number # 0 for article, 1 for planner
+
+	parentID:
+		type: ObjectId
+}
 
 
 
