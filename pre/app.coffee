@@ -37,13 +37,15 @@ app.configure ->
 
 app.get '/', index.view
 
-app.get '/article/:slug', auth.any, article.view # Middleware for auth?
+app.get '/article/:slug', auth.any, article.view # Middleware for auth? Update: No. Just check for session in article.view. WAIT. I MEAN YES. Just make sure the user in reference exists
 
 app.get '/issues', issues.list
 
 app.get '/issues/:id', issues.view
 
-app.get '/login', auth.login
+app.get '/login', auth.login.get
+
+app.post '/login', auth.login.post
 
 app.get '/logout', auth.logout
 

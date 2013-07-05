@@ -59,7 +59,9 @@
 
   app.get('/issues/:id', issues.view);
 
-  app.get('/login', auth.login);
+  app.get('/login', auth.login.get);
+
+  app.post('/login', auth.login.post);
 
   app.get('/logout', auth.logout);
 
