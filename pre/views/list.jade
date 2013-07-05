@@ -6,7 +6,7 @@ mixin list(items)
 					a(href='/articles/#{item.link}')= item.title
 					span.by by #{item.author}
 				.date. Published
-					time(datetime=item.date.robot) #{item.date.human}
+					time(datetime=item.date.robot)= item.date.human
 
 
 //-
