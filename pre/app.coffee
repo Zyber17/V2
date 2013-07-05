@@ -21,6 +21,7 @@ staff.users        =  require './routes/staff/users'
 app = express()
 
 app.configure ->
+	# sessions
 	app.use express.cookieParser('***REMOVED***')
 	app.use express.static(path.join(__dirname, 'public'))
 	app.use express.favicon('./public/images/favicon.ico')
@@ -36,7 +37,7 @@ app.configure ->
 
 app.get '/', index.view
 
-app.get '/article/:slug', auth.maybe, article.view # Middleware for auth?
+app.get '/article/:slug', auth.any, article.view # Middleware for auth?
 
 app.get '/issues', issues.list
 
@@ -52,9 +53,9 @@ app.get '/search/:query', search.search
 
 app.get '/section/:name', section.view
 
-app.get '/settings', auth.any, settings.edit.get
+app.get '/settings', auth.more, settings.edit.get
 
-app.post '/settings', auth.any, settings.edit.post
+app.post '/settings', auth.more, settings.edit.post
 
 app.get '/user/:name', user.view
 

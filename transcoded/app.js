@@ -53,15 +53,25 @@
 
   app.get('/', index.view);
 
-  app.get('/article/:id', article.view);
+  app.get('/article/:slug', auth.any, article.view);
 
   app.get('/issues', issues.list);
 
   app.get('/issues/:id', issues.view);
 
+  app.get('/login', auth.login);
+
+  app.get('/logout', auth.logout);
+
+  app.get('/rss', rss.view);
+
   app.get('/search/:query', search.search);
 
-  app.get('/section/:id', section.view);
+  app.get('/section/:name', section.view);
+
+  app.get('/settings', auth.more, settings.edit.get);
+
+  app.post('/settings', auth.more, settings.edit.post);
 
   app.get('/user/:name', user.view);
 
@@ -76,13 +86,25 @@
 
   app.get('/staff/articles/:id', auth.staff, staff.articles.view);
 
-  app.get('/staff/articles/:id/edit', auth.staff, staff.articles.edit);
+  app.get('/staff/articles/:id/edit', auth.staff, staff.articles.edit.get);
 
-  app.post('/staff/articles/:id/edit', auth.staff, staff.articles.edit);
+  app.post('/staff/articles/:id/edit', auth.staff, staff.articles.edit.post);
 
-  app.get('/staff/articles/new', auth.staff, staff.articles["new"]);
+  app.get('/staff/articles/:id/photos', auth.staff, staff.articles.photos.list);
 
-  app.post('/staff/articles/new', auth.staff, staff.articles["new"]);
+  app.get('/staff/articles/:id/photos/:pid', auth.staff, staff.articles.photos.view);
+
+  app.get('/staff/articles/:id/photos/:pid/edit', auth.staff, staff.articles.photos.edit.get);
+
+  app.post('/staff/articles/:id/photos/:pid/edit', auth.staff, staff.articles.photos.edit.post);
+
+  app.post('/staff/articles/:id/photos/upload', auth.staff, staff.articles.photos.upload.get);
+
+  app.post('/staff/articles/:id/photos/upload', auth.staff, staff.articles.photos.upload.post);
+
+  app.get('/staff/articles/new', auth.staff, staff.articles["new"].get);
+
+  app.post('/staff/articles/new', auth.staff, staff.articles["new"].post);
 
   app.post('/staff/articles/:id/delete', auth.staff, staff.articles["delete"]);
 
@@ -90,13 +112,13 @@
 
   app.get('/staff/issues/:id', auth.staff, staff.issues.view);
 
-  app.get('/staff/issues/:id/edit', auth.staff, staff.issues.edit);
+  app.get('/staff/issues/:id/edit', auth.staff, staff.issues.edit.get);
 
-  app.post('/staff/issues/:id/edit', auth.staff, staff.issues.edit);
+  app.post('/staff/issues/:id/edit', auth.staff, staff.issues.edit.post);
 
-  app.get('/staff/issues/new', auth.staff, staff.issues["new"]);
+  app.get('/staff/issues/new', auth.staff, staff.issues["new"].get);
 
-  app.post('/staff/issues/new', auth.staff, staff.issues["new"]);
+  app.post('/staff/issues/new', auth.staff, staff.issues["new"].post);
 
   app.post('/staff/issues/:id/delete', auth.staff, staff.issues["delete"]);
 
@@ -104,39 +126,41 @@
 
   app.get('/staff/permissions/:id', auth.staff, staff.permissions.view);
 
-  app.get('/staff/permissions/:id/edit', auth.staff, staff.permissions.edit);
+  app.get('/staff/permissions/:id/edit', auth.staff, staff.permissions.edit.get);
 
-  app.post('/staff/permissions/:id/edit', auth.staff, staff.permissions.edit);
+  app.post('/staff/permissions/:id/edit', auth.staff, staff.permissions.edit.post);
 
-  app.get('/staff/permissions/new', auth.staff, staff.permissions["new"]);
+  app.get('/staff/permissions/new', auth.staff, staff.permissions["new"].get);
 
-  app.post('/staff/permissions/new', auth.staff, staff.permissions["new"]);
+  app.post('/staff/permissions/new', auth.staff, staff.permissions["new"].post);
 
   app.post('/staff/permissions/:id/delete', auth.staff, staff.permissions["delete"]);
 
-  app.get('/staff/planners/:id', auth.staff, staff.planners.view);
+  app.get('/staff/planners/:name', auth.staff, staff.planners.view);
 
   app.get('/staff/planners/view/:section', auth.staff, staff.planners.list);
 
-  app.get('/staff/planners/:id/edit', auth.staff, staff.planners.edit);
+  app.get('/staff/planners/:name/edit', auth.staff, staff.planners.edit.get);
 
-  app.post('/staff/planners/:id/edit', auth.staff, staff.planners.edit);
+  app.post('/staff/planners/:name/edit', auth.staff, staff.planners.edit.post);
 
-  app.get('/staff/planners/new', auth.staff, staff.planners["new"]);
+  app.get('/staff/planners/new', auth.staff, staff.planners["new"].get);
 
-  app.post('/staff/planners/new', auth.staff, staff.planners["new"]);
+  app.post('/staff/planners/new', auth.staff, staff.planners["new"].post);
 
-  app.post('/staff/planners/:id/delete', auth.staff, staff.permissions["delete"]);
+  app.post('/staff/planners/:name/delete', auth.staff, staff.permissions["delete"]);
 
   app.get('/staff/rotator', auth.staff, staff.rotator.list);
 
-  app.get('/staff/rotator/:id/edit', auth.staff, staff.rotator.edit);
+  app.get('/staff/rotator/:id', auth.staff, staff.rotator.view);
 
-  app.post('/staff/rotator/:id/edit', auth.staff, staff.rotator.edit);
+  app.get('/staff/rotator/:id/edit', auth.staff, staff.rotator.edit.get);
 
-  app.get('/staff/rotator/new', auth.staff, staff.rotator["new"]);
+  app.post('/staff/rotator/:id/edit', auth.staff, staff.rotator.edit.post);
 
-  app.post('/staff/rotator/new', auth.staff, staff.rotator["new"]);
+  app.get('/staff/rotator/new', auth.staff, staff.rotator["new"].get);
+
+  app.post('/staff/rotator/new', auth.staff, staff.rotator["new"].post);
 
   app.post('/staff/rotator/:id/delete', auth.staff, staff.rotator["delete"]);
 
@@ -144,13 +168,13 @@
 
   app.get('/staff/users/:id', auth.staff, staff.users.view);
 
-  app.get('/staff/users/:id/edit', auth.staff, staff.users.edit);
+  app.get('/staff/users/:id/edit', auth.staff, staff.users.edit.get);
 
-  app.post('/staff/users/:id/edit', auth.staff, staff.users.edit);
+  app.post('/staff/users/:id/edit', auth.staff, staff.users.edit.post);
 
-  app.get('/staff/users/new', auth.staff, staff.users["new"]);
+  app.get('/staff/users/new', auth.staff, staff.users["new"].get);
 
-  app.post('/staff/users/new', auth.staff, staff.users["new"]);
+  app.post('/staff/users/new', auth.staff, staff.users["new"].post);
 
   app.post('/staff/users/:id/delete', auth.staff, staff.users["delete"]);
 
