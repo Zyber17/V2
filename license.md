@@ -1,6 +1,4 @@
-The sole distribution rights to this software belong, and will always belong, to Zackary Corbett.
-The Pine View Torch possesses the right to use and modify this copy of the software, but may not distribute,
-share, or in any way allow any other entity to make use of this software without the explicit consent of the software distribution rights owner.
+The sole distribution rights to this software belong, and will always belong, to [Zackary Corbett](http://zackarycorbett.com/) and [Ed Wellbrook](http://edwellbrook.com/). The [Pine View Torch](http://pineviewtorch.com/) possesses the right to use and modify this copy of the software, but may not distribute, share, or in any way allow any other entity to make use of this software without the explicit consent of both of the software distribution rights owners.
 
-In other words: the Torch can run the site, change the code, whatever. They just can't sell the software.
-Only Zackary Corbett gets to do that.
+In other words: the Torch can run the site, change the code, whatever. It just can't sell the software.
+Only Zackary Corbett and Ed Wellbrook get to do that.
