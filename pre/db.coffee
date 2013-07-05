@@ -24,13 +24,14 @@ users = new Schema {
 
 	bio:
 		type: String
+		default: null
 
 	password:
 		type: String
 
-	status:
-		type: Number
-		default: 0
+	isStaff:
+		type: Boolean
+		default: false
 }
 
 articles = new Schema {
