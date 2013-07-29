@@ -1,0 +1,41 @@
+extends wrapper
+
+block content
+	-if (msg)
+		h2(style="background: #fec9ca; padding: 5px; border: 1px solid #fdacae;")= msg
+	aside
+		ul
+			li
+				a(href='edit') Edit
+			li
+				form#form(method="post", action='delete', enctype="multipart/form-data")
+					input#delete(type="hidden", name="delete", value="true")
+					button#submit(type="submit") Delete
+	h1= resp.title
+	h2= 'by '+resp.author
+	-if (resp.date)
+		h2= 'on '+resp.date
+	article!= body
+	aside.views This article has been viewed #{resp.views} time#{resp.views != 1 ? 's' : ''}
+	-if (staff)
+		div#revisions
+			h3 Revisions
+			ul
+				for version, i in versions
+					li #{version.num} | #{version.ago} by #{version.editor}
+		div#comments
+			h3 Comments
+			ul
+				each comment in comments
+					li
+						div
+							h3.c_author by #{comment.author}
+							time(datetime=comment.exactDate)= comment.ago
+							p!= comment.body.rendered
+			form#form(method="post", action='comment', enctype="multipart/form-data")
+				input#author(type="hidden", name="author", value="Zackary Corbett")
+				input#edited(type="hidden", name="edited", value="false")
+					//-fix this later! Do purely serverside or have a hidden feild? Who knows. Probably serverside though.
+				
+				textarea#body(name="body", placeholder="Your comment here.")
+				button#submit(type="submit") Submit

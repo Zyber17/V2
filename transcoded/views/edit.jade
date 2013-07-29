@@ -1,0 +1,91 @@
+extends wrapper
+
+block head
+	link(rel='stylesheet', href='/css/jquery-ui/theme.css')
+	style.
+			form input, form select, form textarea, form button { display: block; width: 40%; padding: 10px; margin: 10px; clear: both}
+	script(src="/js/jquery-ui/jquery-ui.js")
+	-if (!lockHTML)
+		script(src="/js/ckeditor/ckeditor.js")
+		script.
+			$(document).ready(function() {
+				CKEDITOR.replace('body');
+
+				$('#date').datepicker({
+					dateFormat: 'mm-dd-yy'
+				});
+			});
+
+block content
+	-if (editing && (!lockHTML || (lockHTML && knowsHTML)))
+		h2 Editing: 
+			em= title
+	-if (lockHTML)
+		h3.error #{editing ? title : 'This article'} is locked in HTML.#{!knowsHTML ? " You'll need to ask someone who knows HTML to edit this article for you." : ""}
+	-if ((lockHTML && knowsHTML) || !lockHTML)
+		form#form(method="post", action='#', enctype="multipart/form-data")
+
+			input#title(type="text", placeholder="A witty title", name="title", value=title)
+
+			hr
+
+			label(for="issue") Issue:
+			select#issue(name="issue")
+				each issue in issues.list
+					option(value=issue._id, selected=issue._id == issues.selected ? 'selected' : null)= issue.name
+
+			label(for="section") Section:
+			select#section(name="section")
+				each section in sections.list
+					option(value=section._id, selected=section._id == sections.selected ? 'selected' : null)= section.name
+
+			label(for="status") Status:
+			select#section(name="status")
+				option(value="0", selected=status == 0 ? 'selected' : null) Still Needs Writing
+				option(value="1", selected=status == 1 ? 'selected' : null) Ready for Section Edit
+				option(value="2", selected=status == 2  ? 'selected' : null) Ready for Copy Edit
+				option(value="3", selected=status == 3 ? 'selected' : null) Ready for Approval
+				option(value="4", selected=status == 4 ? 'selected' : null) Good to Go
+				option(value="5", selected=status == 5 ? 'selected' : null) On Hold
+
+			label(for="publication") Publication:
+			select#section(name="publication")
+				option(value="0", selected=publication == 0 ? 'selected' : null) Torch
+				option(value="1", selected=publication == 1 ? 'selected' : null) Match
+				option(value="2", selected=publication == 2  ? 'selected' : null) Web
+
+			//- -var status = 3, approval = {"advisor": 1, "administration": 2};
+
+			-if (status == 3)
+				hr
+
+				label(for="advisorapproval") Advisor approval:
+				select#advisorapproval(name="advisorapproval")
+					option(value="0", selected=approval.advisor == 0 ? 'selected' : null) Awaiting Approval
+					option(value="1", selected=approval.advisor == 1 ? 'selected' : null) Approved
+					option(value="2", selected=approval.advisor == 2  ? 'selected' : null) Rejected (Leave rejection reason in comments)
+
+				label(for="administrationapproval") Administration approval:
+				select#administrationapproval(name="administrationapproval")
+					option(value="0", selected=approval.administration == 0 ? 'selected' : null) Awaiting Approval
+					option(value="1", selected=approval.administration == 1 ? 'selected' : null) Approved
+					option(value="2", selected=approval.administration == 2  ? 'selected' : null) Rejected (Leave rejection reason in comments)
+
+			hr
+
+			input#date(type="text", name="date", value=date, placeholder="Date: mm-dd-yyyy")
+
+			-if (!lockHTML && knowsHTML)
+				input#lockedFalse(type="radio", name="lockHTML", value="false", checked="checked")
+				label(for="lockedFalse") WYSIWYG enabled
+				input#lockedTrue(type="radio", name="lockHTML", value="true") WYSIWYG disabled
+				label(for="lockedTrue") WYSIWYG disabled
+			-else if (lockHTML && knowsHTML)
+				input#lockedTrue(type="radio", name="lockHTML", value="true", checked="checked")
+				label(for="lockedTrue") WYSIWYG disabled
+
+			textarea#body(name="body")=body
+
+			input#author(type="text", placeholder="Author’s Name", name="author", value=author)
+
+			button#submit(type="submit") Submit
