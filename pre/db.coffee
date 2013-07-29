@@ -5,7 +5,7 @@ ObjectId =  Schema.ObjectId
         
 mongoose.connect 'localhost','torch'
 
-users = new Schema {
+users = new Schema
 	_id:
 		type: ObjectId
 
@@ -32,53 +32,117 @@ users = new Schema {
 	isStaff:
 		type: Boolean
 		default: false
-}
 
-articles = new Schema {
-	_id:
-		type: ObjectId
+#Begin articles
 
+articles = new Schema
 	title:
 		type: String
+		required: true
 
 	slug:
 		type: String
 		index:
 			unique: true
 
-	bodyType:
-		type: Number
-		default: 0
-
-	body:
+	author:
 		type: String
+		required: true
 
-	html:
-		type: String
 
-	section:
-		type: ObjectId
-		ref: 'sections'
+	lockHTML:
+		type: Boolean
+		default: false
 
-	issue:
-		type: ObjectId
-		ref: 'issues'
+	body: [articleBodies]
+
+	# section:
+	# 	type: ObjectId
+	# 	ref: 'sections'
+
+	# issue:
+	# 	type: ObjectId
+	# 	ref: 'issues'
 
 	publishDate:
 		type: Date
 		default: null
-}
 
-photos = new Schema {
+	createdDate:
+		type: Date
+		default: Date.now
+
+	status:
+		type: Number
+		default: 0 # 0: Still Needs Writing, 1: Ready for Section Edit, 2: Ready for Copy Edit, 3: Ready for Approval, 4: Good to Go, 5: On Hold
+
+	approvedBy:
+		advisor:
+			type: Number
+			default: 0 #0: Awaiting approval (neither approved nor rejected), 1: Appoved, 2: Rejected
+		administration:
+			type: Number
+			default: 0 #0: Awaiting approval (neither approved nor rejected), 1: Appoved, 2: Rejected
+
+	staffComments: [
+		body:
+			rendered:
+				type: String
+				required: true
+			notRendered:
+				type: String
+				required: true
+		
+		author: #fix later
+			type: String
+			required: true
+			# 	type: ObjectId
+			# 	ref: 'issues'
+
+		edited:
+			type: Boolean
+			default: false
+
+		createdDate:
+			type: Date
+			default: Date.now
+	]
+
+	views:
+		type: Number
+		default: 0
+
+
+articleBodies = new Schema
+	body:
+		type: String
+		required: true
+	editor:
+		type: String
+		required: true
+		# 	type: ObjectId
+		# 	ref: 'issues'
+	editDate:
+		type: Date
+		default: Date.now
+
+
+articles.plugin monguurl
+    source: 'title'
+    target: 'slug'
+
+#End Articles
+
+photos = new Schema
 	_id:
 		type: ObjectId
 
 	parentID:
 		type: ObjectId
 		ref: 'articles'
-}
 
-sections = new Schema {
+
+sections = new Schema
 	_id:
 		type: ObjectId
 
@@ -89,9 +153,8 @@ sections = new Schema {
 	plannerFormat:
 		type: String
 
-}
 
-issues = new Schema {
+issues = new Schema
 	_id:
 		type: ObjectId
 
@@ -102,9 +165,8 @@ issues = new Schema {
 	releaseDate:
 		type: Date
 
-}
 
-planners = new Schema {
+planners = new Schema
 	_id:
 		type: ObjectId
 
@@ -128,41 +190,10 @@ planners = new Schema {
 			type: String
 		rendered:
 			type: String
-}
-
-comments = new Schema {
-	_id:
-		type: ObjectId
-
-	body:
-		type: String
-
-	author:
-		type: ObjectId
-		ref: 'users'
-
-	kind:
-		type: Number # 0 for article, 1 for planner
-
-	parentID:
-		type: ObjectId
-}
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+module.exports =
+	ObjectId:
+		ObjectId
+	Articles:
+		mongoose.model 'articles', articles

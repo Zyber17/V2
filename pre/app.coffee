@@ -1,6 +1,8 @@
 express  =  require 'express'
+http     =  require 'http'
+path     =  require 'path'
 
-article  =  require './routes/article'
+articles  =  require './routes/articles'
 auth     =  require './routes/auth'
 index    =  require './routes/index'
 issues   =  require './routes/issues'
@@ -20,24 +22,51 @@ staff.users        =  require './routes/staff/users'
 
 app = express()
 
+
 app.configure ->
-	# sessions
 	app.use express.cookieParser('***REMOVED***')
 	app.use express.static(path.join(__dirname, 'public'))
-	app.use express.favicon('./public/images/favicon.ico')
-	app.use express.bodyParser
-	app.use (req, res, next) ->
-		res.status(404).render 'errors/404'
-
+	#app.use express.favicon('./public/images/favicon.ico')
+	app.use express.session({ cookie: { maxAge: 15552000000 }})
+	app.use express.bodyParser()
+	app.set 'views', __dirname + '/views'
 	app.set 'view engine', 'jade'
 
 	app.disable 'x-powered-by'
 
+	app.set 'port', process.env.PORT || 8000
+
 	true # CoffeeScript automatically returns the last line of every function. So, we're returning true when eveything works (last line excuted).
 
-app.get '/', index.view
 
-app.get '/article/:slug', auth.any, article.view # Middleware for auth? Update: No. Just check for session in article.view. WAIT. I MEAN YES. Just make sure the user in reference exists
+
+# To set the enviroment: http://stackoverflow.com/questions/11104028/process-env-node-env-is-undefined
+
+# app.configure 'development', ->
+#   	app.listen 8000
+
+# app.configure 'production', ->
+#   	app.listen 80
+#   	app.enable 'view cache'
+
+
+
+app.get '/', articles.index
+
+app.get '/new', articles.create
+
+app.post '/new', articles.add
+
+app.get '/articles/:slug', articles.get # Middleware for auth? Update: No. Just check for session in article.view. WAIT. I MEAN YES. Just make sure the user in reference exists. Add later
+
+app.post '/articles/:slug/comment', articles.comment
+
+app.get '/articles/:slug/edit', articles.edit_get
+
+app.post '/articles/:slug/edit', articles.edit_post
+
+app.post '/articles/:slug/delete', articles.remove
+
 
 app.get '/issues', issues.list
 
@@ -174,11 +203,6 @@ app.post '/staff/users/:id/delete', auth.staff, staff.users.delete
 End Staff Suff
 ###
 
-
-# To set the enviroment: http://stackoverflow.com/questions/11104028/process-env-node-env-is-undefined
-
-app.configure 'development', ->
-  	app.listen 8000
-
-app.configure 'production', ->
-  	app.listen 80
+http.createServer(app).listen(app.get('port'), ->
+        console.log "Express server listening on port " + app.get('port')
+)
