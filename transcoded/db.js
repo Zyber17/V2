@@ -114,6 +114,10 @@
     views: {
       type: Number,
       "default": 0
+    },
+    publication: {
+      type: Number,
+      "default": 0
     }
   });
 

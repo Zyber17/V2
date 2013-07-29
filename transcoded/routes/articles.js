@@ -87,6 +87,7 @@
         date: req.session.message.content.date,
         author: req.session.message.content.author,
         status: req.session.message.content.status,
+        publication: req.session.message.content.publication,
         approval: {
           advisor: 0,
           administration: 0
@@ -136,7 +137,12 @@
           date: req.body.date,
           issue: req.body.issue,
           section: req.body.section,
-          status: req.body.status
+          status: req.body.status,
+          publication: req.body.publication,
+          approval: {
+            advisor: req.body.advisorapproval || null,
+            administration: req.body.administrationapproval || null
+          }
         }
       };
       return res.redirect('/');
@@ -148,6 +154,7 @@
         lockHTML: string(req.body.lockHTML).toBoolean(),
         createdDate: moment().toDate(),
         status: req.body.status,
+        publication: req.body.publication,
         approvedBy: {
           advisor: req.body.advisorapproval || 0,
           administration: req.body.administrationapproval || 0
@@ -283,15 +290,12 @@
         editing: false,
         lockHTML: req.session.message.content.lockHTML,
         status: req.session.message.content.status,
+        publication: req.session.message.content.publication,
         approval: {
-          advisor: 0,
-          administration: 0
+          advisor: req.session.message.content.approval.advisor,
+          administration: req.session.message.content.approval.administration
         }
       };
-      if (req.session.message.content.approval) {
-        resp.approval.advisor = req.session.message.content.approval.advisor || 0;
-        resp.approval.administration = req.session.message.content.approval.administration || 0;
-      }
       res.render('edit', resp);
       return req.session.message = null;
     } else {
@@ -307,6 +311,7 @@
               date: resp.publishDate ? moment(resp.publishDate).format("MM-DD-YYYY") : void 0,
               issue: resp.issue,
               section: resp.section,
+              publication: resp.publication,
               knowsHTML: true,
               lockHTML: resp.lockHTML,
               editing: true,
@@ -375,7 +380,12 @@
           body: req.body.body,
           date: req.body.date,
           issue: req.body.issue,
-          section: req.body.section
+          section: req.body.section,
+          publication: req.body.publication,
+          approval: {
+            advisor: req.body.advisorapproval || null,
+            administration: req.body.administrationapproval || null
+          }
         }
       };
       return res.redirect("/articles/" + req.params.slug + "/edit");
@@ -385,10 +395,11 @@
           if (resp) {
             resp.title = req.body.title;
             resp.author = req.body.author;
-            resp.date = req.body.date ? moment(req.body.date, "MM-DD-YYYY").toDate() : void 0;
+            resp.publishDate = req.body.date ? moment(req.body.date, "MM-DD-YYYY").toDate() : void 0;
             resp.issue = req.body.issue;
             resp.section = req.body.section;
             resp.status = req.body.status;
+            resp.publication = req.body.publication;
             resp.approvedBy = {
               advisor: req.body.advisorapproval || resp.approvedBy.advisor || 0,
               administration: req.body.administrationapproval || resp.approvedBy.administration || 0
@@ -446,6 +457,7 @@
       bodyType: 1,
       lockHTML: 1,
       status: 1,
+      publication: 1,
       approvedBy: 1,
       staffComments: 1,
       views: 1,
