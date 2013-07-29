@@ -112,6 +112,10 @@ articles = new Schema
 		type: Number
 		default: 0
 
+	publication:
+		type: Number
+		default: 0 #0: Torch, 1: Match, 2: Web
+
 
 articleBodies = new Schema
 	body:

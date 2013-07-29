@@ -85,6 +85,8 @@ exports.create = (req,res,next) ->
 				req.session.message.content.author
 			status:
 				req.session.message.content.status
+			publication:
+				req.session.message.content.publication
 			approval:
 				advisor:
 					0
@@ -143,6 +145,13 @@ exports.add = (req,res,next) ->
 					req.body.section
 				status:
 					req.body.status
+				publication:
+					req.body.publication
+				approval:
+					advisor:
+						req.body.advisorapproval || null
+					administration:
+						req.body.administrationapproval || null
 		res.redirect '/'
 	else
 
@@ -163,6 +172,8 @@ exports.add = (req,res,next) ->
 				moment().toDate()
 			status:
 				req.body.status
+			publication:
+				req.body.publication
 			approvedBy:
 				advisor:
 					req.body.advisorapproval || 0
@@ -299,15 +310,13 @@ exports.edit_get = (req,res,next) ->
 				req.session.message.content.lockHTML
 			status:
 				req.session.message.content.status
+			publication:
+				req.session.message.content.publication
 			approval:
 				advisor:
-					0
+					req.session.message.content.approval.advisor
 				administration:
-					0
-
-		if req.session.message.content.approval
-			resp.approval.advisor = req.session.message.content.approval.advisor || 0
-			resp.approval.administration = req.session.message.content.approval.administration || 0
+					req.session.message.content.approval.administration
 
 		res.render 'edit', resp
 		req.session.message = null
@@ -328,6 +337,8 @@ exports.edit_get = (req,res,next) ->
 							resp.issue
 						section:
 							resp.section
+						publication:
+							resp.publication
 						knowsHTML:
 							true
 						lockHTML:
@@ -387,6 +398,13 @@ exports.edit_post = (req,res,next) ->
 					req.body.issue
 				section:
 					req.body.section
+				publication:
+					req.body.publication
+				approval:
+					advisor:
+						req.body.advisorapproval || null
+					administration:
+						req.body.administrationapproval || null
 		res.redirect "/articles/#{req.params.slug}/edit"
 	else
 		findArticle req.params.slug, false, (err, resp) ->
@@ -394,10 +412,11 @@ exports.edit_post = (req,res,next) ->
 				if resp
 					resp.title   =  req.body.title
 					resp.author  =  req.body.author
-					resp.date    =  if req.body.date then moment(req.body.date, "MM-DD-YYYY").toDate()
+					resp.publishDate    =  if req.body.date then moment(req.body.date, "MM-DD-YYYY").toDate()
 					resp.issue   =  req.body.issue
 					resp.section =  req.body.section
 					resp.status  =  req.body.status
+					resp.publication  =  req.body.publication
 					
 					resp.approvedBy=
 						advisor:
@@ -455,6 +474,8 @@ findArticle = (slug, update, callback) ->
 			1
 		status:
 			1
+		publication:
+			1
 		approvedBy:
 			1
 		staffComments:
@@ -470,3 +491,4 @@ findArticle = (slug, update, callback) ->
 		else
 			callback(err,resp)
 	)
+	
