@@ -192,7 +192,8 @@ exports.add = (req,res,next) ->
 			if err == null
 				res.redirect "/articles/#{resp.slug}/"
 			else
-	        	res.end err.toString()
+	        	console.log err
+				res.end JSON.stringify err
 
 exports.get = (req,res,next) ->	
 	update = true
@@ -261,6 +262,7 @@ exports.get = (req,res,next) ->
 			else
 				res.render 'errors/404', {err: "Article not found"}
 		else
+			console.log err
 			res.end JSON.stringify err
 
 
@@ -286,6 +288,7 @@ exports.comment = (req,res,next) ->
 			else
 				res.render 'errors/404', {err: "Article not found"}
 		else
+			console.log err
 			res.end JSON.stringify err
 
 
@@ -367,6 +370,7 @@ exports.edit_get = (req,res,next) ->
 				else
 					res.render 'errors/404', {err: "Article not found"}
 			else
+				console.log err
 				res.end JSON.stringify err
 
 
@@ -440,6 +444,7 @@ exports.edit_post = (req,res,next) ->
 				else
 					res.render 'errors/404', {err: "Article not found"}
 			else
+				console.log err
 				res.end JSON.stringify err
 
 
@@ -451,6 +456,7 @@ exports.remove = (req,res,next) ->
 			if !err
 				res.redirect '/'
 			else
+				console.log err
 				res.end JSON.stringify err
 	else
 		res.redirect "/articles/#{resp.slug}/" 
