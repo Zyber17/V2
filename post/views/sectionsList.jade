@@ -1,0 +1,9 @@
+extends wrapper
+
+block content
+	ul
+		each section in sections
+			li
+				div
+					h2.title
+						a(href=section.slug)= section.title

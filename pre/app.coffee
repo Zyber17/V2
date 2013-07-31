@@ -50,7 +50,9 @@ app.configure ->
 #   	app.enable 'view cache'
 
 
-
+###
+Update this stuff
+###
 app.get '/', articles.index
 
 app.get '/new', articles.create
@@ -67,6 +69,29 @@ app.post '/articles/:slug/edit', articles.edit_post
 
 app.post '/articles/:slug/delete', articles.remove
 
+
+app.get '/issues', issues.list
+
+app.get '/issues/new', issues.new_get
+
+app.post '/issues/new', issues.new_post
+
+app.get '/issues/:slug', issues.edit_get
+
+app.post '/issues/:slug', issues.edit_post
+
+app.get '/sections', sections.list
+
+app.get '/sections/new', sections.new_get
+
+app.post '/sections/new', sections.new_post
+
+app.get '/sections/:slug', sections.edit_get
+
+app.post '/sections/:slug', sections.edit_post
+###
+/Update this stuff
+###
 
 app.get '/issues', issues.list
 
