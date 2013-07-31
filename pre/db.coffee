@@ -5,33 +5,33 @@ ObjectId =  Schema.ObjectId
         
 mongoose.connect 'localhost','torch'
 
-users = new Schema
-	_id:
-		type: ObjectId
+# users = new Schema
+# 	_id:
+# 		type: ObjectId
 
-	username:
-		type: String
-		unique: true
+# 	username:
+# 		type: String
+# 		unique: true
 
-	slugName:
-		type: String
-		index:
-			unique: true
+# 	slugName:
+# 		type: String
+# 		index:
+# 			unique: true
 
-	email:
-		type: String
-		unique: true
+# 	email:
+# 		type: String
+# 		unique: true
 
-	bio:
-		type: String
-		default: null
+# 	bio:
+# 		type: String
+# 		default: null
 
-	password:
-		type: String
+# 	password:
+# 		type: String
 
-	isStaff:
-		type: Boolean
-		default: false
+# 	isStaff:
+# 		type: Boolean
+# 		default: false
 
 #Begin articles
 
@@ -137,62 +137,84 @@ articles.plugin monguurl
 
 #End Articles
 
-photos = new Schema
-	_id:
-		type: ObjectId
+# photos = new Schema
+# 	_id:
+# 		type: ObjectId
 
-	parentID:
-		type: ObjectId
-		ref: 'articles'
-
-
-sections = new Schema
-	_id:
-		type: ObjectId
-
-	name:
-		type: String
-		unique: true
-
-	plannerFormat:
-		type: String
+# 	parentID:
+# 		type: ObjectId
+# 		ref: 'articles'
 
 
 issues = new Schema
-	_id:
-		type: ObjectId
-
-	name:
+	title:
 		type: String
-		unique: true
+		required: true
 
-	releaseDate:
+	slug:
+		type: String
+		index:
+			unique: true
+
+	publication:
+		type: Number
+		default: 0 #0: Torch, 1: Match
+		required: true
+
+	publishDate:
 		type: Date
+		required: true
 
-
-planners = new Schema
-	_id:
-		type: ObjectId
-
-	section:
-		type: ObjectId
-		ref: 'sections'
-
-	issue:
-		type: ObjectId
-		ref: 'issues'
-
-	author:
-		type: ObjectId
-		ref: 'users'
-
-	date:
+	createdDate:
 		type: Date
+		default: Date.now
+		required: true
 
-	body:
-		editable:
-			type: String
-		rendered:
+
+issues.plugin monguurl
+    source: 'title'
+    target: 'slug'
+
+
+sections = new Schema
+	title:
+		type: String
+		required: true
+
+	slug:
+		type: String
+		index:
+			unique: true
+
+
+sections.plugin monguurl
+    source: 'title'
+    target: 'slug'
+
+
+# planners = new Schema
+# 	_id:
+# 		type: ObjectId
+
+# 	section:
+# 		type: ObjectId
+# 		ref: 'sections'
+
+# 	issue:
+# 		type: ObjectId
+# 		ref: 'issues'
+
+# 	author:
+# 		type: ObjectId
+# 		ref: 'users'
+
+# 	date:
+# 		type: Date
+
+# 	body:
+# 		editable:
+# 			type: String
+# 		rendered:
 			type: String
 
 
@@ -201,3 +223,7 @@ module.exports =
 		ObjectId
 	Articles:
 		mongoose.model 'articles', articles
+	Issues:
+		mongoose.model 'issues', issues
+	Sections:
+		mongoose.model 'sections', sections

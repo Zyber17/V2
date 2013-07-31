@@ -1,0 +1,11 @@
+extends wrapper
+
+block content
+	ul
+		each issue in issues
+			li
+				div
+					h2.title
+						a(href=issue.slug)= issue.title
+					h3.author= issue.publication == 0 ? 'Torch' : 'Match'
+					time(datetime=issue.exactDate)= issue.date
