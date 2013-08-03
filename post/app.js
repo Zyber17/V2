@@ -65,11 +65,11 @@
 
   app.get('/', articles.index);
 
-  app.get('/new', articles.create);
+  app.get('/new', articles.new_get);
 
-  app.post('/new', articles.add);
+  app.post('/new', articles.new_post);
 
-  app.get('/articles/:slug', articles.get);
+  app.get('/articles/:slug', articles.view);
 
   app.post('/articles/:slug/comment', articles.comment);
 
