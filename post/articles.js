@@ -50,7 +50,7 @@
     });
   };
 
-  exports.create = function(req, res, next) {
+  exports.new_get = function(req, res, next) {
     var issues, resp, sections;
 
     sections = {
@@ -113,7 +113,7 @@
     }
   };
 
-  exports.add = function(req, res, next) {
+  exports.new_post = function(req, res, next) {
     var err, newArticle;
 
     err = [];
@@ -176,7 +176,7 @@
     }
   };
 
-  exports.get = function(req, res, next) {
+  exports.view = function(req, res, next) {
     var update;
 
     update = true;
