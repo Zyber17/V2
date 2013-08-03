@@ -55,11 +55,11 @@ Update this stuff
 ###
 app.get '/', articles.index
 
-app.get '/new', articles.create
+app.get '/new', articles.new_get
 
-app.post '/new', articles.add
+app.post '/new', articles.new_post
 
-app.get '/articles/:slug', articles.get # Middleware for auth? Update: No. Just check for session in article.view. WAIT. I MEAN YES. Just make sure the user in reference exists. Add later
+app.get '/articles/:slug', articles.view # Middleware for auth? Update: No. Just check for session in article.view. WAIT. I MEAN YES. Just make sure the user in reference exists. Add later
 
 app.post '/articles/:slug/comment', articles.comment
 
