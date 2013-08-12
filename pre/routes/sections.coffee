@@ -23,20 +23,15 @@ exports.list = (req,res,next) ->
 
 				res.render 'sectionsList', {sections: sections}
 			else
-				console.log err
+				console.log "Error (sections): #{err}"
 				res.end JSON.stringify err
 	)
 
 exports.new_get = (req,res,next) ->
 	if req.session.message
-		send=
-			err:
-				req.session.message.err
-			title:
-				req.session.message.content.title
-			editing:
-				false
-		res.render 'newSection', send
+		req.session.message.editing = false
+		res.render 'newSection', req.session.messages
+		req.session.message = null
 	else
 		res.render 'newSection', {editing: false}
 
@@ -46,11 +41,8 @@ exports.new_post = (req,res,next) ->
 		err.push "Name must be three characters or more."
 
 	if err.length > 0
-		req.session.message
-			err:
-				err
-			content:
-				req.body
+		req.session.message = req.body
+		req.session.message._err = err
 		res.redirect '/sections/new'
 	else
 		newSection = new db.Sections
@@ -61,18 +53,14 @@ exports.new_post = (req,res,next) ->
 			if !err
 				res.redirect '/sections/'
 			else
+				console.log "Error (sections): #{err}"
 				res.end JSON.stringify err
 
 exports.edit_get = (req,res,next) ->
 	if req.session.message
-		send=
-			err:
-				req.session.message.err
-			title:
-				req.session.message.content.title
-			editing:
-				true
-		res.render 'newSection', send
+		req.session.message.editing = true
+		res.render 'newSection', req.session.messages
+		req.session.message = null
 	else
 		findSection req.params.slug, (err,resp) ->
 			if !err
@@ -85,9 +73,9 @@ exports.edit_get = (req,res,next) ->
 
 					res.render 'newSection', send
 				else
-					res.render 'errors/404', {err: "Section not found"}
+					res.render 'errors/404', {_err: "Section not found"}
 			else
-				console.log err
+				console.log "Error (sections): #{err}"
 				res.end JSON.stringify err
 
 exports.edit_post = (req,res,next) ->
@@ -96,11 +84,8 @@ exports.edit_post = (req,res,next) ->
 		err.push "Name must be three characters or more."
 
 	if err.length > 0
-		req.session.message
-			err:
-				err
-			content:
-				req.body
+		req.session.message = req.body
+		req.session.message._err = err
 		res.redirect "/sections/#{req.params.slug}"
 	else
 		findSection req.params.slug, (err,resp) ->
@@ -109,11 +94,14 @@ exports.edit_post = (req,res,next) ->
 					resp.title = req.body.title
 
 					resp.save (err, resp) ->
-						if err then res.end JSON.stringify err else res.redirect "/sections/"
+						if err
+							console.log "Error (sections): #{err}"
+							res.end JSON.stringify err
+						else res.redirect "/sections/"
 				else
-					res.render 'errors/404', {err: "Article not found"}
+					res.render 'errors/404', {_err: "Article not found"}
 			else
-				console.log err
+				console.log "Error (sections): #{err}"
 				res.end JSON.stringify err
 
 

@@ -31,24 +31,17 @@
           issues: issues
         });
       } else {
-        console.log(err);
+        console.log("Error (issues): " + err);
         return res.end(JSON.stringify(err));
       }
     });
   };
 
   exports.new_get = function(req, res, next) {
-    var send;
-
     if (req.session.message) {
-      send = {
-        err: req.session.message.err,
-        title: req.session.message.content.title,
-        publication: req.session.message.content.publication,
-        date: req.session.message.content.date,
-        editing: false
-      };
-      return res.render('newIssue', send);
+      req.session.message.editing = false;
+      res.render('newIssue', req.session.message);
+      return req.session.message = null;
     } else {
       return res.render('newIssue', {
         editing: false
@@ -67,10 +60,8 @@
       err.push("Name must be three characters or more.");
     }
     if (err.length > 0) {
-      req.session.message({
-        err: err,
-        content: req.body
-      });
+      req.session.message = req.body;
+      req.session.message.err = _err;
       return res.redirect('/issues/new');
     } else {
       newIssue = new db.Issues({
@@ -83,6 +74,7 @@
         if (!err) {
           return res.redirect('/issues/');
         } else {
+          console.log("Error (issues): " + err);
           return res.end(JSON.stringify(err));
         }
       });
@@ -90,19 +82,14 @@
   };
 
   exports.edit_get = function(req, res, next) {
-    var send;
-
     if (req.session.message) {
-      send = {
-        err: req.session.message.err,
-        title: req.session.message.content.title,
-        publication: req.session.message.content.publication,
-        date: req.session.message.content.date,
-        editing: true
-      };
-      return res.render('newIssue', send);
+      req.session.message.editing = true;
+      res.render('newIssue', req.session.message);
+      return req.session.message = null;
     } else {
       return findIssue(req.params.slug, function(err, resp) {
+        var send;
+
         if (!err) {
           if (resp) {
             send = {
@@ -118,7 +105,7 @@
             });
           }
         } else {
-          console.log(err);
+          console.log("Error (issues): " + err);
           return res.end(JSON.stringify(err));
         }
       });
@@ -136,10 +123,8 @@
       err.push("Name must be three characters or more.");
     }
     if (err.length > 0) {
-      req.session.message({
-        err: err,
-        content: req.body
-      });
+      req.session.message = req.body;
+      req.session.message.err = _err;
       return res.redirect("/issues/" + req.params.slug);
     } else {
       return findIssue(req.params.slug, function(err, resp) {
@@ -150,6 +135,7 @@
             resp.publication = req.body.publication;
             return resp.save(function(err, resp) {
               if (err) {
+                console.log("Error (issues): " + err);
                 return res.end(JSON.stringify(err));
               } else {
                 return res.redirect("/issues/");
@@ -161,7 +147,7 @@
             });
           }
         } else {
-          console.log(err);
+          console.log("Error (issues): " + err);
           return res.end(JSON.stringify(err));
         }
       });

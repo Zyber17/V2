@@ -26,22 +26,17 @@
           sections: sections
         });
       } else {
-        console.log(err);
+        console.log("Error (sections): " + err);
         return res.end(JSON.stringify(err));
       }
     });
   };
 
   exports.new_get = function(req, res, next) {
-    var send;
-
     if (req.session.message) {
-      send = {
-        err: req.session.message.err,
-        title: req.session.message.content.title,
-        editing: false
-      };
-      return res.render('newSection', send);
+      req.session.message.editing = false;
+      res.render('newSection', req.session.messages);
+      return req.session.message = null;
     } else {
       return res.render('newSection', {
         editing: false
@@ -57,10 +52,8 @@
       err.push("Name must be three characters or more.");
     }
     if (err.length > 0) {
-      req.session.message({
-        err: err,
-        content: req.body
-      });
+      req.session.message = req.body;
+      req.session.message._err = err;
       return res.redirect('/sections/new');
     } else {
       newSection = new db.Sections({
@@ -70,6 +63,7 @@
         if (!err) {
           return res.redirect('/sections/');
         } else {
+          console.log("Error (sections): " + err);
           return res.end(JSON.stringify(err));
         }
       });
@@ -77,17 +71,14 @@
   };
 
   exports.edit_get = function(req, res, next) {
-    var send;
-
     if (req.session.message) {
-      send = {
-        err: req.session.message.err,
-        title: req.session.message.content.title,
-        editing: true
-      };
-      return res.render('newSection', send);
+      req.session.message.editing = true;
+      res.render('newSection', req.session.messages);
+      return req.session.message = null;
     } else {
       return findSection(req.params.slug, function(err, resp) {
+        var send;
+
         if (!err) {
           if (resp) {
             send = {
@@ -97,11 +88,11 @@
             return res.render('newSection', send);
           } else {
             return res.render('errors/404', {
-              err: "Section not found"
+              _err: "Section not found"
             });
           }
         } else {
-          console.log(err);
+          console.log("Error (sections): " + err);
           return res.end(JSON.stringify(err));
         }
       });
@@ -116,10 +107,8 @@
       err.push("Name must be three characters or more.");
     }
     if (err.length > 0) {
-      req.session.message({
-        err: err,
-        content: req.body
-      });
+      req.session.message = req.body;
+      req.session.message._err = err;
       return res.redirect("/sections/" + req.params.slug);
     } else {
       return findSection(req.params.slug, function(err, resp) {
@@ -128,6 +117,7 @@
             resp.title = req.body.title;
             return resp.save(function(err, resp) {
               if (err) {
+                console.log("Error (sections): " + err);
                 return res.end(JSON.stringify(err));
               } else {
                 return res.redirect("/sections/");
@@ -135,11 +125,11 @@
             });
           } else {
             return res.render('errors/404', {
-              err: "Article not found"
+              _err: "Article not found"
             });
           }
         } else {
-          console.log(err);
+          console.log("Error (sections): " + err);
           return res.end(JSON.stringify(err));
         }
       });
