@@ -28,16 +28,16 @@ block content
 			input#title(type="text", placeholder="A witty title", name="title", value=title)
 
 			hr
-
-			label(for="issue") Issue:
-			select#issue(name="issue")
-				each issue in issues.list
-					option(value=issue._id, selected=issue._id == issues.selected ? 'selected' : null)= issue.name
+			//-I have no idea if this if'll work. I think so, though
+			label(for="issue") Issue (#{publication && publication != 0 ? (publication != 1 ? "Web" : "Match") : "Torch" }):
+				select#issue(name="issue", disabled=publication == 2 ? 'disabled' : null)
+					each issue in issues[publication || 0]
+						option(value=issue._id, selected=issue._id == selectedIssue ? 'selected' : null)= issue.name
 
 			label(for="section") Section:
 			select#section(name="section")
-				each section in sections.list
-					option(value=section._id, selected=section._id == sections.selected ? 'selected' : null)= section.name
+				each section in sections
+					option(value=section._id, selected=section._id == selectedSection ? 'selected' : null)= section.name
 
 			label(for="status") Status:
 			select#section(name="status")
