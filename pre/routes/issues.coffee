@@ -33,24 +33,15 @@ exports.list = (req,res,next) ->
 
 				res.render 'issuesList', {issues: issues}
 			else
-				console.log err
+				console.log "Error (issues): #{err}"
 				res.end JSON.stringify err
 	)
 
 exports.new_get = (req,res,next) ->
 	if req.session.message
-		send=
-			err:
-				req.session.message.err
-			title:
-				req.session.message.content.title
-			publication:
-				req.session.message.content.publication
-			date:
-				req.session.message.content.date
-			editing:
-				false
-		res.render 'newIssue', send
+		req.session.message.editing = false
+		res.render 'newIssue', req.session.message
+		req.session.message = null
 	else
 		res.render 'newIssue', {editing: false}
 
@@ -62,11 +53,8 @@ exports.new_post = (req,res,next) ->
 		err.push "Name must be three characters or more."
 
 	if err.length > 0
-		req.session.message
-			err:
-				err
-			content:
-				req.body
+		req.session.message = req.body
+		req.session.message.err = _err
 		res.redirect '/issues/new'
 	else
 		newIssue = new db.Issues
@@ -83,22 +71,14 @@ exports.new_post = (req,res,next) ->
 			if !err
 				res.redirect '/issues/'
 			else
+				console.log "Error (issues): #{err}"
 				res.end JSON.stringify err
 
 exports.edit_get = (req,res,next) ->
 	if req.session.message
-		send=
-			err:
-				req.session.message.err
-			title:
-				req.session.message.content.title
-			publication:
-				req.session.message.content.publication
-			date:
-				req.session.message.content.date
-			editing:
-				true
-		res.render 'newIssue', send
+		req.session.message.editing = true
+		res.render 'newIssue', req.session.message
+		req.session.message = null
 	else
 		findIssue req.params.slug, (err,resp) ->
 			if !err
@@ -117,7 +97,7 @@ exports.edit_get = (req,res,next) ->
 				else
 					res.render 'errors/404', {err: "Issue not found"}
 			else
-				console.log err
+				console.log "Error (issues): #{err}"
 				res.end JSON.stringify err
 
 exports.edit_post = (req,res,next) ->
@@ -128,11 +108,8 @@ exports.edit_post = (req,res,next) ->
 		err.push "Name must be three characters or more."
 
 	if err.length > 0
-		req.session.message
-			err:
-				err
-			content:
-				req.body
+		req.session.message = req.body
+		req.session.message.err = _err
 		res.redirect "/issues/#{req.params.slug}"
 	else
 		findIssue req.params.slug, (err,resp) ->
@@ -143,11 +120,15 @@ exports.edit_post = (req,res,next) ->
 					resp.publication = req.body.publication
 
 					resp.save (err, resp) ->
-						if err then res.end JSON.stringify err else res.redirect "/issues/"
+						if err
+							console.log "Error (issues): #{err}"
+							res.end JSON.stringify err
+						else
+							res.redirect "/issues/"
 				else
 					res.render 'errors/404', {err: "Article not found"}
 			else
-				console.log err
+				console.log "Error (issues): #{err}"
 				res.end JSON.stringify err
 
 

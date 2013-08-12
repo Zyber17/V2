@@ -25,8 +25,9 @@ html
 							li
 								a(href='/'+section) section
 			#content
-				-if(error)
-					.error Error: #{error}
+				-if(_err)
+					each error in _err
+						h2.error= error
 				block content
 			footer#footer
 				#login
