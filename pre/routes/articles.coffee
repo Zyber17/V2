@@ -56,58 +56,20 @@ exports.index = (req,res,next) ->
 
 
 exports.new_get = (req,res,next) ->
-	sections =
-			list:[
-				{_id:'jkdf33', name: 'Studient Life'}
-				{_id: 'ieuhrg76', name: 'Science'}]
-			selected: null
-
-		issues =
-			list:[
-				{_id:'sdsdv', name: 'Just 2012'}
-				{_id: 'ffffefe', name: 'Web'}]
-			selected: null
+	sections= [
+		{_id:'jkdf33', name: 'Studient Life'}
+		{_id: 'ieuhrg76', name: 'Science'}]
+	issues=
+		0:[
+			{_id:'sdsdv', name: 'July 2012'}]
+		1: [
+			{_id:'sdsdv', name: 'March 2012'}]
+		2: [{name: 'Web'}]
 	if req.session.message
-		issues.selected = req.session.message.content.issue
-		sections.selected = req.session.message.content.section
+		req.session.message.sections = sections
+		req.session.message.issues = issues
 
-
-		resp =
-			err:
-				req.session.message.reason
-			title:
-				req.session.message.content.title
-			body:
-				req.session.message.content.body
-			date:
-				req.session.message.content.date
-			author:
-				req.session.message.content.author
-			status:
-				req.session.message.content.status
-			publication:
-				req.session.message.content.publication
-			approval:
-				advisor:
-					0
-				administration:
-					0
-			editing:
-				false
-			lockHTML:
-				req.session.message.content.lockHTML
-			knowsHTML:
-				true #fix this
-			sections:
-				sections
-			issues:
-				issues
-
-		if req.session.message.content.approval
-			resp.approval.advisor = req.session.message.content.approval.advisor || 0
-			resp.approval.administration = req.session.message.content.approval.administration || 0
-
-		res.render 'edit', resp
+		res.render 'edit', req.session.message
 		req.session.message = null
 	else
 		
@@ -125,33 +87,15 @@ exports.new_post = (req,res,next) ->
 		err.push 'Author’s name must be longer than three characters.'
 
 	if err.length > 0
-		req.session.message =
-			reason:
-				err
-			content:
-				title:
-					req.body.title
-				author:
-					req.body.author
-				lockHTML:
-					string(req.body.lockHTML).toBoolean()
-				body:
-					req.body.body
-				date:
-					req.body.date
-				issue:
-					req.body.issue
-				section:
-					req.body.section
-				status:
-					req.body.status
-				publication:
-					req.body.publication
-				approval:
-					advisor:
-						req.body.advisorapproval || null
-					administration:
-						req.body.administrationapproval || null
+		req.session.message = req.body
+		req.session.message._err = err
+		req.session.message.selectedIssue = req.body.issue
+		req.session.message.selectedSection = req.body.section
+		req.session.message.approval =
+			advisor:
+				req.body.advisorapproval || 0
+			administration:
+				req.body.administrationapproval || 0
 		res.redirect '/'
 	else
 
@@ -192,7 +136,7 @@ exports.new_post = (req,res,next) ->
 			if err == null
 				res.redirect "/articles/#{resp.slug}/"
 			else
-	        	console.log err
+	        	console.log "Error (articles): #{err}"
 				res.end JSON.stringify err
 
 exports.view = (req,res,next) ->	
@@ -262,7 +206,7 @@ exports.view = (req,res,next) ->
 			else
 				res.render 'errors/404', {err: "Article not found"}
 		else
-			console.log err
+			console.log "Error (articles): #{err}"
 			res.end JSON.stringify err
 
 
@@ -288,40 +232,24 @@ exports.comment = (req,res,next) ->
 			else
 				res.render 'errors/404', {err: "Article not found"}
 		else
-			console.log err
+			console.log "Error (articles): #{err}"
 			res.end JSON.stringify err
 
 
 exports.edit_get = (req,res,next) ->
+	sections= [
+		{_id:'jkdf33', name: 'Studient Life'}
+		{_id: 'ieuhrg76', name: 'Science'}]
+	issues=
+		torch:[
+			{_id:'sdsdv', name: 'July 2012'}]
+		match: [
+			{_id:'sdsdv', name: 'March 2012'}]
 	if req.session.message
-		resp =
-			err:
-				req.session.message.reason
-			title:
-				req.session.message.content.title
-			body:
-				req.session.message.content.body
-			date:
-				req.session.message.content.date
-			issue:
-				req.session.message.content.issue
-			section:
-				req.session.message.content.section
-			editing:
-				false
-			lockHTML:
-				req.session.message.content.lockHTML
-			status:
-				req.session.message.content.status
-			publication:
-				req.session.message.content.publication
-			approval:
-				advisor:
-					req.session.message.content.approval.advisor
-				administration:
-					req.session.message.content.approval.administration
+		req.session.message.sections = sections
+		req.session.message.issues = issues
 
-		res.render 'edit', resp
+		res.render 'edit', req.session.message
 		req.session.message = null
 	else
 		findArticle req.params.slug, false, (err, resp) ->
@@ -349,15 +277,9 @@ exports.edit_get = (req,res,next) ->
 						editing:
 							true
 						sections:
-							list:[
-								{_id:'jkdf33', name: 'Studient Life'}
-								{_id: 'ieuhrg76', name: 'Science'}]
-							selected: null
+							sections
 						issues:
-							list:[
-								{_id:'sdsdv', name: 'Just 2012'}
-								{_id: 'ffffefe', name: 'Web'}]
-							selected: null
+							issues
 						status:
 							resp.status || 0
 						approval:
@@ -370,7 +292,7 @@ exports.edit_get = (req,res,next) ->
 				else
 					res.render 'errors/404', {err: "Article not found"}
 			else
-				console.log err
+				console.log "Error (articles): #{err}"
 				res.end JSON.stringify err
 
 
@@ -386,29 +308,15 @@ exports.edit_post = (req,res,next) ->
 		err.push 'Author’s name must be longer than three characters.'
 	
 	if err.length > 0
-		req.session.message =
-			reason:
-				err
-			content:
-				title:
-					req.body.title
-				author:
-					req.body.author
-				body:
-					req.body.body
-				date:
-					req.body.date
-				issue:
-					req.body.issue
-				section:
-					req.body.section
-				publication:
-					req.body.publication
-				approval:
-					advisor:
-						req.body.advisorapproval || null
-					administration:
-						req.body.administrationapproval || null
+		req.session.message = req.body
+		req.session.message._err = err
+		req.session.message.selectedIssue = req.body.issue
+		req.session.message.selectedSection = req.body.section
+		req.session.message.approval =
+			advisor:
+				req.body.advisorapproval || 0
+			administration:
+				req.body.administrationapproval || 0
 		res.redirect "/articles/#{req.params.slug}/edit"
 	else
 		findArticle req.params.slug, false, (err, resp) ->
@@ -444,7 +352,7 @@ exports.edit_post = (req,res,next) ->
 				else
 					res.render 'errors/404', {err: "Article not found"}
 			else
-				console.log err
+				console.log "Error (articles): #{err}"
 				res.end JSON.stringify err
 
 
@@ -456,7 +364,7 @@ exports.remove = (req,res,next) ->
 			if !err
 				res.redirect '/'
 			else
-				console.log err
+				console.log "Error (articles): #{err}"
 				res.end JSON.stringify err
 	else
 		res.redirect "/articles/#{resp.slug}/" 
