@@ -1,233 +1,244 @@
-express  =  require 'express'
-http     =  require 'http'
-path     =  require 'path'
+cluster = require 'cluster'
+if cluster.isMaster
+	cpus = require('os').cpus().length
 
-articles  =  require './routes/articles'
-auth     =  require './routes/auth'
-index    =  require './routes/index'
-issues   =  require './routes/issues'
-search   =  require './routes/search'
-section  =  require './routes/section'
-user     =  require './routes/user'
+	for cpu in [0...cpus]
+		cluster.fork()
 
-staff = []
-staff.articles     =  require './routes/staff/articles'
-staff.index        =  require './routes/staff/index'
-staff.issues       =  require './routes/staff/issues'
-staff.permissions  =  require './routes/staff/permissions'
-staff.photos       =  require './routes/staff/photos'
-staff.rotator      =  require './routes/staff/rotator'
-staff.sections     =  require './routes/staff/sections'
-staff.users        =  require './routes/staff/users'
+	cluster.on 'exit', (worker) ->
+		# Replace the dead worker, we're not sentimental
+	    console.log "Worker #{worker.id} died :("
+	    cluster.fork()
 
-app = express()
+else    
+	express  =  require 'express'
+	http     =  require 'http'
+	path     =  require 'path'
 
+	articles  =  require './routes/articles'
+	auth     =  require './routes/auth'
+	index    =  require './routes/index'
+	issues   =  require './routes/issues'
+	search   =  require './routes/search'
+	section  =  require './routes/section'
+	user     =  require './routes/user'
 
-app.configure ->
-	app.use express.cookieParser('***REMOVED***')
-	app.use express.static(path.join(__dirname, 'public'))
-	#app.use express.favicon('./public/images/favicon.ico')
-	app.use express.session({ cookie: { maxAge: 15552000000 }})
-	app.use express.bodyParser()
-	app.set 'views', __dirname + '/views'
-	app.set 'view engine', 'jade'
+	staff = []
+	staff.articles     =  require './routes/staff/articles'
+	staff.index        =  require './routes/staff/index'
+	staff.issues       =  require './routes/staff/issues'
+	staff.permissions  =  require './routes/staff/permissions'
+	staff.photos       =  require './routes/staff/photos'
+	staff.rotator      =  require './routes/staff/rotator'
+	staff.sections     =  require './routes/staff/sections'
+	staff.users        =  require './routes/staff/users'
 
-	app.disable 'x-powered-by'
+	app = express()
 
-	app.set 'port', process.env.PORT || 8000
 
-	true # CoffeeScript automatically returns the last line of every function. So, we're returning true when eveything works (last line excuted).
+	app.configure ->
+		app.use express.cookieParser('***REMOVED***')
+		app.use express.static(path.join(__dirname, 'public'))
+		#app.use express.favicon('./public/images/favicon.ico')
+		app.use express.session({ cookie: { maxAge: 15552000000 }})
+		app.use express.bodyParser()
+		app.set 'views', __dirname + '/views'
+		app.set 'view engine', 'jade'
 
+		app.disable 'x-powered-by'
 
+		app.set 'port', process.env.PORT || 8000
 
-# To set the enviroment: http://stackoverflow.com/questions/11104028/process-env-node-env-is-undefined
+		true # CoffeeScript automatically returns the last line of every function. So, we're returning true when eveything works (last line excuted).
 
-# app.configure 'development', ->
-#   	app.listen 8000
 
-# app.configure 'production', ->
-#   	app.listen 80
-#   	app.enable 'view cache'
 
+	# To set the enviroment: http://stackoverflow.com/questions/11104028/process-env-node-env-is-undefined
 
-###
-Update this stuff
-###
-app.get '/', articles.index
+	# app.configure 'development', ->
+	#   	app.listen 8000
 
-app.get '/new', articles.new_get
+	# app.configure 'production', ->
+	#   	app.listen 80
+	#   	app.enable 'view cache'
 
-app.post '/new', articles.new_post
 
-app.get '/articles/:slug', articles.view # Middleware for auth? Update: No. Just check for session in article.view. WAIT. I MEAN YES. Just make sure the user in reference exists. Add later
+	###
+	Update this stuff
+	###
+	app.get '/', articles.index
 
-app.post '/articles/:slug/comment', articles.comment
+	app.get '/new', articles.new_get
 
-app.get '/articles/:slug/edit', articles.edit_get
+	app.post '/new', articles.new_post
 
-app.post '/articles/:slug/edit', articles.edit_post
+	app.get '/articles/:slug', articles.view # Middleware for auth? Update: No. Just check for session in article.view. WAIT. I MEAN YES. Just make sure the user in reference exists. Add later
 
-app.post '/articles/:slug/delete', articles.remove
+	app.post '/articles/:slug/comment', articles.comment
 
+	app.get '/articles/:slug/edit', articles.edit_get
 
-app.get '/issues', issues.list
+	app.post '/articles/:slug/edit', articles.edit_post
 
-app.get '/issues/new', issues.new_get
+	app.post '/articles/:slug/delete', articles.remove
 
-app.post '/issues/new', issues.new_post
 
-app.get '/issues/:slug', issues.edit_get
+	app.get '/issues', issues.list
 
-app.post '/issues/:slug', issues.edit_post
+	app.get '/issues/new', issues.new_get
 
-app.get '/sections', sections.list
+	app.post '/issues/new', issues.new_post
 
-app.get '/sections/new', sections.new_get
+	app.get '/issues/:slug', issues.edit_get
 
-app.post '/sections/new', sections.new_post
+	app.post '/issues/:slug', issues.edit_post
 
-app.get '/sections/:slug', sections.edit_get
+	app.get '/sections', sections.list
 
-app.post '/sections/:slug', sections.edit_post
-###
-/Update this stuff
-###
+	app.get '/sections/new', sections.new_get
 
-app.get '/issues', issues.list
+	app.post '/sections/new', sections.new_post
 
-app.get '/issues/:id', issues.view
+	app.get '/sections/:slug', sections.edit_get
 
-app.get '/login', auth.login.get
+	app.post '/sections/:slug', sections.edit_post
+	###
+	/Update this stuff
+	###
 
-app.post '/login', auth.login.post
+	app.get '/issues', issues.list
 
-app.get '/logout', auth.logout
+	app.get '/issues/:id', issues.view
 
-app.get '/rss', rss.view
+	app.get '/login', auth.login.get
 
-app.get '/search/:query', search.search
+	app.post '/login', auth.login.post
 
-app.get '/section/:name', section.view
+	app.get '/logout', auth.logout
 
-app.get '/settings', auth.more, settings.edit.get
+	app.get '/rss', rss.view
 
-app.post '/settings', auth.more, settings.edit.post
+	app.get '/search/:query', search.search
 
-app.get '/user/:name', user.view
+	app.get '/section/:name', section.view
 
+	app.get '/settings', auth.more, settings.edit.get
 
-###
-Staff Stuff
-###
+	app.post '/settings', auth.more, settings.edit.post
 
-app.get '/staff', auth.staff, staff.index.view
+	app.get '/user/:name', user.view
 
 
-app.get '/staff/articles', auth.staff, staff.articles.list
+	###
+	Staff Stuff
+	###
 
-app.get '/staff/articles/:id', auth.staff, staff.articles.view
+	app.get '/staff', auth.staff, staff.index.view
 
-app.get '/staff/articles/:id/edit', auth.staff, staff.articles.edit.get
 
-app.post '/staff/articles/:id/edit', auth.staff, staff.articles.edit.post
-# Photos
-app.get '/staff/articles/:id/photos', auth.staff, staff.articles.photos.list
+	app.get '/staff/articles', auth.staff, staff.articles.list
 
-app.get '/staff/articles/:id/photos/:pid', auth.staff, staff.articles.photos.view
+	app.get '/staff/articles/:id', auth.staff, staff.articles.view
 
-app.get '/staff/articles/:id/photos/:pid/edit', auth.staff, staff.articles.photos.edit.get
+	app.get '/staff/articles/:id/edit', auth.staff, staff.articles.edit.get
 
-app.post '/staff/articles/:id/photos/:pid/edit', auth.staff, staff.articles.photos.edit.post
+	app.post '/staff/articles/:id/edit', auth.staff, staff.articles.edit.post
+	# Photos
+	app.get '/staff/articles/:id/photos', auth.staff, staff.articles.photos.list
 
-app.post '/staff/articles/:id/photos/upload', auth.staff, staff.articles.photos.upload.get
+	app.get '/staff/articles/:id/photos/:pid', auth.staff, staff.articles.photos.view
 
-app.post '/staff/articles/:id/photos/upload', auth.staff, staff.articles.photos.upload.post
-#End Photos
-app.get '/staff/articles/new', auth.staff, staff.articles.new.get
+	app.get '/staff/articles/:id/photos/:pid/edit', auth.staff, staff.articles.photos.edit.get
 
-app.post '/staff/articles/new', auth.staff, staff.articles.new.post
+	app.post '/staff/articles/:id/photos/:pid/edit', auth.staff, staff.articles.photos.edit.post
 
-app.post '/staff/articles/:id/delete', auth.staff, staff.articles.delete
+	app.post '/staff/articles/:id/photos/upload', auth.staff, staff.articles.photos.upload.get
 
+	app.post '/staff/articles/:id/photos/upload', auth.staff, staff.articles.photos.upload.post
+	#End Photos
+	app.get '/staff/articles/new', auth.staff, staff.articles.new.get
 
-app.get '/staff/issues', auth.staff, staff.issues.list
+	app.post '/staff/articles/new', auth.staff, staff.articles.new.post
 
-app.get '/staff/issues/:id', auth.staff, staff.issues.view
+	app.post '/staff/articles/:id/delete', auth.staff, staff.articles.delete
 
-app.get '/staff/issues/:id/edit', auth.staff, staff.issues.edit.get
 
-app.post '/staff/issues/:id/edit', auth.staff, staff.issues.edit.post
+	app.get '/staff/issues', auth.staff, staff.issues.list
 
-app.get '/staff/issues/new', auth.staff, staff.issues.new.get
+	app.get '/staff/issues/:id', auth.staff, staff.issues.view
 
-app.post '/staff/issues/new', auth.staff, staff.issues.new.post
+	app.get '/staff/issues/:id/edit', auth.staff, staff.issues.edit.get
 
-app.post '/staff/issues/:id/delete', auth.staff, staff.issues.delete
+	app.post '/staff/issues/:id/edit', auth.staff, staff.issues.edit.post
 
+	app.get '/staff/issues/new', auth.staff, staff.issues.new.get
 
-app.get '/staff/permissions', auth.staff, staff.permissions.list
+	app.post '/staff/issues/new', auth.staff, staff.issues.new.post
 
-app.get '/staff/permissions/:id', auth.staff, staff.permissions.view
+	app.post '/staff/issues/:id/delete', auth.staff, staff.issues.delete
 
-app.get '/staff/permissions/:id/edit', auth.staff, staff.permissions.edit.get
 
-app.post '/staff/permissions/:id/edit', auth.staff, staff.permissions.edit.post
+	app.get '/staff/permissions', auth.staff, staff.permissions.list
 
-app.get '/staff/permissions/new', auth.staff, staff.permissions.new.get
+	app.get '/staff/permissions/:id', auth.staff, staff.permissions.view
 
-app.post '/staff/permissions/new', auth.staff, staff.permissions.new.post
+	app.get '/staff/permissions/:id/edit', auth.staff, staff.permissions.edit.get
 
-app.post '/staff/permissions/:id/delete', auth.staff, staff.permissions.delete
+	app.post '/staff/permissions/:id/edit', auth.staff, staff.permissions.edit.post
 
+	app.get '/staff/permissions/new', auth.staff, staff.permissions.new.get
 
-app.get '/staff/planners/:name', auth.staff, staff.planners.view
+	app.post '/staff/permissions/new', auth.staff, staff.permissions.new.post
 
-app.get '/staff/planners/view/:section', auth.staff, staff.planners.list
+	app.post '/staff/permissions/:id/delete', auth.staff, staff.permissions.delete
 
-app.get '/staff/planners/:name/edit', auth.staff, staff.planners.edit.get
 
-app.post '/staff/planners/:name/edit', auth.staff, staff.planners.edit.post
+	app.get '/staff/planners/:name', auth.staff, staff.planners.view
 
-app.get '/staff/planners/new', auth.staff, staff.planners.new.get
+	app.get '/staff/planners/view/:section', auth.staff, staff.planners.list
 
-app.post '/staff/planners/new', auth.staff, staff.planners.new.post
+	app.get '/staff/planners/:name/edit', auth.staff, staff.planners.edit.get
 
-app.post '/staff/planners/:name/delete', auth.staff, staff.permissions.delete
+	app.post '/staff/planners/:name/edit', auth.staff, staff.planners.edit.post
 
+	app.get '/staff/planners/new', auth.staff, staff.planners.new.get
 
-app.get '/staff/rotator', auth.staff, staff.rotator.list
+	app.post '/staff/planners/new', auth.staff, staff.planners.new.post
 
-app.get '/staff/rotator/:id', auth.staff, staff.rotator.view
+	app.post '/staff/planners/:name/delete', auth.staff, staff.permissions.delete
 
-app.get '/staff/rotator/:id/edit', auth.staff, staff.rotator.edit.get
 
-app.post '/staff/rotator/:id/edit', auth.staff, staff.rotator.edit.post
+	app.get '/staff/rotator', auth.staff, staff.rotator.list
 
-app.get '/staff/rotator/new', auth.staff, staff.rotator.new.get
+	app.get '/staff/rotator/:id', auth.staff, staff.rotator.view
 
-app.post '/staff/rotator/new', auth.staff, staff.rotator.new.post
+	app.get '/staff/rotator/:id/edit', auth.staff, staff.rotator.edit.get
 
-app.post '/staff/rotator/:id/delete', auth.staff, staff.rotator.delete
+	app.post '/staff/rotator/:id/edit', auth.staff, staff.rotator.edit.post
 
+	app.get '/staff/rotator/new', auth.staff, staff.rotator.new.get
 
-app.get '/staff/users', auth.staff, staff.users.list
+	app.post '/staff/rotator/new', auth.staff, staff.rotator.new.post
 
-app.get '/staff/users/:id', auth.staff, staff.users.view
+	app.post '/staff/rotator/:id/delete', auth.staff, staff.rotator.delete
 
-app.get '/staff/users/:id/edit', auth.staff, staff.users.edit.get
 
-app.post '/staff/users/:id/edit', auth.staff, staff.users.edit.post
+	app.get '/staff/users', auth.staff, staff.users.list
 
-app.get '/staff/users/new', auth.staff, staff.users.new.get
+	app.get '/staff/users/:slug', auth.staff, staff.users.edit_get
 
-app.post '/staff/users/new', auth.staff, staff.users.new.post
+	app.post '/staff/users/:slug', auth.staff, staff.users.edit_post
 
-app.post '/staff/users/:id/delete', auth.staff, staff.users.delete
+	app.get '/staff/users/new', auth.staff, staff.users.new_get
 
-###
-End Staff Suff
-###
+	app.post '/staff/users/new', auth.staff, staff.users.new_post
 
-http.createServer(app).listen(app.get('port'), ->
-        console.log "Express server listening on port " + app.get('port')
-)
+	app.post '/staff/users/:id/delete', auth.staff, staff.users.remove
+
+	###
+	End Staff Suff
+	###
+
+	app.listen app.get('port'), ->
+		console.log "Express server listening on port " + app.get('port')
+		console.log "Worker #{cluster.worker.id} running!"
