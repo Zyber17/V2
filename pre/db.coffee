@@ -5,33 +5,136 @@ ObjectId =  Schema.ObjectId
         
 mongoose.connect 'localhost','torch'
 
-# users = new Schema
-# 	_id:
-# 		type: ObjectId
+users = new Schema
+	name:
+		type: String
+		required: true
+		index:
+			unique: true
 
-# 	username:
-# 		type: String
-# 		unique: true
+	username:
+		type: String
+		required: true
+		unique: true
 
-# 	slugName:
-# 		type: String
-# 		index:
-# 			unique: true
+	isStaff:
+		type: Boolean
+		default: true
+		required: true
 
-# 	email:
-# 		type: String
-# 		unique: true
+	email:
+		type: String
+		unique: true
 
-# 	bio:
-# 		type: String
-# 		default: null
+	bio:
+		rendered:
+			type: String
 
-# 	password:
-# 		type: String
+		notRendered:
+			type: String
 
-# 	isStaff:
-# 		type: Boolean
-# 		default: false
+	password:
+		type: String
+		required: true
+
+	slug:
+		type: String
+
+	permissions:
+		knowsHTML:
+			type: Boolean
+			default: false
+
+		canPublishStories:
+			type: Boolean
+			default: true
+
+		canDeletePhotos:
+			type: Boolean
+			default: true
+
+		canManageIssues:
+			type: Boolean
+			default: false
+
+		canManageUsers:
+			type: Boolean
+			default: false
+
+		canManageSections:
+			type: Boolean
+			default: false
+
+		canEditPlannerFormats:
+			type: Boolean
+			default: false
+
+		canAcceptPlanners:
+			type: Boolean
+			default: false
+
+		canComment:
+			type: Boolean
+			default: true
+
+		canEditOthersComments:
+			type: Boolean
+			default: true
+
+		canChat:
+			type: Boolean
+			default: true
+
+		accountStatus:
+			isWebmaster:
+				type: Boolean
+				default: false
+
+			isRetired:
+				type: Boolean
+				default: false
+
+			isDisabled:
+				type: Boolean
+				default: false
+
+
+users.plugin monguurl
+    source: 'name'
+    target: 'slug'
+
+
+#/via http://devsmash.com/blog/password-authentication-with-mongoose-and-bcrypt
+users.pre 'save', (next) ->
+    user = @
+
+    # only hash the password if it has been modified (or is new)
+    if !user.isModified('password')
+    	next()
+
+    # generate a salt
+    bcrypt.genSalt saltWorkFactor, (err, salt) ->
+        if err
+        	next err
+
+        # hash the password using our new salt
+        bcrypt.hash user.password, salt, (err, hash) ->
+            if err
+            	next err
+
+            # override the cleartext password with the hashed one
+            user.password = hash
+            next()
+
+
+users.methods.comparePassword = (candidatePassword, callback) ->
+    bcrypt.compare candidatePassword, @.password, (err, isMatch) ->
+        if err
+        	callback err
+
+        callback null, isMatch
+
+
 
 #Begin articles
 
@@ -215,7 +318,7 @@ sections.plugin monguurl
 # 		editable:
 # 			type: String
 # 		rendered:
-			type: String
+#			type: String
 
 
 module.exports =
@@ -227,3 +330,5 @@ module.exports =
 		mongoose.model 'issues', issues
 	Sections:
 		mongoose.model 'sections', sections
+	Users:
+		mongoose.model 'users', users

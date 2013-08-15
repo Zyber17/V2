@@ -1,0 +1,191 @@
+extends wrapper
+
+block head
+	style.
+			form input, form select, form textarea, form button { display: block; width: 40%; padding: 10px; margin: 10px; clear: both}
+			.moreInfo { font-style: italic; margin-left: 5px;}
+				.moreInfo:before {content: '(';}
+				.moreInfo:after {content: ')';}
+			.moreInfo>em { font-style: normal; }
+			.safe { color: #428d47; font-style: italic; text-decoration: underline; }
+				.moreInfo>.safe { font-style: normal; margin-left: 5px; }
+				.safe:before {content: '[';}
+				.safe:after {content: ']';}
+			.admin { color: #165c8d; border-bottom: 1px dashed #165c8d;}
+			.dangerous { color: #8d0002; }
+			.fakeLink { color: #5c108d; text-decoration: underline; cursor: pointer;}
+				.moreInfo>.fakeLink { margin-left: 5px; }
+	script.
+		function safteyMessage() {
+			alert("The permanency is so that the Torch will never run into an issue where no one has permission to create users/set permissions/etc.\n\nIf you ever run into an issue where someone with `isWebmaster` set is messing with the site, you can always set their account to `isDisabled` or delete it (you should only ever do the former unless you're worried about them pushing code to the Torch server to override this).\n\nFor security purposes, (1) you yourself, (2) anyone who does not have `isWebmaster`, (2 cont.) and people with both `isWebmaster` *and* `isRetired` set can neither delete your personal account nor set your personal account to `isRetired` (and thereby not to `isDisabled`). This is to (1) prevent you from accidentally locking yourself out and (2) prevent hostile takeovers of the site from current and old webmasters.");
+		}
+
+block content
+	form#form(method="post", action='delete', enctype="multipart/form-data")
+		input#delete(type="hidden", name="delete", value="true")
+		button#submit(type="submit") Delete User
+	form#form(method="post", action='#', enctype="multipart/form-data")
+		-if (userID)
+			// Please don't be an idiot and mess with this in the web inspector. Trust me, it's better to just leave this be.
+			input#userID(type="hidden", name="userID", value=userID)
+
+		label(for="name") Name:	
+		input#name(type="text", placeholder="Gillian Applesmith", name="name", value=name)
+
+		label(for="username") Username:	
+		input#username(type="text", placeholder="gillian", name="username", value=username)
+
+		label(for="email") Email:
+		input#email(type="text", placeholder="gillian.applesmith@pineviewtorch.com", name="email", value=email)
+
+		label(for="password") Password:
+		input#password(type="password", name="password")
+
+		label(for="bio") Bio:
+		textarea#bio(name="bio", placeholder="A bio. Markdown. Snazzy.")= dispBio
+
+		hr
+
+		legend Is this person on staff or in administration?
+		fieldset#isStaff
+			label(for="onStaff") On staff
+			input#onStaff(type="radio", name="isStaff", value="true", checked=isStaff || isStaff == null ? 'checked' : null)
+			label(for="inAdministration") In administration
+			input#inAdministration(type="radio", name="isStaff", value="false", checked=!isStaff && isStaff != null ? 'checked' : null))
+
+		hr
+
+		legend Permission type key
+		dl
+			dt
+				span.dangerous Dangerous
+			dd
+				| Items with labels that look like 
+				span.dangerous this
+				|  are deemed to be dangerous and should be checked with the utmost care.
+			dt
+				span.safe Safe
+			dd
+				| In the label on 
+				span.dangerous dangerous items
+				|  the safe option will always appear ask 
+				span.safe checked
+				|  or 
+				span.safe unchecked
+				| .
+			dt
+				span.admin Generally Admin
+			dd
+				| Generally, only the webmaster and (maybe) other tech-savvy staff need to worry about doing the stuff outlined in these options which look like 
+				span.admin this
+				| . Giving these permissions to non-tech-savvy staffers shouldn't cause any problems (unless the item is also labled as 
+				span.dangerous dangerous
+				| ), but they'll likely never need (nor use) these permissions either.
+			dt
+				span.fakeLink More info
+			dd
+				| Click on items that look like 
+				span.fakeLink this
+				|  to get more info about an option.
+
+		hr
+
+		legend User permissions
+		- if (isWebmaster == true && sessonUserIsWebmaster != 1)
+			h3 Why are the permissions here uneditable? It's so that there's never a situation where the webmaster has no permissions on the website (and therefore can't adminster the site). If you have any more questions about this, you should go ask the webmaster.
+		fieldset#permissions(disabled=isWebmaster == true? 'disabled' : null)
+			ul
+				li
+					label.admin.dangerous(for="knowsHTML")
+						| Knows HTML
+						span.moreInfo
+							| Is this person 
+							em fluent
+							|  in HTML? 
+							span.safe unchecked
+					input#knowsHTML(type="checkbox", name="knowsHTML", value="true", checked=knowsHTML == true ? 'checked' : null)
+				li
+					label(for="canPublishStories")
+						| Can publish stories 
+						span.moreInfo Is this person permitted to publish stories to the web?
+					input#canPublishStories(type="checkbox", name="canPublishStories", value="true", checked=canPublishStories == true || canPublishStories == null ? 'checked' : null)
+				li
+					label(for="canDeletePhotos")
+						| Can delete photos 
+						span.moreInfo Is this person permitted to delete photos?
+					input#canDeletePhotos(type="checkbox", name="canDeletePhotos", value="true", checked=canDeletePhotos == true ? 'checked' : null)
+				li
+					label.admin(for="canManageIssues")
+						| Can manage issues 
+						span.moreInfo Is this person permitted to manage issues?
+					input#canManageIssues(type="checkbox", name="canManageIssues", value="true", checked=canManageIssues == true ? 'checked' : null)
+				li
+					label.admin(for="canManageUsers")
+						| Can manage users 
+						span.moreInfo Is this person permitted to manage users?
+					input#canManageUsers(type="checkbox", name="canManageUsers", value="true", checked=canManageUsers == true ? 'checked' : null)
+				li
+					label.admin(for="canManageSections")
+						| Can manage sections 
+						span.moreInfo Is this person permitted to manage sections?
+					input#canManageSections(type="checkbox", name="canManageSections", value="true", checked=canManageSections == true ? 'checked' : null)
+				li
+					label.admin(for="canEditPlannerFormats")
+						| Can manage edit planner formats 
+						span.moreInfo Is this person permitted to manage planner formats?
+					input#canEditPlannerFormats(type="checkbox", name="canEditPlannerFormats", value="true", checked=canEditPlannerFormats == true ? 'checked' : null)
+				li
+					label(for="canAcceptPlanners")
+						| Can accept planners 
+						span.moreInfo Is this person permitted to accept planners for any section?
+					input#canAcceptPlanners(type="checkbox", name="canAcceptPlanners", value="true", checked=canAcceptPlanners == true ? 'checked' : null)
+				li
+					label(for="canComment")
+						| Can comment 
+						span.moreInfo Is this person permitted to comment on stories in the staff panel?
+					input#canComment(type="checkbox", name="canComment", value="true", checked=canComment == true  || canComment == null ? 'checked' : null)
+				li
+					label(for="canEditOthersComments")
+						| Can edit others’ comments 
+						span.moreInfo Is this person permitted to edit comments they themself did not write?
+					input#canEditOthersComments(type="checkbox", name="canEditOthersComments", value="true", checked=canEditOthersComments == true || canEditOthersComments == null ? 'checked' : null)
+
+				li
+					label(for="canChat")
+						| Can chat 
+						span.moreInfo Is this person permitted to edit chat in the staff chat? [Feature coming soonish.]
+					input#canChat(type="checkbox", name="canChat", value="true", checked=canChat == true || canChat == null ? 'checked' : null)
+				
+				-if (true) //-sessonUserIsWebmaster
+					li
+						label.admin.dangerous(for="isWebmaster")
+							| Is webmaster 
+							span.moreInfo
+								strong Highly dangerous. There is no unsetting this once it is set. Be very careful when setting this. 
+								| Is this person a webmaster? Checking this option will 
+								em permanently
+								|  grant this user 
+								em all
+								|  permissions. 
+								span.safe unchecked
+								|  
+								span.fakeLink(onClick='safteyMessage()') Why?
+						input#isWebmaster(type="checkbox", name="isWebmaster", value="true", checked=isWebmaster == true ? 'checked' : null)
+					li
+						label(for="isRetired")
+						| Is retired
+						span.moreInfo
+							| Is this person currently 
+							em not
+							|  on Torch staff? Checking this option will not revoke any permissions that are not involved in a hostile takeover of the website [locking out other webmasters] nor will it prevent this user from logging in. Checking this will enable `isDisabled` to be set.
+						input#isRetired(type="checkbox", name="isRetired", value="true", checked=isRetired == true ? 'checked' : null)
+						ul
+							li
+								label.dangerous(for="isDisabled")
+									| Is disabled 
+									span.moreInfo
+										| Checking this option will prevent this user from logging in [and thereby prevent them from doing stuff in the staff panel]. The account will only persist so that objectIds have valid references. 
+										span.safe unchecked
+								input#isDisabled(type="checkbox", name="isDisabled", value="true", disabled=isRetired != 1 ? 'disabled' : null, checked=isDisabled == true ? 'checked' : null)
+
+		button#submit(type="submit") Submit
