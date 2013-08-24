@@ -159,6 +159,8 @@ articles = new Schema
 
 	body: [articleBodies]
 
+	photos: [photos]
+
 	# section:
 	# 	type: ObjectId
 	# 	ref: 'sections'
@@ -240,13 +242,42 @@ articles.plugin monguurl
 
 #End Articles
 
-# photos = new Schema
-# 	_id:
-# 		type: ObjectId
+photos = new Schema
+	number:
+		type: Number
+		index:
+			unique: true
 
-# 	parentID:
-# 		type: ObjectId
-# 		ref: 'articles'
+	isRotator:
+		type: Boolean
+		default: false
+
+	isPreview:
+		type: Boolean
+		default: false
+
+	uploadDate:
+		type: Date
+		required: true
+
+	photographer:
+		type: Date
+		default: Date.now
+		required: true
+
+	caption:
+		type: String
+		required: true
+
+	slug:
+		type: String
+		index:
+			unique: true
+
+
+photos.plugin monguurl
+    source: 'number'
+    target: 'slug'
 
 
 issues = new Schema
