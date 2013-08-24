@@ -144,6 +144,14 @@ else
 
 	app.post '/staff/articles/:id/edit', auth.staff, staff.articles.edit.post
 	# Photos
+
+	app.get '/:slug/photos/upload', photos.view
+
+	app.get "/:slug/photos/upload/signS3/:mime(\\w+\/\\w+)", photos.auth
+
+	app.get "/:slug/photos/upload/confirmed/:id(\\d+)", photos.addToDB
+
+
 	app.get '/staff/articles/:id/photos', auth.staff, staff.articles.photos.list
 
 	app.get '/staff/articles/:id/photos/:pid', auth.staff, staff.articles.photos.view
