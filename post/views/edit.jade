@@ -25,19 +25,20 @@ block content
 	-if ((lockHTML && knowsHTML) || !lockHTML)
 		form#form(method="post", action='#', enctype="multipart/form-data")
 
-			input#title(type="text", placeholder="A witty title", name="title", value=title)
+			label(for="title") Title:
+			input#title(type="text", placeholder="A title", name="title", value=title)
 
 			hr
-			//-I have no idea if this if'll work. I think so, though
-			label(for="issue") Issue (#{publication && publication != 0 ? (publication != 1 ? "Web" : "Match") : "Torch" }):
-				select#issue(name="issue", disabled=publication == 2 ? 'disabled' : null)
-					each issue in issues[publication || 0]
-						option(value=issue._id, selected=issue._id == selectedIssue ? 'selected' : null)= issue.name
+
+			label(for="issue") Issue:
+			select#issue(name="issue")
+				each issue in issues.list
+					option(value=issue._id, selected=issue._id == issues.selected ? 'selected' : null)= issue.name
 
 			label(for="section") Section:
 			select#section(name="section")
-				each section in sections
-					option(value=section._id, selected=section._id == selectedSection ? 'selected' : null)= section.name
+				each section in sections.list
+					option(value=section._id, selected=section._id == sections.selected ? 'selected' : null)= section.name
 
 			label(for="status") Status:
 			select#section(name="status")
@@ -73,6 +74,7 @@ block content
 
 			hr
 
+			label(for="date") Publish Date:
 			input#date(type="text", name="date", value=date, placeholder="Date: mm-dd-yyyy")
 
 			-if (!lockHTML && knowsHTML)
@@ -86,6 +88,7 @@ block content
 
 			textarea#body(name="body")=body
 
+			label(for="author") Author:
 			input#author(type="text", placeholder="Author’s Name", name="author", value=author)
 
 			button#submit(type="submit") Submit
