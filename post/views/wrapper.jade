@@ -1,12 +1,10 @@
 !!!5
 html
 	head
-		-if (!title)
-			title Pine View Torch
-		-else
-			title #{title} - Pine View Torch
+		title= (title ? title+ ' | ' : '') + 'Pine View Torch'
+		script(src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js")
 		meta(name='viewport', content='initial-scale=1.0, maximum-scale=1.0, user-scalable=0')
-		//link(rel='stylesheet', href='/stylesheets/type.css')
+		//-link(rel='stylesheet', href='/stylesheets/type.css')
 		block stylesheets
 	body
 		#wrapper
