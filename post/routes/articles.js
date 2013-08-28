@@ -50,59 +50,41 @@
     });
   };
 
-  exports.create = function(req, res, next) {
-    var issues, resp, sections;
+  exports.new_get = function(req, res, next) {
+    var issues, sections;
 
-    sections = {
-      list: [
-        {
-          _id: 'jkdf33',
-          name: 'Studient Life'
-        }, {
-          _id: 'ieuhrg76',
-          name: 'Science'
-        }
-      ],
-      selected: null
-    };
+    sections = [
+      {
+        _id: 'jkdf33',
+        name: 'Studient Life'
+      }, {
+        _id: 'ieuhrg76',
+        name: 'Science'
+      }
+    ];
     issues = {
-      list: [
+      0: [
         {
           _id: 'sdsdv',
-          name: 'Just 2012'
-        }, {
-          _id: 'ffffefe',
-          name: 'Web'
+          name: 'July 2012'
         }
       ],
-      selected: null
+      1: [
+        {
+          _id: 'sdsdv',
+          name: 'March 2012'
+        }
+      ],
+      2: [
+        {
+          name: 'Web'
+        }
+      ]
     };
     if (req.session.message) {
-      issues.selected = req.session.message.content.issue;
-      sections.selected = req.session.message.content.section;
-      resp = {
-        err: req.session.message.reason,
-        title: req.session.message.content.title,
-        body: req.session.message.content.body,
-        date: req.session.message.content.date,
-        author: req.session.message.content.author,
-        status: req.session.message.content.status,
-        publication: req.session.message.content.publication,
-        approval: {
-          advisor: 0,
-          administration: 0
-        },
-        editing: false,
-        lockHTML: req.session.message.content.lockHTML,
-        knowsHTML: true,
-        sections: sections,
-        issues: issues
-      };
-      if (req.session.message.content.approval) {
-        resp.approval.advisor = req.session.message.content.approval.advisor || 0;
-        resp.approval.administration = req.session.message.content.approval.administration || 0;
-      }
-      res.render('edit', resp);
+      req.session.message.sections = sections;
+      req.session.message.issues = issues;
+      res.render('edit', req.session.message);
       return req.session.message = null;
     } else {
       return res.render('edit', {
@@ -113,7 +95,7 @@
     }
   };
 
-  exports.add = function(req, res, next) {
+  exports.new_post = function(req, res, next) {
     var err, newArticle;
 
     err = [];
@@ -127,23 +109,13 @@
       err.push('Author’s name must be longer than three characters.');
     }
     if (err.length > 0) {
-      req.session.message = {
-        reason: err,
-        content: {
-          title: req.body.title,
-          author: req.body.author,
-          lockHTML: string(req.body.lockHTML).toBoolean(),
-          body: req.body.body,
-          date: req.body.date,
-          issue: req.body.issue,
-          section: req.body.section,
-          status: req.body.status,
-          publication: req.body.publication,
-          approval: {
-            advisor: req.body.advisorapproval || null,
-            administration: req.body.administrationapproval || null
-          }
-        }
+      req.session.message = req.body;
+      req.session.message._err = err;
+      req.session.message.selectedIssue = req.body.issue;
+      req.session.message.selectedSection = req.body.section;
+      req.session.message.approval = {
+        advisor: req.body.advisorapproval || 0,
+        administration: req.body.administrationapproval || 0
       };
       return res.redirect('/');
     } else {
@@ -167,15 +139,16 @@
       });
       return newArticle.save(function(err, resp) {
         if (err === null) {
-          return res.redirect("/articles/" + resp.slug + "/");
+          res.redirect("/articles/" + resp.slug + "/");
         } else {
-          return res.end(err.toString());
+          console.log("Error (articles): " + err);
         }
+        return res.end(JSON.stringify(err));
       });
     }
   };
 
-  exports.get = function(req, res, next) {
+  exports.view = function(req, res, next) {
     var update;
 
     update = true;
@@ -240,6 +213,7 @@
           });
         }
       } else {
+        console.log("Error (articles): " + err);
         return res.end(JSON.stringify(err));
       }
     });
@@ -271,32 +245,42 @@
           });
         }
       } else {
+        console.log("Error (articles): " + err);
         return res.end(JSON.stringify(err));
       }
     });
   };
 
   exports.edit_get = function(req, res, next) {
-    var resp;
+    var issues, sections;
 
-    if (req.session.message) {
-      resp = {
-        err: req.session.message.reason,
-        title: req.session.message.content.title,
-        body: req.session.message.content.body,
-        date: req.session.message.content.date,
-        issue: req.session.message.content.issue,
-        section: req.session.message.content.section,
-        editing: false,
-        lockHTML: req.session.message.content.lockHTML,
-        status: req.session.message.content.status,
-        publication: req.session.message.content.publication,
-        approval: {
-          advisor: req.session.message.content.approval.advisor,
-          administration: req.session.message.content.approval.administration
+    sections = [
+      {
+        _id: 'jkdf33',
+        name: 'Studient Life'
+      }, {
+        _id: 'ieuhrg76',
+        name: 'Science'
+      }
+    ];
+    issues = {
+      torch: [
+        {
+          _id: 'sdsdv',
+          name: 'July 2012'
         }
-      };
-      res.render('edit', resp);
+      ],
+      match: [
+        {
+          _id: 'sdsdv',
+          name: 'March 2012'
+        }
+      ]
+    };
+    if (req.session.message) {
+      req.session.message.sections = sections;
+      req.session.message.issues = issues;
+      res.render('edit', req.session.message);
       return req.session.message = null;
     } else {
       return findArticle(req.params.slug, false, function(err, resp) {
@@ -315,30 +299,8 @@
               knowsHTML: true,
               lockHTML: resp.lockHTML,
               editing: true,
-              sections: {
-                list: [
-                  {
-                    _id: 'jkdf33',
-                    name: 'Studient Life'
-                  }, {
-                    _id: 'ieuhrg76',
-                    name: 'Science'
-                  }
-                ],
-                selected: null
-              },
-              issues: {
-                list: [
-                  {
-                    _id: 'sdsdv',
-                    name: 'Just 2012'
-                  }, {
-                    _id: 'ffffefe',
-                    name: 'Web'
-                  }
-                ],
-                selected: null
-              },
+              sections: sections,
+              issues: issues,
               status: resp.status || 0,
               approval: {
                 advisor: resp.approvedBy.advisor || 0,
@@ -352,6 +314,7 @@
             });
           }
         } else {
+          console.log("Error (articles): " + err);
           return res.end(JSON.stringify(err));
         }
       });
@@ -372,21 +335,13 @@
       err.push('Author’s name must be longer than three characters.');
     }
     if (err.length > 0) {
-      req.session.message = {
-        reason: err,
-        content: {
-          title: req.body.title,
-          author: req.body.author,
-          body: req.body.body,
-          date: req.body.date,
-          issue: req.body.issue,
-          section: req.body.section,
-          publication: req.body.publication,
-          approval: {
-            advisor: req.body.advisorapproval || null,
-            administration: req.body.administrationapproval || null
-          }
-        }
+      req.session.message = req.body;
+      req.session.message._err = err;
+      req.session.message.selectedIssue = req.body.issue;
+      req.session.message.selectedSection = req.body.section;
+      req.session.message.approval = {
+        advisor: req.body.advisorapproval || 0,
+        administration: req.body.administrationapproval || 0
       };
       return res.redirect("/articles/" + req.params.slug + "/edit");
     } else {
@@ -424,6 +379,7 @@
             });
           }
         } else {
+          console.log("Error (articles): " + err);
           return res.end(JSON.stringify(err));
         }
       });
@@ -438,6 +394,7 @@
         if (!err) {
           return res.redirect('/');
         } else {
+          console.log("Error (articles): " + err);
           return res.end(JSON.stringify(err));
         }
       });
