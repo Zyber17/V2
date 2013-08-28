@@ -167,6 +167,14 @@
     },
     body: [articleBodies],
     photos: [photos],
+    section: {
+      type: ObjectId,
+      ref: 'sections'
+    },
+    issue: {
+      type: ObjectId,
+      ref: 'issues'
+    },
     publishDate: {
       type: Date,
       "default": null
@@ -202,8 +210,8 @@
           }
         },
         author: {
-          type: String,
-          required: true
+          type: ObjectId,
+          ref: 'users'
         },
         edited: {
           type: Boolean,
@@ -231,8 +239,8 @@
       required: true
     },
     editor: {
-      type: String,
-      required: true
+      type: ObjectId,
+      ref: 'users'
     },
     editDate: {
       type: Date,
@@ -310,6 +318,9 @@
       type: Date,
       "default": Date.now,
       required: true
+    },
+    download: {
+      trpe: String
     }
   });
 

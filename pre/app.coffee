@@ -16,22 +16,23 @@ else
 	path     =  require 'path'
 
 	articles  =  require './routes/articles'
-	auth     =  require './routes/auth'
-	index    =  require './routes/index'
+	# auth     =  require './routes/auth'
+	# index    =  require './routes/index'
 	issues   =  require './routes/issues'
-	search   =  require './routes/search'
-	section  =  require './routes/section'
-	user     =  require './routes/user'
+	# search   =  require './routes/search'
+	sections  =  require './routes/sections'
+	users    =  require './routes/users'
+	photos    =  require './routes/photos'
 
-	staff = []
-	staff.articles     =  require './routes/staff/articles'
-	staff.index        =  require './routes/staff/index'
-	staff.issues       =  require './routes/staff/issues'
-	staff.permissions  =  require './routes/staff/permissions'
-	staff.photos       =  require './routes/staff/photos'
-	staff.rotator      =  require './routes/staff/rotator'
-	staff.sections     =  require './routes/staff/sections'
-	staff.users        =  require './routes/staff/users'
+	# staff = []
+	# staff.articles     =  require './routes/staff/articles'
+	# staff.index        =  require './routes/staff/index'
+	# staff.issues       =  require './routes/staff/issues'
+	# staff.permissions  =  require './routes/staff/permissions'
+	# staff.photos       =  require './routes/staff/photos'
+	# staff.rotator      =  require './routes/staff/rotator'
+	# staff.sections     =  require './routes/staff/sections'
+	# staff.users        =  require './routes/staff/users'
 
 	app = express()
 
@@ -68,180 +69,139 @@ else
 	###
 	app.get '/', articles.index
 
-	app.get '/new', articles.new_get
-
-	app.post '/new', articles.new_post
-
 	app.get '/articles/:slug', articles.view # Middleware for auth? Update: No. Just check for session in article.view. WAIT. I MEAN YES. Just make sure the user in reference exists. Add later
 
-	app.post '/articles/:slug/comment', articles.comment
 
-	app.get '/articles/:slug/edit', articles.edit_get
-
-	app.post '/articles/:slug/edit', articles.edit_post
-
-	app.post '/articles/:slug/delete', articles.remove
-
-
-	app.get '/issues', issues.list
-
-	app.get '/issues/new', issues.new_get
-
-	app.post '/issues/new', issues.new_post
-
-	app.get '/issues/:slug', issues.edit_get
-
-	app.post '/issues/:slug', issues.edit_post
-
-	app.get '/sections', sections.list
-
-	app.get '/sections/new', sections.new_get
-
-	app.post '/sections/new', sections.new_post
-
-	app.get '/sections/:slug', sections.edit_get
-
-	app.post '/sections/:slug', sections.edit_post
 	###
 	/Update this stuff
 	###
 
-	app.get '/issues', issues.list
+	# app.get '/issues', issues.list
 
-	app.get '/issues/:id', issues.view
+	# app.get '/issues/:id', issues.edit_get
 
-	app.get '/login', auth.login.get
+	# app.get '/login', auth.login.get
 
-	app.post '/login', auth.login.post
+	# app.post '/login', auth.login.post
 
-	app.get '/logout', auth.logout
+	# app.get '/logout', auth.logout
 
-	app.get '/rss', rss.view
+	# app.get '/rss', rss.view
 
-	app.get '/search/:query', search.search
+	# app.get '/search/:query', search.search
 
-	app.get '/section/:name', section.view
+	# app.get '/section/:name', section.view
 
-	app.get '/settings', auth.more, settings.edit.get
+	# app.get '/settings', auth.more, settings.edit.get
 
-	app.post '/settings', auth.more, settings.edit.post
+	# app.post '/settings', auth.more, settings.edit.post
 
-	app.get '/user/:name', user.view
+	# app.get '/user/:name', user.view
 
 
 	###
 	Staff Stuff
 	###
 
-	app.get '/staff', auth.staff, staff.index.view
+	# Articles
+
+	# app.get '/staff', auth.staff, staff.index.view
 
 
-	app.get '/staff/articles', auth.staff, staff.articles.list
+	app.get '/staff/articles/new', articles.new_get
 
-	app.get '/staff/articles/:id', auth.staff, staff.articles.view
+	app.post '/staff/articles/new', articles.new_post
 
-	app.get '/staff/articles/:id/edit', auth.staff, staff.articles.edit.get
+	app.get '/staff/articles/:slug', articles.view # Middleware for auth? Update: No. Just check for session in article.view. WAIT. I MEAN YES. Just make sure the user in reference exists. Add later
 
-	app.post '/staff/articles/:id/edit', auth.staff, staff.articles.edit.post
+	app.post '/staff/articles/:slug/comment', articles.comment
+
+	app.get '/staff/articles/:slug/edit', articles.edit_get
+
+	app.post '/staff/articles/:slug/edit', articles.edit_post
+
+	app.post '/staff/articles/:slug/delete', articles.remove
+
+	# End Articles
 	# Photos
 
-	app.get '/:slug/photos/upload', photos.view
+	app.get '/staff/articles/:slug/photos/upload', photos.view
 
-	app.get "/:slug/photos/upload/signS3/:mime(\\w+\/\\w+)", photos.auth
+	app.get "/staff/articles/:slug/photos/upload/signS3/:mime(\\w+\/\\w+)", photos.auth
 
-	app.get "/:slug/photos/upload/confirmed/:id(\\d+)", photos.addToDB
+	app.get "/staff/articles/:slug/photos/upload/confirmed/:id(\\d+)", photos.addToDB
 
+	# End Photos
+	# Issues
 
-	app.get '/staff/articles/:id/photos', auth.staff, staff.articles.photos.list
+	app.get '/staff/issues', issues.list
 
-	app.get '/staff/articles/:id/photos/:pid', auth.staff, staff.articles.photos.view
+	app.get '/staff/issues/new', issues.new_get
 
-	app.get '/staff/articles/:id/photos/:pid/edit', auth.staff, staff.articles.photos.edit.get
+	app.post '/staff/issues/new', issues.new_post
 
-	app.post '/staff/articles/:id/photos/:pid/edit', auth.staff, staff.articles.photos.edit.post
+	app.get '/staff/issues/:slug', issues.edit_get
 
-	app.post '/staff/articles/:id/photos/upload', auth.staff, staff.articles.photos.upload.get
+	app.post '/staff/issues/:slug', issues.edit_post
 
-	app.post '/staff/articles/:id/photos/upload', auth.staff, staff.articles.photos.upload.post
-	#End Photos
-	app.get '/staff/articles/new', auth.staff, staff.articles.new.get
+	# End Issues
+	# Sections
 
-	app.post '/staff/articles/new', auth.staff, staff.articles.new.post
+	app.get '/staff/sections', sections.list
 
-	app.post '/staff/articles/:id/delete', auth.staff, staff.articles.delete
+	app.get '/staff/sections/new', sections.new_get
 
+	app.post '/staff/sections/new', sections.new_post
 
-	app.get '/staff/issues', auth.staff, staff.issues.list
+	app.get '/staff/sections/:slug', sections.edit_get
 
-	app.get '/staff/issues/:id', auth.staff, staff.issues.view
+	app.post '/staff/sections/:slug', sections.edit_post
 
-	app.get '/staff/issues/:id/edit', auth.staff, staff.issues.edit.get
+	# End Sections
+	# Users
 
-	app.post '/staff/issues/:id/edit', auth.staff, staff.issues.edit.post
+	app.get '/staff/users', users.list
 
-	app.get '/staff/issues/new', auth.staff, staff.issues.new.get
+	app.get '/staff/users/new', users.new_get
 
-	app.post '/staff/issues/new', auth.staff, staff.issues.new.post
+	app.post '/staff/users/new', users.new_post
 
-	app.post '/staff/issues/:id/delete', auth.staff, staff.issues.delete
+	app.get '/staff/users/:slug', users.edit_get
 
+	app.post '/staff/users/:slug', users.edit_post
 
-	app.get '/staff/permissions', auth.staff, staff.permissions.list
+	app.post '/staff/users/:slug/delete', users.remove
 
-	app.get '/staff/permissions/:id', auth.staff, staff.permissions.view
-
-	app.get '/staff/permissions/:id/edit', auth.staff, staff.permissions.edit.get
-
-	app.post '/staff/permissions/:id/edit', auth.staff, staff.permissions.edit.post
-
-	app.get '/staff/permissions/new', auth.staff, staff.permissions.new.get
-
-	app.post '/staff/permissions/new', auth.staff, staff.permissions.new.post
-
-	app.post '/staff/permissions/:id/delete', auth.staff, staff.permissions.delete
+	# End Users
 
 
-	app.get '/staff/planners/:name', auth.staff, staff.planners.view
+	# app.get '/staff/planners/:name', auth.staff, staff.planners.view
 
-	app.get '/staff/planners/view/:section', auth.staff, staff.planners.list
+	# app.get '/staff/planners/view/:section', auth.staff, staff.planners.list
 
-	app.get '/staff/planners/:name/edit', auth.staff, staff.planners.edit.get
+	# app.get '/staff/planners/:name/edit', auth.staff, staff.planners.edit.get
 
-	app.post '/staff/planners/:name/edit', auth.staff, staff.planners.edit.post
+	# app.post '/staff/planners/:name/edit', auth.staff, staff.planners.edit.post
 
-	app.get '/staff/planners/new', auth.staff, staff.planners.new.get
+	# app.get '/staff/planners/new', auth.staff, staff.planners.new.get
 
-	app.post '/staff/planners/new', auth.staff, staff.planners.new.post
+	# app.post '/staff/planners/new', auth.staff, staff.planners.new.post
 
-	app.post '/staff/planners/:name/delete', auth.staff, staff.permissions.delete
-
-
-	app.get '/staff/rotator', auth.staff, staff.rotator.list
-
-	app.get '/staff/rotator/:id', auth.staff, staff.rotator.view
-
-	app.get '/staff/rotator/:id/edit', auth.staff, staff.rotator.edit.get
-
-	app.post '/staff/rotator/:id/edit', auth.staff, staff.rotator.edit.post
-
-	app.get '/staff/rotator/new', auth.staff, staff.rotator.new.get
-
-	app.post '/staff/rotator/new', auth.staff, staff.rotator.new.post
-
-	app.post '/staff/rotator/:id/delete', auth.staff, staff.rotator.delete
+	# app.post '/staff/planners/:name/delete', auth.staff, staff.permissions.delete
 
 
-	app.get '/staff/users', auth.staff, staff.users.list
 
-	app.get '/staff/users/:slug', auth.staff, staff.users.edit_get
+	# app.get '/staff/users', auth.staff, staff.users.list
 
-	app.post '/staff/users/:slug', auth.staff, staff.users.edit_post
+	# app.get '/staff/users/:slug', auth.staff, staff.users.edit_get
 
-	app.get '/staff/users/new', auth.staff, staff.users.new_get
+	# app.post '/staff/users/:slug', auth.staff, staff.users.edit_post
 
-	app.post '/staff/users/new', auth.staff, staff.users.new_post
+	# app.get '/staff/users/new', auth.staff, staff.users.new_get
 
-	app.post '/staff/users/:id/delete', auth.staff, staff.users.remove
+	# app.post '/staff/users/new', auth.staff, staff.users.new_post
+
+	# app.post '/staff/users/:id/delete', auth.staff, staff.users.remove
 
 	###
 	End Staff Suff

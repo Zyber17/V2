@@ -161,13 +161,13 @@ articles = new Schema
 
 	photos: [photos]
 
-	# section:
-	# 	type: ObjectId
-	# 	ref: 'sections'
+	section:
+		type: ObjectId
+		ref: 'sections'
 
-	# issue:
-	# 	type: ObjectId
-	# 	ref: 'issues'
+	issue:
+		type: ObjectId
+		ref: 'issues'
 
 	publishDate:
 		type: Date
@@ -198,11 +198,9 @@ articles = new Schema
 				type: String
 				required: true
 		
-		author: #fix later
-			type: String
-			required: true
-			# 	type: ObjectId
-			# 	ref: 'issues'
+		author:
+			type: ObjectId
+			ref: 'users'
 
 		edited:
 			type: Boolean
@@ -226,11 +224,11 @@ articleBodies = new Schema
 	body:
 		type: String
 		required: true
+
 	editor:
-		type: String
-		required: true
-		# 	type: ObjectId
-		# 	ref: 'issues'
+		type: ObjectId
+		ref: 'users'
+
 	editDate:
 		type: Date
 		default: Date.now
@@ -303,6 +301,9 @@ issues = new Schema
 		type: Date
 		default: Date.now
 		required: true
+
+	download:
+		trpe: String
 
 
 issues.plugin monguurl
