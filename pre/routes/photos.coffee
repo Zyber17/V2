@@ -1,8 +1,9 @@
 crypto = require 'crypto'
 moment = require 'moment'
+db = require '../db'
 
 exports.view = (req,res,next) ->
-	res.render 'index'
+	res.render 'uploadPhoto'
 
 exports.auth = (req,res,next) ->
 	createS3Policy req.params.slug, req.params.mime, (err,ret) ->
@@ -49,3 +50,7 @@ createS3Policy = (slug, mimetype, callback) ->
 		callback null, signed_request
 	else
 		callback 'Invalid mime', null
+
+
+exports.addToDB = (req,res,next) ->
+	res.end 'success'
