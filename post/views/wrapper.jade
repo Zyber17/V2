@@ -38,12 +38,12 @@ html
 								a(href='/settings/') Settings
 							li
 								a(href='/logout/') Log out
-					- else
-						li
-							a(href='/login/') Log in
+						- else
+							li
+								a(href='/login/') Log in
 				#copyright
 					p All content, unless otherwise noted, is the property of the Pine View Torch &copy; 
-						= new Date().getFullYear();
+						= new Date().getFullYear()
 		//-Add this later
 		//-include includes/ga
 
