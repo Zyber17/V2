@@ -20,7 +20,7 @@
 
       author: "Pine View Torch",
       webMaster: 'Zackary Corbett',
-      copyright: "" + feed + " Pine View Torch",
+      copyright: "" + (new Date().getFullYear()) + " Pine View Torch",
       language: 'en'
     });
     feed.item({

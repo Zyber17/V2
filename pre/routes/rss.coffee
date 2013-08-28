@@ -27,7 +27,7 @@ exports.rss = (req,res,next) ->
 			'Zackary Corbett'
 
 		copyright:
-			"#{feed} Pine View Torch"
+			"#{new Date().getFullYear()} Pine View Torch"
 
 		language:
 			'en'
