@@ -5,7 +5,7 @@ html
 		script(src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js")
 		meta(name='viewport', content='initial-scale=1.0, maximum-scale=1.0, user-scalable=0')
 		//-link(rel='stylesheet', href='/stylesheets/type.css')
-		block stylesheets
+		block head
 	body
 		#wrapper
 			header#header
@@ -17,11 +17,12 @@ html
 							input(type='submit') Go
 					li
 						a(href='/issues/') Read the print edition online
-				nav#nav
-					ul
-						each section in sections
-							li
-								a(href='/'+section) section
+				-if(sections)
+					nav#nav
+						ul
+							each section in sections
+								li
+									a(href='/#section}') section
 			#content
 				-if(_err)
 					each error in _err
@@ -30,17 +31,17 @@ html
 			footer#footer
 				#login
 					ul
-						- if (logged.in)
-							- if (logged.staff)
-								li
-									a(href='/staff/') Staff Panel
-							li
-								a(href='/settings/') Settings
-							li
-								a(href='/logout/') Log out
-						- else
-							li
-								a(href='/login/') Log in
+						//- - if (logged.in)
+						//- 	- if (logged.staff)
+						//- 		li
+						//- 			a(href='/staff/') Staff Panel
+						//- 	li
+						//- 		a(href='/settings/') Settings
+						//- 	li
+						//- 		a(href='/logout/') Log out
+						//- - else
+						//- 	li
+						//- 		a(href='/login/') Log in
 				#copyright
 					p All content, unless otherwise noted, is the property of the Pine View Torch &copy; 
 						= new Date().getFullYear()
