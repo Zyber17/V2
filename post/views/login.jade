@@ -1,0 +1,19 @@
+extends wrapper
+
+block head
+	style.
+		form input, form select, form textarea, form button { display: block; width: 40%; padding: 10px; margin: 10px; clear: both}
+
+block content
+	h2 Login
+	form#form(method="post", action='#', enctype="multipart/form-data")
+
+		label(for="username") Username:
+		input#username(type="text", placeholder="Issue title", name="title", value=username)
+		label(for="username")
+			em Note: this may not be the same as your full name
+
+		label(for="username") Password:
+		input#password(type="password", placeholder="", name="password",)
+			
+		button#submit(type="submit") Submit
