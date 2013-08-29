@@ -198,8 +198,8 @@
           if (options.resp.date && options.resp.date < moment()) {
             return res.render('article', options);
           } else {
-            if (true) {
-              options.msg = "This article is not yet released, you’re seeing it because you’" + (true ? "re on staff" : "ve been granted early access") + ".";
+            if (req.session.isUser) {
+              options.msg = "This article is not yet released, you’re seeing it because you’" + (req.session.user.isStaff ? "re on staff" : "ve been granted early access") + ".";
               return res.render('article', options);
             } else {
               return res.render('errors/404', {

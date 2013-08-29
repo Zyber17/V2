@@ -196,8 +196,8 @@ exports.view = (req,res,next) ->
 				if options.resp.date and options.resp.date < moment()
 					res.render 'article', options
 				else
-					if true #req.session.user
-						options.msg = "This article is not yet released, you’re seeing it because you’#{if true then "re on staff" else "ve been granted early access"}." #req.session.isStaff not true
+					if req.session.isUser
+						options.msg = "This article is not yet released, you’re seeing it because you’#{if req.session.user.isStaff then "re on staff" else "ve been granted early access"}." #req.session.isStaff not true
 						res.render 'article', options
 					else
 						# req.session.message = 'boo'
