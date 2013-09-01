@@ -1,8 +1,9 @@
 extends wrapper
 
 block content
+	include mixins/list
 	#rotator
-		mixin rotator(items)
+		//- mixin rotator(items)
 	#lists
 		//- c stands for column. Columns are labeled c[number] and stuff regating columns start with c_ (e.g. c_small, c_large)
 		.c1
@@ -11,12 +12,12 @@ block content
 				span
 					//- not final yet
 					a.rss(href='/rss') Subscribe
-			mixin list(items.recent)
+			+list(recentAr)
 		.c2
 			.c_title
 				h2 Popular
-			mixin list(items.popular)
-		.c3.c_small
-			.c_title
-				h2 Briefs
-			mixin list(items.briefs)
+			+list(rotatorAr)
+		//- .c3.c_small
+		//- 	.c_title
+		//- 		h2 Briefs
+		//- 	mixin list(items.briefs)
