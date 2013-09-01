@@ -2,6 +2,7 @@ db = require '../db'
 moment = require 'moment'
 marked = require 'marked'
 string = require 'string'
+R = require 'rss'
 
 marked.setOptions
 	gfm:
@@ -32,26 +33,79 @@ exports.index = (req,res,next) ->
 		slug:
 			1}
 	).sort('-publishDate'
-	).limit(10
+	).limit(3
 	).execFind(
-		(err, resp) ->
-			articles = []
-			for article, i in resp
-				articles[i] =
-					body:
-						string(article.body[0].body).truncate(250).s
-					author:
-						article.author
-					title:
-						article.title
-					date:
-						moment(article.publishDate).format("MMMM D, YYYY")
-					exactDate:
-						moment(article.publishDate).toISOString().split('T')[0]
-					slug:
-						"/articles/#{article.slug}/"
+		(err, recent) ->
+			if! err
+				if recent
+					recentAr = []
+					for article, i in recent
+						recentAr[i] =
+							body:
+								string(article.body[0].body).truncate(250).s
+							author:
+								article.author
+							title:
+								article.title
+							date:
+								moment(article.publishDate).format("MMMM D, YYYY")
+							exactDate:
+								moment(article.publishDate).toISOString().split('T')[0]
+							slug:
+								"/articles/#{article.slug}/"
 
-			res.render 'index', {articles: articles}
+						db.Articles.find(
+							{publishDate:
+								$lte:
+									moment().toDate()
+							status:
+								4
+							isRotator:
+								true},
+							{publishDate:
+								1
+							body:
+								1
+							title:
+								1
+							author:
+								1
+							slug:
+								1}
+						).sort('-publishDate'
+						).limit(4
+						).execFind(
+							(err, rotator) ->
+								if! err
+									if rotator
+										rotatorAr = []
+										for article, i in rotator
+											rotatorAr[i] =
+												body:
+													string(article.body[0].body).truncate(250).s
+												author:
+													article.author
+												title:
+													article.title
+												date:
+													moment(article.publishDate).format("MMMM D, YYYY")
+												exactDate:
+													moment(article.publishDate).toISOString().split('T')[0]
+												slug:
+													"/articles/#{article.slug}/"
+
+										res.render 'index', {recentAr: recentAr, rotatorAr: rotatorAr}
+									else
+										res.render 'errors/404', {err: "Article not found"}
+								else
+									console.log "Error (articles): #{err}"
+									res.end JSON.stringify err
+						)
+				else
+					res.render 'errors/404', {err: "Article not found"}
+			else
+				console.log "Error (articles): #{err}"
+				res.end JSON.stringify err
 	)
 
 
