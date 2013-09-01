@@ -16,10 +16,11 @@ else
 	path     =  require 'path'
 
 	articles  =  require './routes/articles'
-	# auth     =  require './routes/auth'
+	auth     =  require './routes/auth'
 	# index    =  require './routes/index'
 	issues   =  require './routes/issues'
 	# search   =  require './routes/search'
+	rss  =  require './routes/rss'
 	sections  =  require './routes/sections'
 	users    =  require './routes/users'
 	photos    =  require './routes/photos'
@@ -86,7 +87,7 @@ else
 
 	app.get '/logout', auth.logout
 
-	# app.get '/rss', rss.view
+	app.get '/rss', rss
 
 	# app.get '/search/:query', search.search
 
