@@ -1,6 +1,8 @@
-rss = require "rss"
+RSS = require "rss"
+moment = require "moment"
+db = require "../db"
 
-exports.rss = (req,res,next) ->
+module.exports = (req,res,next) ->
 	feed = new RSS
 		title:
 			"Pine View Torch"
@@ -32,24 +34,52 @@ exports.rss = (req,res,next) ->
 		language:
 			'en'
 
-	#add DB intregration later
-	feed.item
+	db.Articles.find(
+		{publishDate:
+			$lte:
+				moment().toDate()
+		status:
+			4},
+		{publishDate:
+			1
+		body:
+			1
 		title:
-			item.title
+			1
+		author:
+			1
+		slug:
+			1}
+	).sort('-publishDate'
+	).limit(15
+	).execFind(
+		(err, resp) ->
+			if !err
+				if resp
+					for article in resp
+						feed.item		
+							title:
+								article.title
 
-		descripton:
-			item.content
+							description:
+								article.body[0].body
 
-		url:
-			"http:/pineviewtorch.com/#{item.slug}"
+							url:
+								"http://pineviewtorch.com/articles/#{article.slug}"
 
-		guid:
-			item.id
+							guid:
+								article._id.toString()
 
-		auhtor:
-			item.author
+							author:
+								article.author
 
-		date:
-			item.date.rss
+							date:
+								article.publishDate
 
-	res.end feed.xml()
+					res.end feed.xml()
+				else
+					res.render 'errors/404', {err: "Articles not found"}
+			else
+				console.log "Error (rss): #{err}"
+				res.end JSON.stringify err
+	)
