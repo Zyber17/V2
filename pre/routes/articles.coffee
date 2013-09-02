@@ -36,8 +36,8 @@ exports.index = (req,res,next) ->
 	).limit(3
 	).execFind(
 		(err, recent) ->
-			if! err
-				if recent
+			if !err
+				if recent.length
 					recentAr = []
 					for article, i in recent
 						recentAr[i] =
@@ -76,8 +76,8 @@ exports.index = (req,res,next) ->
 						).limit(4
 						).execFind(
 							(err, rotator) ->
-								if! err
-									if rotator
+								if !err
+									if rotator.length > 0
 										rotatorAr = []
 										for article, i in rotator
 											rotatorAr[i] =
@@ -96,13 +96,13 @@ exports.index = (req,res,next) ->
 
 										res.render 'index', {recentAr: recentAr, rotatorAr: rotatorAr}
 									else
-										res.render 'errors/404', {err: "Article not found"}
+										res.render 'errors/404', {_err: ["Article not found"]}
 								else
 									console.log "Error (articles): #{err}"
 									res.end JSON.stringify err
 						)
 				else
-					res.render 'errors/404', {err: "Article not found"}
+					res.render 'errors/404', {_err: ["Article not found"]}
 			else
 				console.log "Error (articles): #{err}"
 				res.end JSON.stringify err
@@ -195,8 +195,9 @@ exports.new_post = (req,res,next) ->
 
 exports.view = (req,res,next) ->	
 	update = true
-	#if req.session.staff is true then update is false
+	if req.session.isUser == true then update = false
 	findArticle req.params.slug, update, (err, resp) ->
+		res.end 'hi'
 		if !err
 			if resp
 				versions = []
@@ -423,7 +424,7 @@ exports.remove = (req,res,next) ->
 	else
 		res.redirect "/articles/#{resp.slug}/" 
 
-findArticle = (slug, update, callback) ->
+findArticle = (slug, update = false, callback) ->
 	db.Articles.findOne(
 		slug:
 			slug
@@ -452,11 +453,14 @@ findArticle = (slug, update, callback) ->
 			1
 		slug:
 			1
-	).exec((err, resp) ->
-		if update
-			resp.views++
-			resp.save callback(err,resp)
+	).exec(
+		if update is true
+			callback(true,true)
+			(err, resp) ->
+				resp.views++
+				resp.save callback(err,resp)
 		else
-			callback(err,resp)
+			(err, resp) ->
+				callback(err,resp)
 	)
 	
