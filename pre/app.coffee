@@ -1,16 +1,30 @@
 cluster = require 'cluster'
 if cluster.isMaster
-	cpus = require('os').cpus().length
 
-	for cpu in [0...cpus]
-		cluster.fork()
+	if process.env.NODE_ENV == 'setup'
+		console.log 'Starting setup process.'
 
-	cluster.on 'exit', (worker) ->
-		# Replace the dead worker, we're not sentimental
-	    console.log "Worker #{worker.id} died :("
-	    cluster.fork()
+		express  =  require 'express'
+		setup    =  require './routes/setup'
+		app      =  express()
 
-else    
+		app.configure 'setup', ->
+			setup (resp) ->
+				console.log resp
+				process.kill process.pid, "SIGTERM"
+
+	else
+		cpus = require('os').cpus().length
+
+		for cpu in [0...cpus]
+			cluster.fork()
+
+		cluster.on 'exit', (worker) ->
+			# Replace the dead worker, we're not sentimental
+			console.log "Worker #{worker.id} died :("
+			cluster.fork()
+
+else if process.env.NODE_ENV != 'setup'
 	express  =  require 'express'
 	http     =  require 'http'
 	path     =  require 'path'
@@ -52,8 +66,6 @@ else
 		app.set 'port', process.env.PORT || 8000
 
 		true # CoffeeScript automatically returns the last line of every function. So, we're returning true when eveything works (last line excuted).
-
-
 
 	# To set the enviroment: http://stackoverflow.com/questions/11104028/process-env-node-env-is-undefined
 
@@ -211,3 +223,5 @@ else
 	app.listen app.get('port'), ->
 		console.log "Express server listening on port " + app.get('port')
 		console.log "Worker #{cluster.worker.id} running!"
+else
+	console.log "Uhh. This should never happen. See app.js."
