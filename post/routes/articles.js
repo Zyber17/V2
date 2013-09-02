@@ -35,7 +35,7 @@
       var article, i, recentAr, _i, _len, _results;
 
       if (!err) {
-        if (recent) {
+        if (recent.length) {
           recentAr = [];
           _results = [];
           for (i = _i = 0, _len = recent.length; _i < _len; i = ++_i) {
@@ -64,7 +64,7 @@
               var rotatorAr, _j, _len1;
 
               if (!err) {
-                if (rotator) {
+                if (rotator.length > 0) {
                   rotatorAr = [];
                   for (i = _j = 0, _len1 = rotator.length; _j < _len1; i = ++_j) {
                     article = rotator[i];
@@ -83,7 +83,7 @@
                   });
                 } else {
                   return res.render('errors/404', {
-                    err: "Article not found"
+                    _err: ["Article not found"]
                   });
                 }
               } else {
@@ -95,7 +95,7 @@
           return _results;
         } else {
           return res.render('errors/404', {
-            err: "Article not found"
+            _err: ["Article not found"]
           });
         }
       } else {
@@ -207,9 +207,13 @@
     var update;
 
     update = true;
+    if (req.session.isUser === true) {
+      update = false;
+    }
     return findArticle(req.params.slug, update, function(err, resp) {
       var comment, comments, i, now, options, revbody, revision, versions, _i, _j, _len, _len1, _ref, _ref1;
 
+      res.end('hi');
       if (!err) {
         if (resp) {
           versions = [];
@@ -459,6 +463,9 @@
   };
 
   findArticle = function(slug, update, callback) {
+    if (update == null) {
+      update = false;
+    }
     return db.Articles.findOne({
       slug: slug
     }).select({
@@ -474,13 +481,11 @@
       staffComments: 1,
       views: 1,
       slug: 1
-    }).exec(function(err, resp) {
-      if (update) {
-        resp.views++;
-        return resp.save(callback(err, resp));
-      } else {
-        return callback(err, resp);
-      }
+    }).exec(update === true ? (callback(true, true), function(err, resp) {
+      resp.views++;
+      return resp.save(callback(err, resp));
+    }) : function(err, resp) {
+      return callback(err, resp);
     });
   };
 
