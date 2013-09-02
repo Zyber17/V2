@@ -5,11 +5,13 @@ Schema   =  mongoose.Schema
 ObjectId =  Schema.ObjectId
 saltWorkFactor = 10
         
-mongoose.connect 'localhost','torch'
+mongoose.connect 'localhost','torchTwo'
 database = mongoose.connection
 
 database.on 'error', console.error.bind(console, 'connection error:')
+database.on 'open', -> console.log "Mongoose and Mongo are working"
 
+# database.once 'open', ->
 users = new Schema
 	name:
 		type: String
@@ -141,9 +143,9 @@ users.methods.comparePassword = (candidatePassword, callback) ->
 
 
 
-#Begin articles
+#Begin Articles
 
-articles = new Schema
+stories = new Schema
 	title:
 		type: String
 		required: true
@@ -239,7 +241,7 @@ articleBodies = new Schema
 		default: Date.now
 
 
-articles.plugin monguurl
+stories.plugin monguurl
     source: 'title'
     target: 'slug'
 
@@ -308,7 +310,7 @@ issues = new Schema
 		required: true
 
 	download:
-		trpe: String
+		type: String
 
 
 issues.plugin monguurl
@@ -361,11 +363,11 @@ sections.plugin monguurl
 module.exports =
 	ObjectId:
 		ObjectId
-	Articles:
-		mongoose.model 'articles', articles
+	Stories:
+		database.model 'stories', stories
 	Issues:
-		mongoose.model 'issues', issues
+		database.model 'issues', issues
 	Sections:
-		mongoose.model 'sections', sections
+		database.model 'sections', sections
 	Users:
-		mongoose.model 'users', users
+		database.model 'users', users
