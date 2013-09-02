@@ -1,9 +1,14 @@
 mongoose =  require 'mongoose'
 monguurl =  require 'monguurl'
+bcrypt  =  require 'bcrypt'
 Schema   =  mongoose.Schema
 ObjectId =  Schema.ObjectId
+saltWorkFactor = 10
         
 mongoose.connect 'localhost','torch'
+database = mongoose.connection
+
+database.on 'error', console.error.bind(console, 'connection error:')
 
 users = new Schema
 	name:
@@ -199,8 +204,8 @@ articles = new Schema
 				required: true
 		
 		author:
-			type: ObjectId
-			ref: 'users'
+			type: String #ObjectId
+			# ref: 'users'
 
 		edited:
 			type: Boolean
