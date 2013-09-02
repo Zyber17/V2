@@ -3,7 +3,8 @@ mixin list(items)
 		each item in items
 			li
 				.top
-					a(href='/articles/#{item.link}')= item.title
+					a(href=item.slug)= item.title
+					|  
 					span.by by #{item.author}
 				.date. Published
 					time(datetime=item.date.robot)= item.date.human
