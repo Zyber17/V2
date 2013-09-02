@@ -145,7 +145,7 @@ users.methods.comparePassword = (candidatePassword, callback) ->
 
 #Begin Articles
 
-stories = new Schema
+articles = new Schema
 	title:
 		type: String
 		required: true
@@ -241,7 +241,7 @@ articleBodies = new Schema
 		default: Date.now
 
 
-stories.plugin monguurl
+articles.plugin monguurl
     source: 'title'
     target: 'slug'
 
@@ -363,8 +363,8 @@ sections.plugin monguurl
 module.exports =
 	ObjectId:
 		ObjectId
-	Stories:
-		database.model 'stories', stories
+	Articles:
+		database.model 'articles', articles
 	Issues:
 		database.model 'issues', issues
 	Sections:
