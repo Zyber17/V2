@@ -18,7 +18,7 @@ module.exports = (callback) ->
 			else if resp
 				callback "You have already completed the setup. You do not need to run this again."
 			else
-				firstUser = new db.Users(
+				new db.Users(
 					username:
 						dummy.username
 					name:
@@ -68,5 +68,18 @@ module.exports = (callback) ->
 					if err
 						callback err
 					else
-						callback "The setup was completed successfully. You may now run the production server."
+						sectionErrs = 0
+						sectionList = ["News","Entertainment","Science and Technology","Humor","Features","Opinion","Sports","Focus"]
+						for sections in sectionList
+							new db.Sections(
+								title: sections
+							).save (err)->
+								if err
+									sectionErrs++
+									callback err
+
+						if sectionErrs > 0
+							callback "The setup was completed successfully. You may now run the production server."
+						else
+							callback err
 	)

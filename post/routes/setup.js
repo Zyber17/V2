@@ -15,14 +15,12 @@
     return db.Users.findOne({
       username: dummy.username
     }, function(err, resp) {
-      var firstUser;
-
       if (err) {
         return callback(err);
       } else if (resp) {
         return callback("You have already completed the setup. You do not need to run this again.");
       } else {
-        return firstUser = new db.Users({
+        return new db.Users({
           username: dummy.username,
           name: dummy.name,
           bio: {
@@ -51,10 +49,29 @@
             }
           }
         }).save(function(err) {
+          var sectionErrs, sectionList, sections, _i, _len;
+
           if (err) {
             return callback(err);
           } else {
-            return callback("The setup was completed successfully. You may now run the production server.");
+            sectionErrs = 0;
+            sectionList = ["News", "Entertainment", "Science and Technology", "Humor", "Features", "Opinion", "Sports", "Focus"];
+            for (_i = 0, _len = sectionList.length; _i < _len; _i++) {
+              sections = sectionList[_i];
+              new db.Sections({
+                title: sections
+              }).save(function(err) {
+                if (err) {
+                  sectionErrs++;
+                  return callback(err);
+                }
+              });
+            }
+            if (sectionErrs > 0) {
+              return callback("The setup was completed successfully. You may now run the production server.");
+            } else {
+              return callback(err);
+            }
           }
         });
       }
