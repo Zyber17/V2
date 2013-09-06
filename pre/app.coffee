@@ -25,9 +25,10 @@ if cluster.isMaster
 			cluster.fork()
 
 else if process.env.NODE_ENV != 'setup'
-	express  =  require 'express'
-	http     =  require 'http'
-	path     =  require 'path'
+	express    =  require 'express'
+	http       =  require 'http'
+	path       =  require 'path'
+	RedisStore =  require('connect-redis')(express)
 
 	articles  =  require './routes/articles'
 	auth     =  require './routes/auth'
@@ -56,15 +57,24 @@ else if process.env.NODE_ENV != 'setup'
 		app.use express.cookieParser('***REMOVED***')
 		app.use express.static(path.join(__dirname, 'public'))
 		#app.use express.favicon('./public/images/favicon.ico')
-		app.use express.session({ cookie: { maxAge: 15552000000 }})
 		app.use express.bodyParser()
-		app.use app.router
+		app.use(
+			express.session
+				store:
+					new RedisStore
+				secret:
+					'***REMOVED***'
+		)
+		
 		app.set 'views', __dirname + '/views'
 		app.set 'view engine', 'jade'
 
 		app.disable 'x-powered-by'
 
 		app.set 'port', process.env.PORT || 8000
+
+		app.use app.router
+		app.use express.csrf()
 
 		true # CoffeeScript automatically returns the last line of every function. So, we're returning true when eveything works (last line excuted).
 
