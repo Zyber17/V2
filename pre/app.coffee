@@ -58,6 +58,7 @@ else if process.env.NODE_ENV != 'setup'
 		#app.use express.favicon('./public/images/favicon.ico')
 		app.use express.session({ cookie: { maxAge: 15552000000 }})
 		app.use express.bodyParser()
+		app.use app.router
 		app.set 'views', __dirname + '/views'
 		app.set 'view engine', 'jade'
 
@@ -118,7 +119,7 @@ else if process.env.NODE_ENV != 'setup'
 
 	# Articles
 
-	# app.get '/staff', auth.requireStaff, staff.index.view
+	app.get '/staff', auth.requireStaff, (req,res,next) -> res.render 'staff'
 
 
 	app.get '/staff/articles/new', auth.requireStaff, articles.new_get
