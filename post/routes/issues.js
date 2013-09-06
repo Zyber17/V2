@@ -23,7 +23,7 @@
             title: issue.title,
             date: moment(issue.publishDate).format("MMMM D, YYYY"),
             exactDate: moment(issue.publishDate).toISOString().split('T')[0],
-            slug: "/issues/" + issue.slug + "/",
+            slug: "/staff/issues/" + issue.slug + "/",
             publication: issue.publication
           };
         }
@@ -62,7 +62,7 @@
     if (err.length > 0) {
       req.session.message = req.body;
       req.session.message.err = _err;
-      return res.redirect('/issues/new');
+      return res.redirect('/staff/issues/new');
     } else {
       newIssue = new db.Issues({
         title: req.body.title,
@@ -72,7 +72,7 @@
       });
       return newIssue.save(function(err, resp) {
         if (!err) {
-          return res.redirect('/issues/');
+          return res.redirect('/staff/issues/');
         } else {
           console.log("Error (issues): " + err);
           return res.end(JSON.stringify(err));
@@ -125,7 +125,7 @@
     if (err.length > 0) {
       req.session.message = req.body;
       req.session.message.err = _err;
-      return res.redirect("/issues/" + req.params.slug);
+      return res.redirect("/staff/issues/" + req.params.slug);
     } else {
       return findIssue(req.params.slug, function(err, resp) {
         if (!err) {
@@ -138,7 +138,7 @@
                 console.log("Error (issues): " + err);
                 return res.end(JSON.stringify(err));
               } else {
-                return res.redirect("/issues/");
+                return res.redirect("/staff/issues/");
               }
             });
           } else {

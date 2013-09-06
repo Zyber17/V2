@@ -27,7 +27,7 @@ exports.list = (req,res,next) ->
 						exactDate:
 							moment(issue.publishDate).toISOString().split('T')[0]
 						slug:
-							"/issues/#{issue.slug}/"
+							"/staff/issues/#{issue.slug}/"
 						publication:
 							issue.publication
 
@@ -55,7 +55,7 @@ exports.new_post = (req,res,next) ->
 	if err.length > 0
 		req.session.message = req.body
 		req.session.message.err = _err
-		res.redirect '/issues/new'
+		res.redirect '/staff/issues/new'
 	else
 		newIssue = new db.Issues
 			title:
@@ -69,7 +69,7 @@ exports.new_post = (req,res,next) ->
 
 		newIssue.save (err,resp) ->
 			if !err
-				res.redirect '/issues/'
+				res.redirect '/staff/issues/'
 			else
 				console.log "Error (issues): #{err}"
 				res.end JSON.stringify err
@@ -110,7 +110,7 @@ exports.edit_post = (req,res,next) ->
 	if err.length > 0
 		req.session.message = req.body
 		req.session.message.err = _err
-		res.redirect "/issues/#{req.params.slug}"
+		res.redirect "/staff/issues/#{req.params.slug}"
 	else
 		findIssue req.params.slug, (err,resp) ->
 			if !err
@@ -124,7 +124,7 @@ exports.edit_post = (req,res,next) ->
 							console.log "Error (issues): #{err}"
 							res.end JSON.stringify err
 						else
-							res.redirect "/issues/"
+							res.redirect "/staff/issues/"
 				else
 					res.render 'errors/404', {err: "Article not found"}
 			else
