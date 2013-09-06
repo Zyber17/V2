@@ -3,18 +3,19 @@ db = require '../db'
 exports.optionalLogin = (req, res, next) ->
 	if req.session.user
 		db.Users.findOne {_id: req.session.user._id}, {password:0}, (err, resp) ->
-				if !errn
-					if resp
-						req.session.isUser = true
-						req.session.user = resp
-						next()
-
-					else
-						res.redirect '/logout'
+			if !err
+				if resp
+					req.session.isUser = true
+					if resp.isStaff then req.session.isStaff = true else req.session.isStaff = false
+					req.session.user = resp
+					next()
 
 				else
-					console.log "Error (auth): #{err}"
-					res.end JSON.stringify err
+					res.redirect '/logout'
+
+			else
+				console.log "Error (auth): #{err}"
+				res.end JSON.stringify err
 	else
 		req.session.isUser = false
 		next()
@@ -22,12 +23,19 @@ exports.optionalLogin = (req, res, next) ->
 
 exports.requireStaff = (req,res,next) ->
 	if req.session.user
-		if req.session.user.isStaff == true
-			req.session.user = resp
-			next()
-		else
-			res.redirect '/'
-		
+		db.Users.findOne {_id: req.session.user._id}, {password:0}, (err, resp) ->
+			if !err
+				if resp
+					req.session.isUser = true
+					if resp.isStaff then req.session.isStaff = true else req.session.isStaff = false
+					req.session.user = resp
+					next()
+				else
+					res.redirect '/logout'
+
+			else
+				console.log "Error (auth): #{err}"
+				res.end JSON.stringify err
 	else
 		res.redirect '/login'
 
@@ -49,27 +57,43 @@ exports.login_post = (req,res,next) ->
 
 	if err.length > 0
 		req.session.message = req.body
+		req.session.message._err = err
 		res.redirect '/login'
 	else
-		db.User.findOne {username: req.body.username.toLowerCase()}, (err, resp) ->
+		db.Users.findOne(
+			{username: req.body.username}
+			(err, resp) ->
 				if !err
 					if resp
 						resp.comparePassword req.body.password, (err, isMatch) ->
-	           				if !err
-	           					if isMatch
-	            					next()
-	            				else
-	            					req.session.message = req.body
-	            					res.redirect '/'
-	            			else
-	            				console.log "Error (auth): #{err}"
-								res.end JSON.stringify err
+								if !err
+									if isMatch
+										req.session.user = resp
+										req.session.isUser = true
+										
+										if resp.isStaff
+											req.session.isStaff = true
+											res.redirect '/staff/'
+										else
+											req.session.isStaff = false
+											res.redirect '/'
+										
+									else
+										req.session.message = req.body
+										req.session.message._err = ["Invalid password"]
+										res.redirect '/login'
+								else
+									console.log "Error (auth): #{err}"
+									res.end JSON.stringify err
 					else
-						res.redirect '/logout'
+						req.session.message = req.body
+						req.session.message._err = ["Invalid username"]
+						res.redirect '/login'
 				else
 					console.log "Error (auth): #{err}"
 					res.end JSON.stringify err
+		)
 
 exports.logout = (req,res,next) ->
-        req.session.destroy()
-        res.redirect '/'
+		req.session.destroy()
+		res.redirect '/'
