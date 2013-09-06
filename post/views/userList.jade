@@ -5,7 +5,7 @@ block content
 		each user in users
 			li
 				div
-					a(href="/users/#{user.slug}")
+					a(href="/staff/users/#{user.slug}")
 						i.indicator(class=isStaff ? 'isStaff' : 'isAdmin')
 						h2.name= user.name
 						h3.username (#{user.username})
