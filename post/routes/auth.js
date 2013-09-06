@@ -11,9 +11,14 @@
       }, {
         password: 0
       }, function(err, resp) {
-        if (!errn) {
+        if (!err) {
           if (resp) {
             req.session.isUser = true;
+            if (resp.isStaff) {
+              req.session.isStaff = true;
+            } else {
+              req.session.isStaff = false;
+            }
             req.session.user = resp;
             return next();
           } else {
@@ -32,12 +37,29 @@
 
   exports.requireStaff = function(req, res, next) {
     if (req.session.user) {
-      if (req.session.user.isStaff === true) {
-        req.session.user = resp;
-        return next();
-      } else {
-        return res.redirect('/');
-      }
+      return db.Users.findOne({
+        _id: req.session.user._id
+      }, {
+        password: 0
+      }, function(err, resp) {
+        if (!err) {
+          if (resp) {
+            req.session.isUser = true;
+            if (resp.isStaff) {
+              req.session.isStaff = true;
+            } else {
+              req.session.isStaff = false;
+            }
+            req.session.user = resp;
+            return next();
+          } else {
+            return res.redirect('/logout');
+          }
+        } else {
+          console.log("Error (auth): " + err);
+          return res.end(JSON.stringify(err));
+        }
+      });
     } else {
       return res.redirect('/login');
     }
@@ -64,28 +86,40 @@
     }
     if (err.length > 0) {
       req.session.message = req.body;
+      req.session.message._err = err;
       return res.redirect('/login');
     } else {
-      return db.User.findOne({
-        username: req.body.username.toLowerCase()
+      return db.Users.findOne({
+        username: req.body.username
       }, function(err, resp) {
         if (!err) {
           if (resp) {
-            resp.comparePassword(req.body.password, function(err, isMatch) {
+            return resp.comparePassword(req.body.password, function(err, isMatch) {
               if (!err) {
                 if (isMatch) {
-                  return next();
+                  req.session.user = resp;
+                  req.session.isUser = true;
+                  if (resp.isStaff) {
+                    req.session.isStaff = true;
+                    return res.redirect('/staff/');
+                  } else {
+                    req.session.isStaff = false;
+                    return res.redirect('/');
+                  }
                 } else {
                   req.session.message = req.body;
-                  return res.redirect('/');
+                  req.session.message._err = ["Invalid password"];
+                  return res.redirect('/login');
                 }
               } else {
-                return console.log("Error (auth): " + err);
+                console.log("Error (auth): " + err);
+                return res.end(JSON.stringify(err));
               }
             });
-            return res.end(JSON.stringify(err));
           } else {
-            return res.redirect('/logout');
+            req.session.message = req.body;
+            req.session.message._err = ["Invalid username"];
+            return res.redirect('/login');
           }
         } else {
           console.log("Error (auth): " + err);
