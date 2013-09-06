@@ -19,7 +19,7 @@
           section = resp[i];
           sections[i] = {
             title: section.title,
-            slug: "/sections/" + section.slug + "/"
+            slug: "/staff/sections/" + section.slug + "/"
           };
         }
         return res.render('sectionsList', {
@@ -54,14 +54,14 @@
     if (err.length > 0) {
       req.session.message = req.body;
       req.session.message._err = err;
-      return res.redirect('/sections/new');
+      return res.redirect('/staff/sections/new');
     } else {
       newSection = new db.Sections({
         title: req.body.title
       });
       return newSection.save(function(err, resp) {
         if (!err) {
-          return res.redirect('/sections/');
+          return res.redirect('/staff/sections/');
         } else {
           console.log("Error (sections): " + err);
           return res.end(JSON.stringify(err));
@@ -109,7 +109,7 @@
     if (err.length > 0) {
       req.session.message = req.body;
       req.session.message._err = err;
-      return res.redirect("/sections/" + req.params.slug);
+      return res.redirect("/staff/sections/" + req.params.slug);
     } else {
       return findSection(req.params.slug, function(err, resp) {
         if (!err) {
@@ -120,7 +120,7 @@
                 console.log("Error (sections): " + err);
                 return res.end(JSON.stringify(err));
               } else {
-                return res.redirect("/sections/");
+                return res.redirect("/staff/sections/");
               }
             });
           } else {

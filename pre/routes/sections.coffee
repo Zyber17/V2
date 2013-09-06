@@ -19,7 +19,7 @@ exports.list = (req,res,next) ->
 						title:
 							section.title
 						slug:
-							"/sections/#{section.slug}/"
+							"/staff/sections/#{section.slug}/"
 
 				res.render 'sectionsList', {sections: sections}
 			else
@@ -43,7 +43,7 @@ exports.new_post = (req,res,next) ->
 	if err.length > 0
 		req.session.message = req.body
 		req.session.message._err = err
-		res.redirect '/sections/new'
+		res.redirect '/staff/sections/new'
 	else
 		newSection = new db.Sections
 			title:
@@ -51,7 +51,7 @@ exports.new_post = (req,res,next) ->
 
 		newSection.save (err,resp) ->
 			if !err
-				res.redirect '/sections/'
+				res.redirect '/staff/sections/'
 			else
 				console.log "Error (sections): #{err}"
 				res.end JSON.stringify err
@@ -86,7 +86,7 @@ exports.edit_post = (req,res,next) ->
 	if err.length > 0
 		req.session.message = req.body
 		req.session.message._err = err
-		res.redirect "/sections/#{req.params.slug}"
+		res.redirect "/staff/sections/#{req.params.slug}"
 	else
 		findSection req.params.slug, (err,resp) ->
 			if !err
@@ -97,7 +97,7 @@ exports.edit_post = (req,res,next) ->
 						if err
 							console.log "Error (sections): #{err}"
 							res.end JSON.stringify err
-						else res.redirect "/sections/"
+						else res.redirect "/staff/sections/"
 				else
 					res.render 'errors/404', {_err: "Article not found"}
 			else
