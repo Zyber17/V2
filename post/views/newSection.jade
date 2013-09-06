@@ -14,9 +14,9 @@ block head
 			});
 
 block content
-	h2 #{editing ? "Edit" : 'New'} Issue
+	h2 #{editing ? "Edit" : 'New'} Section
 	form#form(method="post", action='#', enctype="multipart/form-data")
 
-		input#title(type="text", placeholder="Issue title", name="title", value=title)
+		input#title(type="text", placeholder="Section title", name="title", value=title)
 			
 		button#submit(type="submit") Submit
