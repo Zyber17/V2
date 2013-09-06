@@ -77,7 +77,7 @@ exports.new_post = (req,res,next) ->
 		req.body.isRetired = string(req.body.isRetired).toBool()
 		req.body.isDisabled = string(req.body.isDisabled).toBool()
 		req.session._err = err
-		res.redirect '/users/new'
+		res.redirect '/staff/users/new'
 	else
 		newUser = new db.Users
 			username:
@@ -128,7 +128,7 @@ exports.new_post = (req,res,next) ->
 		
 		newUser.save (err,resp) ->
 			if err == null
-				res.redirect "/users/#{resp.slug}/"
+				res.redirect "/staff/users/#{resp.slug}/"
 			else
 	        	console.log "Error (users): #{err}"
 				res.end JSON.stringify err
@@ -191,7 +191,7 @@ exports.edit_post = (req,res,next) ->
 		req.body.isWebmaster = string(req.body.isWebmaster).toBool()
 		req.body.isRetired = string(req.body.isRetired).toBool()
 		req.body.isDisabled = string(req.body.isDisabled).toBool()
-		res.redirect "/users/#{req.params.slug}/"
+		res.redirect "/staff/users/#{req.params.slug}/"
 	else
 		findUser req.params.slug, (err, resp) ->
 			if !err
@@ -242,7 +242,7 @@ exports.edit_post = (req,res,next) ->
 							console.log "Error (users): #{err}"
 							res.end JSON.stringify err
 						else
-							res.redirect "/users/#{resp.slug}/"
+							res.redirect "/staff/users/#{resp.slug}/"
 
 
 				else
@@ -264,7 +264,7 @@ exports.remove = (req,res,next) ->
 				console.log "Error (users): #{err}"
 				res.end JSON.stringify err
 	else
-		res.redirect "/users/#{resp.slug}/" 
+		res.redirect "/staff/users/#{resp.slug}/" 
 # Fix these later
 exports.change_get = (req,res,next) ->
 	if req.session.message
