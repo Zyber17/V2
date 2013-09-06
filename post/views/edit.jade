@@ -32,12 +32,12 @@ block content
 
 			label(for="issue") Issue:
 			select#issue(name="issue")
-				each issue in issues.list
+				each issue in issues
 					option(value=issue._id, selected=issue._id == issues.selected ? 'selected' : null)= issue.name
 
 			label(for="section") Section:
 			select#section(name="section")
-				each section in sections.list
+				each section in sections
 					option(value=section._id, selected=section._id == sections.selected ? 'selected' : null)= section.name
 
 			label(for="status") Status:
