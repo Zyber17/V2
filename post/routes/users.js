@@ -78,7 +78,7 @@
       req.body.isRetired = string(req.body.isRetired).toBool();
       req.body.isDisabled = string(req.body.isDisabled).toBool();
       req.session._err = err;
-      return res.redirect('/users/new');
+      return res.redirect('/staff/users/new');
     } else {
       newUser = new db.Users({
         username: req.body.username,
@@ -111,7 +111,7 @@
       });
       return newUser.save(function(err, resp) {
         if (err === null) {
-          res.redirect("/users/" + resp.slug + "/");
+          res.redirect("/staff/users/" + resp.slug + "/");
         } else {
           console.log("Error (users): " + err);
         }
@@ -185,7 +185,7 @@
       req.body.isWebmaster = string(req.body.isWebmaster).toBool();
       req.body.isRetired = string(req.body.isRetired).toBool();
       req.body.isDisabled = string(req.body.isDisabled).toBool();
-      return res.redirect("/users/" + req.params.slug + "/");
+      return res.redirect("/staff/users/" + req.params.slug + "/");
     } else {
       return findUser(req.params.slug, function(err, resp) {
         if (!err) {
@@ -224,7 +224,7 @@
                 console.log("Error (users): " + err);
                 return res.end(JSON.stringify(err));
               } else {
-                return res.redirect("/users/" + resp.slug + "/");
+                return res.redirect("/staff/users/" + resp.slug + "/");
               }
             });
           } else {
@@ -253,7 +253,7 @@
         }
       });
     } else {
-      return res.redirect("/users/" + resp.slug + "/");
+      return res.redirect("/staff/users/" + resp.slug + "/");
     }
   };
 
