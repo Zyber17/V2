@@ -82,8 +82,8 @@
                     rotatorAr: rotatorAr
                   });
                 } else {
-                  return res.render('errors/404', {
-                    _err: ["Article not found"]
+                  return res.render('index', {
+                    recentAr: recentAr
                   });
                 }
               } else {
@@ -106,48 +106,22 @@
   };
 
   exports.new_get = function(req, res, next) {
-    var issues, sections;
-
-    sections = [
-      {
-        _id: 'jkdf33',
-        name: 'Studient Life'
-      }, {
-        _id: 'ieuhrg76',
-        name: 'Science'
+    return db.Sections.find().select({
+      title: 1,
+      slug: 1
+    }).exec(function(err, resp) {
+      if (req.session.message) {
+        req.session.message.sections = resp;
+        res.render('edit', req.session.message);
+        return req.session.message = null;
+      } else {
+        return res.render('edit', {
+          knowsHTML: false,
+          sections: resp,
+          author: req.session.user.name
+        });
       }
-    ];
-    issues = {
-      0: [
-        {
-          _id: 'sdsdv',
-          name: 'July 2012'
-        }
-      ],
-      1: [
-        {
-          _id: 'sdsdv',
-          name: 'March 2012'
-        }
-      ],
-      2: [
-        {
-          name: 'Web'
-        }
-      ]
-    };
-    if (req.session.message) {
-      req.session.message.sections = sections;
-      req.session.message.issues = issues;
-      res.render('edit', req.session.message);
-      return req.session.message = null;
-    } else {
-      return res.render('edit', {
-        knowsHTML: false,
-        sections: sections,
-        issues: issues
-      });
-    }
+    });
   };
 
   exports.new_post = function(req, res, next) {
@@ -176,12 +150,13 @@
     } else {
       newArticle = new db.Articles({
         title: req.body.title,
+        section: req.body.section,
         author: req.body.author,
         publishDate: req.body.date ? moment(req.body.date, "MM-DD-YYYY").toDate() : void 0,
         lockHTML: string(req.body.lockHTML).toBoolean(),
         createdDate: moment().toDate(),
         status: req.body.status,
-        publication: req.body.publication,
+        publication: 2,
         approvedBy: {
           advisor: req.body.advisorapproval || 0,
           administration: req.body.administrationapproval || 0
@@ -246,7 +221,7 @@
             resp: resp,
             msg: '',
             title: resp.title,
-            staff: true,
+            staff: req.session.isStaff || false,
             comments: comments
           };
           if (resp.publishDate) {
@@ -254,7 +229,7 @@
           } else {
             options.resp.date = null;
           }
-          if (options.resp.date && options.resp.date < moment()) {
+          if (resp.publishDate && moment(resp.publishDate) < moment()) {
             return res.render('article', options);
           } else {
             if (req.session.isUser) {
@@ -311,73 +286,51 @@
   };
 
   exports.edit_get = function(req, res, next) {
-    var issues, sections;
+    return db.Sections.find().select({
+      title: 1,
+      slug: 1
+    }).exec(function(err, sections) {
+      req.session.message = null;
+      if (req.session.message) {
+        req.session.message.sections = sections;
+        return res.render('edit', req.session.message);
+      } else {
+        return findArticle(req.params.slug, false, function(err, article) {
+          var content;
 
-    sections = [
-      {
-        _id: 'jkdf33',
-        name: 'Studient Life'
-      }, {
-        _id: 'ieuhrg76',
-        name: 'Science'
-      }
-    ];
-    issues = {
-      torch: [
-        {
-          _id: 'sdsdv',
-          name: 'July 2012'
-        }
-      ],
-      match: [
-        {
-          _id: 'sdsdv',
-          name: 'March 2012'
-        }
-      ]
-    };
-    if (req.session.message) {
-      req.session.message.sections = sections;
-      req.session.message.issues = issues;
-      res.render('edit', req.session.message);
-      return req.session.message = null;
-    } else {
-      return findArticle(req.params.slug, false, function(err, resp) {
-        var content;
-
-        if (!err) {
-          if (resp) {
-            content = {
-              title: resp.title,
-              author: resp.author,
-              body: resp.body[0].body,
-              date: resp.publishDate ? moment(resp.publishDate).format("MM-DD-YYYY") : void 0,
-              issue: resp.issue,
-              section: resp.section,
-              publication: resp.publication,
-              knowsHTML: true,
-              lockHTML: resp.lockHTML,
-              editing: true,
-              sections: sections,
-              issues: issues,
-              status: resp.status || 0,
-              approval: {
-                advisor: resp.approvedBy.advisor || 0,
-                administration: resp.approvedBy.administration || 0
-              }
-            };
-            return res.render('edit', content);
+          if (!err) {
+            if (article) {
+              content = {
+                title: article.title,
+                author: article.author,
+                body: article.body[0].body,
+                date: article.publishDate ? moment(article.publishDate).format("MM-DD-YYYY") : void 0,
+                issue: article.issue,
+                section: article.section,
+                publication: article.publication,
+                knowsHTML: false,
+                lockHTML: article.lockHTML,
+                editing: true,
+                sections: sections,
+                status: article.status || 0,
+                approval: {
+                  advisor: article.approvedBy.advisor || 0,
+                  administration: article.approvedBy.administration || 0
+                }
+              };
+              return res.render('edit', content);
+            } else {
+              return res.render('errors/404', {
+                err: "Article not found"
+              });
+            }
           } else {
-            return res.render('errors/404', {
-              err: "Article not found"
-            });
+            console.log("Error (articles): " + err);
+            return res.end(JSON.stringify(err));
           }
-        } else {
-          console.log("Error (articles): " + err);
-          return res.end(JSON.stringify(err));
-        }
-      });
-    }
+        });
+      }
+    });
   };
 
   exports.edit_post = function(req, res, next) {
@@ -481,11 +434,13 @@
       staffComments: 1,
       views: 1,
       slug: 1
-    }).exec(update === true ? (callback(true, true), function(err, resp) {
-      resp.views++;
-      return resp.save(callback(err, resp));
-    }) : function(err, resp) {
-      return callback(err, resp);
+    }).exec(function(err, resp) {
+      if (update) {
+        resp.views++;
+        return resp.save(callback(err, resp));
+      } else {
+        return callback(err, resp);
+      }
     });
   };
 
