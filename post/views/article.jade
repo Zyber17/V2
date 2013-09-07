@@ -3,22 +3,23 @@ extends wrapper
 block content
 	-if (msg)
 		h2(style="background: #fec9ca; padding: 5px; border: 1px solid #fdacae;")= msg
-	aside
-		ul
-			li
-				a(href='edit') Edit
-			li
-				form#form(method="post", action='delete', enctype="multipart/form-data")
-					input#delete(type="hidden", name="delete", value="true")
-					button#submit(type="submit") Delete
+	-if (staff)
+		aside
+			ul
+				li
+					a(href='edit') Edit
+				li
+					form#form(method="post", action='delete', enctype="multipart/form-data")
+						input#delete(type="hidden", name="delete", value="true")
+						button#submit(type="submit") Delete
 	h1= resp.title
 	h2= 'by '+resp.author
 	-if (resp.date)
 		h2= 'on '+resp.date
 	include includes/fb
 	article!= body
-	aside.views This article has been viewed #{resp.views} time#{resp.views != 1 ? 's' : ''}
 	-if (staff)
+		aside.views This article has been viewed #{resp.views} time#{resp.views != 1 ? 's' : ''}
 		div#revisions
 			h3 Revisions
 			ul
