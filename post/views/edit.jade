@@ -4,7 +4,7 @@ block head
 	link(rel='stylesheet', href='/css/jquery-ui/theme.css')
 	style.
 		form input, form select, form textarea, form button { display: block; width: 40%; padding: 10px; margin: 10px; clear: both}
-	script(src="/js/jquery-ui/jquery-ui.js")
+	script(src="/js/jquery-ui.js")
 	-if (!lockHTML)
 		script(src="/js/ckeditor/ckeditor.js")
 		script.
@@ -23,6 +23,7 @@ block content
 	-if (lockHTML)
 		h3.error #{editing ? title : 'This article'} is locked in HTML.#{!knowsHTML ? " You'll need to ask someone who knows HTML to edit this article for you." : ""}
 	-if ((lockHTML && knowsHTML) || !lockHTML)
+
 		form#form(method="post", action='#', enctype="multipart/form-data")
 
 			label(for="title") Title:
@@ -30,15 +31,16 @@ block content
 
 			hr
 
-			label(for="issue") Issue:
-			select#issue(name="issue")
-				each issue in issues
-					option(value=issue._id, selected=issue._id == issues.selected ? 'selected' : null)= issue.name
+			//- Re add later
+				label(for="issue") Issue:
+				select#issue(name="issue")
+					each issue in issues
+						option(value=issue._id, selected=issue._id == issues.selected ? 'selected' : null)= issue.name
 
 			label(for="section") Section:
 			select#section(name="section")
 				each section in sections
-					option(value=section._id, selected=section._id == sections.selected ? 'selected' : null)= section.name
+					option(value=section._id, selected=section._id == sections.selected ? 'selected' : null)= section.title
 
 			label(for="status") Status:
 			select#section(name="status")
@@ -50,10 +52,13 @@ block content
 				option(value="5", selected=status == 5 ? 'selected' : null) On Hold
 
 			label(for="publication") Publication:
-			select#section(name="publication")
-				option(value="0", selected=publication == 0 ? 'selected' : null) Torch
-				option(value="1", selected=publication == 1 ? 'selected' : null) Match
-				option(value="2", selected=publication == 2  ? 'selected' : null) Web
+			select#section(name="publication", disabled="disbaled")
+				option(value="2", selected='selected') Web
+				//- publication == 2  ? 'selected' : null FOR WEB
+				//-
+					option(value="0", selected=publication == 0 ? 'selected' : null) Torch
+					option(value="1", selected=publication == 1 ? 'selected' : null) Match
+				
 
 			//- -var status = 3, approval = {"advisor": 1, "administration": 2};
 
