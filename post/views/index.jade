@@ -1,7 +1,7 @@
 extends wrapper
+include mixins/list
 
 block content
-	include mixins/list
 	#rotator
 		//- mixin rotator(items)
 	#lists
@@ -13,10 +13,10 @@ block content
 					//- not final yet
 					a.rss(href='/rss') Subscribe
 			+list(recentAr)
-		.c2
-			.c_title
-				h2 Popular
-			+list(rotatorAr)
+		//- .c2
+		//- 	.c_title
+		//- 		h2 Popular
+		//- 	+list(rotatorAr)
 		//- .c3.c_small
 		//- 	.c_title
 		//- 		h2 Briefs
