@@ -96,7 +96,7 @@ exports.index = (req,res,next) ->
 
 										res.render 'index', {recentAr: recentAr, rotatorAr: rotatorAr}
 									else
-										res.render 'errors/404', {_err: ["Article not found"]}
+										res.render 'index', {recentAr: recentAr}
 								else
 									console.log "Error (articles): #{err}"
 									res.end JSON.stringify err
@@ -110,24 +110,20 @@ exports.index = (req,res,next) ->
 
 
 exports.new_get = (req,res,next) ->
-	sections= [
-		{_id:'jkdf33', name: 'Studient Life'}
-		{_id: 'ieuhrg76', name: 'Science'}]
-	issues=
-		0:[
-			{_id:'sdsdv', name: 'July 2012'}]
-		1: [
-			{_id:'sdsdv', name: 'March 2012'}]
-		2: [{name: 'Web'}]
-	if req.session.message
-		req.session.message.sections = sections
-		req.session.message.issues = issues
+	db.Sections.find().select(
+		title:
+			1
+		slug:
+			1
+	).exec((err, resp) ->
+		if req.session.message
+			req.session.message.sections = resp
 
-		res.render 'edit', req.session.message
-		req.session.message = null
-	else
-		
-		res.render 'edit', {knowsHTML: false, sections: sections, issues: issues} #fix this too
+			res.render 'edit', req.session.message
+			req.session.message = null
+		else
+			res.render 'edit', {knowsHTML: false, sections: resp, author: req.session.user.name} #fix this too
+	)
 
 exports.new_post = (req,res,next) ->
 	err = []
@@ -158,8 +154,8 @@ exports.new_post = (req,res,next) ->
 				req.body.title
 			# issue:
 			# 	req.body.issue #is val and not dsiplay val
-			# section:
-			# 	req.body.section
+			section:
+				req.body.section
 			author:
 				req.body.author
 			publishDate:
@@ -171,7 +167,7 @@ exports.new_post = (req,res,next) ->
 			status:
 				req.body.status
 			publication:
-				req.body.publication
+				2    # change to `req.body.publication` later
 			approvedBy:
 				advisor:
 					req.body.advisorapproval || 0
@@ -239,7 +235,7 @@ exports.view = (req,res,next) ->
 					title:
 						resp.title
 					staff:
-						true
+						req.session.isStaff || false
 					comments:
 						comments
 
@@ -248,7 +244,7 @@ exports.view = (req,res,next) ->
 				else
 					options.resp.date = null
 
-				if options.resp.date and options.resp.date < moment()
+				if resp.publishDate and moment(resp.publishDate) < moment()
 					res.render 'article', options
 				else
 					if req.session.isUser
@@ -292,64 +288,61 @@ exports.comment = (req,res,next) ->
 
 
 exports.edit_get = (req,res,next) ->
-	sections= [
-		{_id:'jkdf33', name: 'Studient Life'}
-		{_id: 'ieuhrg76', name: 'Science'}]
-	issues=
-		torch:[
-			{_id:'sdsdv', name: 'July 2012'}]
-		match: [
-			{_id:'sdsdv', name: 'March 2012'}]
-	if req.session.message
-		req.session.message.sections = sections
-		req.session.message.issues = issues
-
-		res.render 'edit', req.session.message
+	db.Sections.find().select(
+		title:
+			1
+		slug:
+			1
+	).exec((err, sections) ->
 		req.session.message = null
-	else
-		findArticle req.params.slug, false, (err, resp) ->
-			if !err
-				if resp
-					content =
-						title:
-							resp.title
-						author:
-							resp.author
-						body:
-							resp.body[0].body
-						date:
-							if resp.publishDate then moment(resp.publishDate).format("MM-DD-YYYY")
-						issue:
-							resp.issue
-						section:
-							resp.section
-						publication:
-							resp.publication
-						knowsHTML:
-							true
-						lockHTML:
-							resp.lockHTML
-						editing:
-							true
-						sections:
-							sections
-						issues:
-							issues
-						status:
-							resp.status || 0
-						approval:
-							advisor:
-								resp.approvedBy.advisor || 0
-							administration:
-								resp.approvedBy.administration || 0
+		if req.session.message
+			req.session.message.sections = sections
 
-					res.render 'edit', content
+			res.render 'edit', req.session.message
+		else
+			findArticle req.params.slug, false, (err, article) ->
+				if !err
+					if article
+						content =
+							title:
+								article.title
+							author:
+								article.author
+							body:
+								article.body[0].body
+							date:
+								if article.publishDate then moment(article.publishDate).format("MM-DD-YYYY")
+							issue:
+								article.issue
+							section:
+								article.section
+							publication:
+								article.publication
+							knowsHTML:
+								false
+							lockHTML:
+								article.lockHTML
+							editing:
+								true
+							sections:
+								sections
+							# issues:
+							# 	issues
+							status:
+								article.status || 0
+							approval:
+								advisor:
+									article.approvedBy.advisor || 0
+								administration:
+									article.approvedBy.administration || 0
+
+						res.render 'edit', content
+					else
+						res.render 'errors/404', {err: "Article not found"}
 				else
-					res.render 'errors/404', {err: "Article not found"}
-			else
-				console.log "Error (articles): #{err}"
-				res.end JSON.stringify err
-
+					console.log "Error (articles): #{err}"
+					res.end JSON.stringify err
+	)
 
 exports.edit_post = (req,res,next) ->
 	err = []
@@ -453,14 +446,11 @@ findArticle = (slug, update = false, callback) ->
 			1
 		slug:
 			1
-	).exec(
-		if update is true
-			callback(true,true)
-			(err, resp) ->
-				resp.views++
-				resp.save callback(err,resp)
+	).exec((err, resp) ->
+		if update
+			resp.views++
+			resp.save callback(err,resp)
 		else
-			(err, resp) ->
-				callback(err,resp)
+			callback(err,resp)
 	)
 	
