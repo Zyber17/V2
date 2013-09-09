@@ -265,7 +265,7 @@
   }));
 
   photos = new Schema({
-    number: {
+    name: {
       type: Number,
       index: {
         unique: true
@@ -301,7 +301,7 @@
   });
 
   photos.plugin(monguurl({
-    source: 'number',
+    source: 'name',
     target: 'slug'
   }));
 

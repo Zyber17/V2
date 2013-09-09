@@ -151,9 +151,9 @@ else if process.env.NODE_ENV != 'setup'
 
 	app.get '/staff/articles/:slug/photos/upload', auth.requireStaff, photos.view
 
-	app.get "/staff/articles/:slug/photos/upload/signS3/:mime(\\w+\/\\w+)", auth.requireStaff, photos.auth
+	app.get "/staff/articles/:slug/photos/upload/signS3/:mime(\\w+\/\\w+)/:filename", auth.requireStaff, photos.auth
 
-	app.get "/staff/articles/:slug/photos/upload/confirmed/:id(\\d+)", auth.requireStaff, photos.addToDB
+	app.get "/staff/articles/:slug/photos/upload/confirmed/:name", auth.requireStaff, photos.addToDB
 
 	# End Photos
 	# Issues

@@ -1,35 +1,33 @@
-!!!5
-html
-	head
-		title Hi
-		script(src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js")
-		script(src="/js/toS3.js")
-		style.
-			#progress_bar {
-				width: 200px;
-				margin: 10px 0;
-				padding: 3px;
-				border: 1px solid #000;
-				font-size: 14px;
-				clear: both;
-				opacity: 0;
-				-moz-transition: opacity 1s linear;
-				-o-transition: opacity 1s linear;
-				-webkit-transition: opacity 1s linear;
-			}
-			#progress_bar.loading {
-				opacity: 1.0;
-			}
-			#progress_bar .percent {
-				background-color: #99ccff;
-				height: auto;
-				width: 0;
-			}
+extends wrapper
+
+block head
+	script(src="/js/toS3.js")
+	style.
+		#progress_bar {
+			width: 200px;
+			margin: 10px 0;
+			padding: 3px;
+			border: 1px solid #000;
+			font-size: 14px;
+			clear: both;
+			opacity: 0;
+			-moz-transition: opacity 1s linear;
+			-o-transition: opacity 1s linear;
+			-webkit-transition: opacity 1s linear;
+		}
+		#progress_bar.loading {
+			opacity: 1.0;
+		}
+		#progress_bar .percent {
+			background-color: #99ccff;
+			height: auto;
+			width: 0;
+		}
 			
-	body
-		noscript
-			.error You must have JavaScript enabled to use this
-		input#files(name="filelist[]", type="file", multiple="multiple")
-		input#submit(type="Submit", onclick="handleFileSelect()")
-		#progress_bar
-			.percent 0%
+block content
+	noscript
+		.error You must have JavaScript enabled to use this
+	input#files(name="filelist[]", type="file", multiple="multiple")
+	input#submit(type="Submit", onclick="handleFileSelect()")
+	#progress_bar
+		.percent 0%
