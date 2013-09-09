@@ -1,0 +1,30 @@
+mixin rotator(item)
+	a(href=item.slug)
+		.outside
+			.img
+				h3= item.title
+				img(src=item.photo)
+			.text
+				div.body
+					p= item.body
+				.more
+					span Read More
+
+	//-
+		ul.list
+			each item,i in items
+				li(class=(i == 0 ? 'selected' : ''))
+					a(href=item.slug)
+						.top
+							h3= item.title
+							article!= item.body
+						.bottom
+							.floatfix
+								.info
+									span.by by #{item.author}
+									|  on 
+									time(datetime=item.date.robot)= item.date.human
+									//-
+										|  in 
+										span.section= item.section
+								.more Read More

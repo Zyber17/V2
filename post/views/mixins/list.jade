@@ -2,9 +2,21 @@ mixin list(items)
 	ul.list
 		each item in items
 			li
-				.top
-					a(href=item.slug)= item.title
-					|  
-					span.by by #{item.author}
-				.date. Published
-					time(datetime=item.date.robot)= item.date.human
+				a(href=item.slug)
+					.top
+						.sixty
+							h3= item.title
+							article!= item.body
+						-if(item.photo)
+							.preview
+								img(src=item.photo)
+					.bottom
+						.floatfix
+							.info
+								span.by by #{item.author}
+								|  on 
+								time(datetime=item.date.robot)= item.date.human
+								//-
+									|  in 
+									span.section= item.section
+							.more Read More
