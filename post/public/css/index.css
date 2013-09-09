@@ -1,0 +1,164 @@
+body {
+	background: #ffffff;
+	font-family:Avenir,'OpenHelvetica Neue',Helvetica,Arial,Verdana,sans-serif;
+	color: #233947;
+}
+a:link, a:visited { color: teal; text-decoration: none; }
+a:active {  }
+#wrapper {
+	position: relative;
+	max-width: 1024px;
+	margin: 0 auto;
+}
+
+#header {
+	background: #efbc8b;
+	height: 139px;
+	padding: 20px 0;
+}
+	#header h1 a {
+		display: block;
+		text-indent: -9999px;
+		background-image: url('../images/logo.png');
+		background-repeat: no-repeat;
+		background-position: center center;
+		height:139px;
+	}
+	.bar {
+		background: #e97747;
+		color: #fff;
+		text-transform: uppercase;
+		font-weight: bold;
+		text-align: center;
+		font-size: 22px;
+		padding: 15px 0;
+	}
+#rotator {
+	position: relative;
+	width: 1024px;
+	margin: 0 auto;
+	
+}
+#rotator .img, #rotator .img img{
+	height: 400px;
+}
+	#rotator .img {
+		width: 600px;
+		overflow: hidden;
+	}
+	#rotator .img h3{
+		position: absolute;
+		top: 25px;
+		width: 600px;
+		text-align: center;
+		text-shadow: 0 0 6px #000;
+		text-transform: uppercase;
+		font-weight: bold;
+		font-size: 28px;
+		color: #fff
+	}
+#rotator a:link .text, #rotator a:visited .text {
+	background: #7f7f7f;
+	color: #fff;
+	font-size: 18px;
+	font-style: italic;
+	display: block;
+	height: 60px;
+	overflow: hidden;
+}
+	#rotator a:link .text div, #rotator a:visited .text div{
+		float: left;
+		height: 60px;
+	}
+		#rotator a:link .text div.body, #rotator a:visited .text div.body{
+			width: 824px;
+			border-right: 1px solid #fff;
+		}
+			#rotator a:link .text div.body p, #rotator a:visited .text div.body p{
+				margin: 15px 30px;
+				height: 36px;
+				font-size: 18px;
+				overflow: hidden;
+			}
+		#rotator a:link .text div.more span, #rotator a:visited .text div.more span{
+			display: block;
+			margin: 20px 0;
+			text-transform: uppercase;
+			font-weight: bold;
+			font-size: 20px;
+			text-align: center;
+			width: 199px;
+			font-style: normal;
+		}
+	#recent h2 {
+		color: #e97747;
+		text-transform: uppercase;
+		font-weight: bold;
+		font-style: italic;
+		font-size: 22px;
+		padding: 15px 0 15px 30px;
+	}
+	#recent ul li {
+		margin-bottom: 30px;
+	}
+		#recent ul li a:link, #recent ul li a:visited {
+			display: block;
+			color: #fff;
+		}
+			#recent ul li a:link .top, #recent ul li a:visited .top{
+				background: #e97747;
+				padding-left: 30px;
+				height: 15 0px;
+				height: 150px;
+			}
+				#recent ul li a:link .top h3, #recent ul li a:visited .top h3{
+					font-weight: bold;
+					font-style: italic;
+					font-size: 17px;
+					margin-bottom: 10px
+				}
+			#recent ul li a:link .top .sixty, #recent ul li a:visited .top .sixty{
+				float: left;
+				width: 60%;
+				margin-top: 15px;
+				margin-bottom: 10px;
+			}
+			#recent ul li a:link .top .preview, #recent ul li a:visited .top .preview{
+				float: right;
+				width: 38%;
+				max-height: 150px;
+				overflow: hidden;
+			}
+				#recent ul li a:link .top .preview img, #recent ul li a:visited .top .preview img{
+				max-height: 150px;
+				float: right;
+			}
+			#recent ul li a:link .bottom, #recent ul li a:visited .bottom{
+				background: #fff;
+				color: #233947;
+				font-style: italic;
+				height: 30px;
+				clear: both;
+			}
+				#recent ul li a:link .bottom .floatfix, #recent ul li a:visited .bottom .floatfix {
+					float: right;
+				}
+					#recent ul li a:link .bottom .floatfix div, #recent ul li a:visited .bottom .floatfix div{
+						float: left;
+
+					}
+						#recent ul li a:link .bottom .floatfix div.info, #recent ul li a:visited .bottom .floatfix div.info{
+							margin-top: 10px;
+						}
+						#recent ul li a:link .bottom .floatfix div.more, #recent ul li a:visited .bottom .floatfix div.more{
+							margin-left: 20px;
+							color: #fff;
+							background: #e97747;
+							text-transform: uppercase;
+							padding: 10px;
+						}
+#footer {
+	background: #efbc8b;
+	padding: 20px 0;
+	text-align: center;
+}
