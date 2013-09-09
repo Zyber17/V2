@@ -247,7 +247,7 @@ articles.plugin monguurl
 #End Articles
 
 photos = new Schema
-	number:
+	name:
 		type: Number
 		index:
 			unique: true
@@ -280,7 +280,7 @@ photos = new Schema
 
 
 photos.plugin monguurl
-    source: 'number'
+    source: 'name'
     target: 'slug'
 
 
