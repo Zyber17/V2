@@ -2,6 +2,7 @@ db = require '../db'
 moment = require 'moment'
 marked = require 'marked'
 string = require 'string'
+htmlToText = require 'html-to-text'
 R = require 'rss'
 
 marked.setOptions
@@ -31,6 +32,8 @@ exports.index = (req,res,next) ->
 		author:
 			1
 		slug:
+			1
+		photos:
 			1}
 	).sort('-publishDate'
 	).limit(3
@@ -42,17 +45,22 @@ exports.index = (req,res,next) ->
 					for article, i in recent
 						recentAr[i] =
 							body:
-								string(article.body[0].body).truncate(250).s
+								string(htmlToText.fromString(article.body[0].body)).truncate(250).s
 							author:
 								article.author
 							title:
-								article.title
+								string(article.title).truncate(75).s
 							date:
-								moment(article.publishDate).format("MMMM D, YYYY")
-							exactDate:
-								moment(article.publishDate).toISOString().split('T')[0]
+								human:
+									moment(article.publishDate).format("MMM. D, YYYY")
+								robot:
+									moment(article.publishDate).toISOString().split('T')[0]
 							slug:
 								"/articles/#{article.slug}/"
+							section:
+								JSON.stringify(article.section)
+							photo:
+								if article.photos[0] then "http://s3.amazonaws.com/V2_test/#{article._id}/#{article.photos[0].name}"
 
 						db.Articles.find(
 							{publishDate:
@@ -82,15 +90,16 @@ exports.index = (req,res,next) ->
 										for article, i in rotator
 											rotatorAr[i] =
 												body:
-													string(article.body[0].body).truncate(250).s
+													string(htmlToText.fromString(article.body[0].body)).truncate(250).s
 												author:
 													article.author
 												title:
-													article.title
+													string(article.title).truncate(75).s
 												date:
-													moment(article.publishDate).format("MMMM D, YYYY")
-												exactDate:
-													moment(article.publishDate).toISOString().split('T')[0]
+													human:
+														moment(article.publishDate).format("MMM. D, YYYY")
+													robot:
+														moment(article.publishDate).toISOString().split('T')[0]
 												slug:
 													"/articles/#{article.slug}/"
 
@@ -148,7 +157,9 @@ exports.new_post = (req,res,next) ->
 				req.body.administrationapproval || 0
 		res.redirect '/'
 	else
-
+		# db.Sections.findOne(_id: req.body.section).exec((err, resp) ->
+		# 	if !err
+		# 		if resp
 		newArticle = new db.Articles
 			title:
 				req.body.title
@@ -188,6 +199,12 @@ exports.new_post = (req,res,next) ->
 			else
 	        	console.log "Error (articles): #{err}"
 				res.end JSON.stringify err
+		# 		else
+		# 			res.render 'errors/404', {err: "Section not found"}
+		# 	else
+		# 		console.log "Error (articles): #{err}"
+		# 		res.end JSON.stringify err
+		# )
 
 exports.view = (req,res,next) ->	
 	update = true
@@ -238,6 +255,8 @@ exports.view = (req,res,next) ->
 						req.session.isStaff || false
 					comments:
 						comments
+					photo:
+						if resp.photos[0] then "http://s3.amazonaws.com/V2_test/#{resp._id}/#{resp.photos[0].name}"
 
 				if resp.publishDate
 					options.resp.date = moment(resp.publishDate).format("MMMM D, YYYY")
@@ -445,6 +464,10 @@ findArticle = (slug, update = false, callback) ->
 		views:
 			1
 		slug:
+			1
+		photos:
+			1
+		section:
 			1
 	).exec((err, resp) ->
 		if update

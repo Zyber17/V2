@@ -31,7 +31,8 @@
     "string": "~1.5.0",
     "bcrypt": "~0.7.6",
     "cson": "~1.4.2",
-    "connect-redis": "~1.4.5"
+    "connect-redis": "~1.4.5",
+    "html-to-text": "0.0.6"
   },
   "engines": {
     "node": ">=0.10.11"
