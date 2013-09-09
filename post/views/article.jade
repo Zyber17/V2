@@ -7,7 +7,9 @@ block content
 		aside
 			ul
 				li
-					a(href='edit') Edit
+					a(href="/staff/articles/#{resp.slug}/edit/") Edit
+				li
+					a(href="/staff/articles/#{resp.slug}/photos/upload/") Upload photos
 				li
 					form#form(method="post", action='delete', enctype="multipart/form-data")
 						input#delete(type="hidden", name="delete", value="true")
@@ -17,7 +19,7 @@ block content
 	-if (resp.date)
 		h2= 'on '+resp.date
 	include includes/fb
-	article!= body
+	article!= (photo ? "<img src='"+photo+"'/>" : '')+body
 	-if (staff)
 		aside.views This article has been viewed #{resp.views} time#{resp.views != 1 ? 's' : ''}
 		div#revisions

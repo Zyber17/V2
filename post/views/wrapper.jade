@@ -4,47 +4,55 @@ html
 		title= (title ? title+ ' | ' : '') + 'Pine View Torch'
 		script(src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js")
 		meta(name='viewport', content='initial-scale=1.0, maximum-scale=1.0, user-scalable=0')
-		//-link(rel='stylesheet', href='/stylesheets/type.css')
+		<link href='http://fonts.googleapis.com/css?family=Open+Sans:400italic,700italic,400,700' rel='stylesheet' type='text/css'>
+		link(rel='stylesheet', href='/css/reset.css')
+		link(rel='stylesheet', href='/css/index.css')
 		block head
+		<!--[if IE]>
+		<script src="http://ie7-js.googlecode.com/svn/version/2.1(beta4)/IE9.js"></script>
+		<![endif]-->
 	body
 		#wrapper
 			header#header
-				h1 The Torch
-				ul
-					li
-						form
-							input(type="text", placeholder='Search…')
-							input(type='submit') Go
-					li
-						a(href='/issues/') Read the print edition online
-				-if(sections)
-					nav#nav
-						ul
-							each section in sections
-								li
-									a(href='/#section}') section
+				h1
+					a(href="/") The Torch
+				//-
+					ul
+						li
+							form
+								input(type="text", placeholder='Search…')
+								input(type='submit') Go
+						li
+							a(href='/issues/') Read the print edition online
+					-if(sections)
+						nav#nav
+							ul
+								each section in sections
+									li
+										a(href='/#section}') section
+			.bar
+				h2 Plese pardon our dust as we remodel
 			#content
 				-if(_err)
 					each error in _err
 						h2.error= error
 				block content
 			footer#footer
-				#login
-					ul
-						//- - if (logged.in)
-						//- 	- if (logged.staff)
-						//- 		li
-						//- 			a(href='/staff/') Staff Panel
-						//- 	li
-						//- 		a(href='/settings/') Settings
-						//- 	li
-						//- 		a(href='/logout/') Log out
-						//- - else
-						//- 	li
-						//- 		a(href='/login/') Log in
+				//-
+					#login
+						ul
+							- if (logged.user)
+								- if (logged.staff)
+									li
+										a(href='/staff/') Staff Panel
+								li
+									a(href='/settings/') Settings
+								li
+									a(href='/logout/') Log out
+							- else
+								li
+									a(href='/login/') Log in
 				#copyright
 					p All content, unless otherwise noted, is the property of the Pine View Torch &copy; 
 						= new Date().getFullYear()
-		//-Add this later
-		//-include includes/ga
 

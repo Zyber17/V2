@@ -1,16 +1,15 @@
 extends wrapper
 include mixins/list
+include mixins/rotator
 
 block content
 	#rotator
-		//- mixin rotator(items)
+		+rotator(recentAr[0])
 	#lists
 		//- c stands for column. Columns are labeled c[number] and stuff regating columns start with c_ (e.g. c_small, c_large)
-		.c1
-			.c_title
-				h2 Recent
-				span
-					//- not final yet
+		#recent
+			h2 Recent Stories
+				//-
 					a.rss(href='/rss') Subscribe
 			+list(recentAr)
 		//- .c2
