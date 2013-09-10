@@ -3,7 +3,6 @@ moment = require 'moment'
 marked = require 'marked'
 string = require 'string'
 htmlToText = require 'html-to-text'
-R = require 'rss'
 
 marked.setOptions
 	gfm:
