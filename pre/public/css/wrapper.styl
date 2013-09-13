@@ -1,0 +1,44 @@
+@import helpers
+
+body
+	background #fff
+	font-family $fontSans
+	color $black
+
+a
+	&:link, &:visited
+		color teal
+		text-decoration none
+	&:active
+		color blue
+
+#wrapper
+	position relative
+	max-width $bodyWidth
+	margin 0 auto
+
+#header
+	background: $lightOrange
+	height 139px
+	padding 20px 0
+	h1 a
+		display block
+		hideText()
+		background-image url('../images/logo.png')
+		background-repeat no-repeat
+		background-position center center
+		height @height
+
+.bar
+	background $darkOrange
+	color #fff
+	text-transform uppercase
+	font-weight bold
+	text-align center
+	font-size 22px
+	padding 15px 0
+
+#footer 
+	background $lightOrange
+	padding 20px 0
+	text-align center
