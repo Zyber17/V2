@@ -1,0 +1,45 @@
+body {
+  background: #fff;
+  font-family: Avenir, 'Open Sans', 'Helvetica Neue', Helvetica, Arial, Verdana, sans-serif;
+  color: #233947;
+}
+a:link,
+a:visited {
+  color: #008080;
+  text-decoration: none;
+}
+a:active {
+  color: #00f;
+}
+#wrapper {
+  position: relative;
+  max-width: 1024px;
+  margin: 0 auto;
+}
+#header {
+  background: #efbc8b;
+  height: 139px;
+  padding: 20px 0;
+}
+#header h1 a {
+  display: block;
+  text-indent: -9999px;
+  background-image: url("../images/logo.png");
+  background-repeat: no-repeat;
+  background-position: center center;
+  height: 139px;
+}
+.bar {
+  background: #e97747;
+  color: #fff;
+  text-transform: uppercase;
+  font-weight: bold;
+  text-align: center;
+  font-size: 22px;
+  padding: 15px 0;
+}
+#footer {
+  background: #efbc8b;
+  padding: 20px 0;
+  text-align: center;
+}

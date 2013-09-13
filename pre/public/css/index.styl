@@ -1,0 +1,98 @@
+@import helpers
+
+#rotator
+	position relative
+	width $bodyWidth
+	margin 0 auto
+	img, .img img
+		height: 400px
+	.img
+		width 600px
+		overflow hidden
+		h3
+			position absolute
+			top 25px
+			width @width
+			text-align: center
+			text-shadow: 0 0 6px #000
+			headerText false
+			font-size 28px
+			color #fff
+	a:link .text, a:visited .text
+		background #7f7f7f
+		color #fff
+		font-size 18px
+		font-style italic
+		display block
+		height 60px
+		overflow hidden
+		div
+			float left
+			height @height
+			&.body
+				width ($bodyWidth - 200px)
+				border-right 1px solid #fff
+				p
+					margin 15px 30px
+					height 36px
+					font-size 18px
+					overflow hidden
+			&.more span
+				display block
+				margin 20px 0
+				headerText false
+				font-size 20px
+				text-align center
+				width 199px
+				font-style normal
+#recent
+	h2
+		color $darkOrange
+		headerText(true)
+		font-size 22px
+		padding 15px 0 15px 30px
+	ul li
+		margin-bottom 30px
+		a:link, a:visited
+			display block
+			color #fff
+			.top
+				background $darkOrange
+				padding-left 30px
+				height 150px
+				h3
+					font-weight bold
+					font-style italic
+					font-size 17px
+					margin-bottom 10px
+				.sixty
+					float left
+					width 60%
+					margin-top 15px
+					margin-bottom 10px
+				.preview
+					float right
+					width 38%
+					max-height @height
+					overflow hidden
+					img
+						max-height @height
+						float right
+			.bottom
+				background #fff
+				color $black
+				font-style italic
+				height 30px
+				clear both
+				.floatfix
+					float right
+					div
+						float left
+						&.info
+							margin-top 10px
+						&.more
+							margin-left 20px
+							color #fff
+							background $darkOrange
+							text-transform uppercase
+							padding: 10px
