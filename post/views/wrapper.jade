@@ -1,3 +1,4 @@
+include mixins/style
 !!!5
 html
 	head
@@ -5,8 +6,7 @@ html
 		script(src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js")
 		meta(name='viewport', content='initial-scale=1.0, maximum-scale=1.0, user-scalable=0')
 		<link href='http://fonts.googleapis.com/css?family=Open+Sans:400italic,700italic,400,700' rel='stylesheet' type='text/css'>
-		link(rel='stylesheet', href='/css/reset.css')
-		link(rel='stylesheet', href='/css/index.css')
+		+style(['reset','wrapper'])
 		block head
 		<!--[if IE]>
 		<script src="http://ie7-js.googlecode.com/svn/version/2.1(beta4)/IE9.js"></script>
@@ -29,7 +29,7 @@ html
 							ul
 								each section in sections
 									li
-										a(href='/#section}') section
+										a(href='/#{section}') section
 			.bar
 				h2 Plese pardon our dust as we remodel
 			#content
