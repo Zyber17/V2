@@ -1,7 +1,11 @@
 extends wrapper
+include mixins/style
 include mixins/list
 include mixins/rotator
 
+
+block head
+	+style(['index'])
 block content
 	#rotator
 		+rotator(recentAr[0])

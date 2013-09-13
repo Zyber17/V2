@@ -1,4 +1,9 @@
 extends wrapper
+include mixins/style
+
+
+block head
+	+style(['article'])
 
 block content
 	-if (msg)
