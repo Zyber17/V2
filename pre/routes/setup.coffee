@@ -1,4 +1,4 @@
-db = require('../db')
+db = require '../db'
 
 
 module.exports = (callback) ->
