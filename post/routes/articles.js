@@ -46,7 +46,7 @@
               author: article.author,
               title: string(article.title).truncate(75).s,
               date: {
-                human: moment(article.publishDate).format("MMM. D, YYYY"),
+                human: moment(article.publishDate).format("MMM D, YYYY"),
                 robot: moment(article.publishDate).toISOString().split('T')[0]
               },
               slug: "/articles/" + article.slug + "/",
@@ -78,7 +78,7 @@
                       author: article.author,
                       title: string(article.title).truncate(75).s,
                       date: {
-                        human: moment(article.publishDate).format("MMM. D, YYYY"),
+                        human: moment(article.publishDate).format("MMM D, YYYY"),
                         robot: moment(article.publishDate).toISOString().split('T')[0]
                       },
                       slug: "/articles/" + article.slug + "/"
@@ -226,7 +226,11 @@
             body: resp.body[0].body,
             versions: versions.reverse(),
             resp: resp,
-            msg: '',
+            date: {
+              human: moment(resp.publishDate).format("MMM D, YYYY"),
+              robot: moment(resp.publishDate).toISOString().split('T')[0]
+            },
+            msg: null,
             title: resp.title,
             staff: req.session.isStaff || false,
             comments: comments,
