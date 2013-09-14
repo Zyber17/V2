@@ -51,7 +51,7 @@ exports.index = (req,res,next) ->
 								string(article.title).truncate(75).s
 							date:
 								human:
-									moment(article.publishDate).format("MMM. D, YYYY")
+									moment(article.publishDate).format("MMM D, YYYY")
 								robot:
 									moment(article.publishDate).toISOString().split('T')[0]
 							slug:
@@ -96,7 +96,7 @@ exports.index = (req,res,next) ->
 													string(article.title).truncate(75).s
 												date:
 													human:
-														moment(article.publishDate).format("MMM. D, YYYY")
+														moment(article.publishDate).format("MMM D, YYYY")
 													robot:
 														moment(article.publishDate).toISOString().split('T')[0]
 												slug:
@@ -246,8 +246,13 @@ exports.view = (req,res,next) ->
 						versions.reverse()
 					resp:
 						resp
+					date:
+						human:
+							moment(resp.publishDate).format("MMM D, YYYY")
+						robot:
+							moment(resp.publishDate).toISOString().split('T')[0]
 					msg:
-						''
+						null
 					title:
 						resp.title
 					staff:

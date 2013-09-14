@@ -27,6 +27,7 @@ if cluster.isMaster
 else if process.env.NODE_ENV != 'setup'
 	express    =  require 'express'
 	http       =  require 'http'
+	moment     =  require 'moment'
 	path       =  require 'path'
 	RedisStore =  require('connect-redis')(express)
 
@@ -64,6 +65,23 @@ else if process.env.NODE_ENV != 'setup'
 					new RedisStore
 				secret:
 					'***REMOVED***'
+		)
+
+		moment.lang('en'
+		    monthsShort:[
+		        "Jan."
+		        "Feb."
+		        "March"
+		        "April"
+		        "May"
+		        "June"
+		        "July"
+		        "Aug."
+		        "Sept."
+		        "Oct."
+		        "Nov."
+		        "Dec."
+		    ]
 		)
 		
 		app.set 'views', __dirname + '/views'
