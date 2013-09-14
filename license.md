@@ -1,4 +1,5 @@
-The sole distribution rights to this software belong, and will always belong, to [Zackary Corbett](http://zackarycorbett.com/) and [Ed Wellbrook](http://edwellbrook.com/). The [Pine View Torch](http://pineviewtorch.com/) possesses the right to use and modify this copy of the software, but may not distribute, share, or in any way allow any other entity to make use of this software without the explicit consent of both of the software distribution rights owners.
+The sole distribution rights to this software belong, and will always belong, to [Zackary Corbett](http://zackarycorbett.com/).
 
-In other words: the Torch can run the site, change the code, whatever. It just can't sell the software.
-Only Zackary Corbett and Ed Wellbrook get to do that.
+[Ed Wellbrook](http://edwellbrook.com/), [Matthew Dunn-Rankin](https://github.com/Matchu), and [Eugene Ho](http://eugeneho.me/) additionally have the right to use (but not sell or otherwise distribute) the software. Eugene Ho also has the right to display, but not distribute or sell, image assets (files ending in `.png`) on any websites or website pages tied personally to him. The [Pine View Torch](http://pineviewtorch.com/) possesses the right to use and modify this copy of the software, but may not distribute, share, or in any way allow any other entity to make use of this software without the explicit consent of both of the software distribution rights owners.
+
+In other words: The Torch, Ed Wellbrook, Matthew Dunn-Rankin, and Euegene Ho can run the site, change the code, whatever; Eugene Ho can additionaly disply the stuff he designed for Torch on his website. They just can't sell the software — only Zackary Corbett gets to do that.
