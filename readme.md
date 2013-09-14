@@ -1,7 +1,23 @@
 # About V2
 
-Hand coded from the ground up in [Node.js](http://nodejs.org/) via [CoffeeScript](http://coffeescript.org/), the Torch CMS is back and better than ever. Sporting a dashing new look, the next version of the Torch CMS (affectionately called *V2*) aims to fix many of the problems previously experienced. This new version is completely new and shares no code with the previous version of the Torch CMS.
+A [Node.js](http://nodejs.org/) hand coded from the ground up in [CoffeeScript](http://coffeescript.org/), the Torch CMS is back and better than ever. Sporting a dashing new look, the next version of the Torch CMS (affectionately called *V2*) aims to fix previous issues and be more future-proof. This new version is completely new and shares no code with the previous version of the Torch CMS (V1).
 
 ## Roadmap
 
-Do everything.
+* Style the website
+* Add briefs
+* Add upcoming events
+* Make the rotator rotate
+* Allow stories to be marked as rotator stories
+* Allow photos to be marked as either rotator or article preview
+* Add temperature metric
+* Display sections on index
+	* Have individual sections pages
+* Have public user pages
+* Allow users to change their password'
+	* Add a force–change password upon login function.
+* Display article version differences
+* Add planner support
+	* Add staff report support
+* Distribute PDFs of physical issues
+* Add search everywhere
