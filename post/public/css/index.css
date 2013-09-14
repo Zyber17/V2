@@ -1,6 +1,6 @@
 #rotator {
   position: relative;
-  max-width: 1024px;
+  width: 1024px;
   margin: 0 auto;
 }
 #rotator img,
@@ -8,13 +8,13 @@
   height: 400px;
 }
 #rotator .img {
-  max-width: 600px;
+  width: 600px;
   overflow: hidden;
 }
 #rotator .img h3 {
   position: absolute;
   top: 25px;
-  max-width: 600px;
+  width: 600px;
   text-align: center;
   text-shadow: 0 0 6px #000;
   text-transform: uppercase;
@@ -36,15 +36,10 @@
 #rotator a:visited .text div {
   float: left;
   height: 60px;
-  -webkit-box-sizing: border-box;
-  -moz-box-sizing: border-box;
-  -ms-box-sizing: border-box;
-  -o-box-sizing: border-box;
-  box-sizing: border-box;
 }
 #rotator a:link .text div.body,
 #rotator a:visited .text div.body {
-  width: 80%;
+  width: 824px;
   border-right: 1px solid #fff;
 }
 #rotator a:link .text div.body p,
@@ -54,10 +49,6 @@
   font-size: 18px;
   overflow: hidden;
 }
-#rotator a:link .text div.more,
-#rotator a:visited .text div.more {
-  width: 20%;
-}
 #rotator a:link .text div.more span,
 #rotator a:visited .text div.more span {
   display: block;
@@ -66,6 +57,7 @@
   font-weight: bold;
   font-size: 20px;
   text-align: center;
+  width: 199px;
   font-style: normal;
 }
 #recent h2 {
