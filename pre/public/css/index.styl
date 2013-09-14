@@ -2,17 +2,17 @@
 
 #rotator
 	position relative
-	width $bodyWidth
+	max-width $bodyWidth
 	margin 0 auto
 	img, .img img
 		height: 400px
 	.img
-		width 600px
+		max-width 600px
 		overflow hidden
 		h3
 			position absolute
 			top 25px
-			width @width
+			max-width @max-width
 			text-align: center
 			text-shadow: 0 0 6px #000
 			headerText false
@@ -29,22 +29,24 @@
 		div
 			float left
 			height @height
+			borderBox()
 			&.body
-				width ($bodyWidth - 200px)
+				width 80%
 				border-right 1px solid #fff
 				p
 					margin 15px 30px
 					height 36px
 					font-size 18px
 					overflow hidden
-			&.more span
-				display block
-				margin 20px 0
-				headerText false
-				font-size 20px
-				text-align center
-				width 199px
-				font-style normal
+			&.more
+				width 20%
+				span
+					display block
+					margin 20px 0
+					headerText false
+					font-size 20px
+					text-align center
+					font-style normal
 #recent
 	h2
 		color $darkOrange
