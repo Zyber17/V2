@@ -19,10 +19,13 @@ block content
 					form#form(method="post", action='delete', enctype="multipart/form-data")
 						input#delete(type="hidden", name="delete", value="true")
 						button#submit(type="submit") Delete
-	h1= resp.title
-	h2= 'by '+resp.author
-	-if (resp.date)
-		h2= 'on '+resp.date
+	.meta
+		h1= resp.title
+		h2= 'by '+resp.author
+		-if (date)
+			h2
+				| on 
+				time(datetime=date.robot)= date.human
 	include includes/fb
 	article!= (photo ? "<img src='"+photo+"'/>" : '')+body
 	-if (staff)
