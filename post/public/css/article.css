@@ -2,6 +2,9 @@
   width: 800px;
   margin: 40px auto;
 }
+#content .meta {
+  margin-bottom: 20px;
+}
 #content .meta ul {
   margin-bottom: 10px;
   height: 16px;

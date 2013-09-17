@@ -30,8 +30,9 @@ block content
 					h2.pubdate
 						| on 
 						time(datetime=date.robot)= date.human
+			li.facebook
+				include includes/fb
 		h1= resp.title
-	include includes/fb
 	article!= (photo ? "<img src='"+photo+"'/>" : '')+body
 	-if (staff)
 		aside.views This article has been viewed #{resp.views} time#{resp.views != 1 ? 's' : ''}
