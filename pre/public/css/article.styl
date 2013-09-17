@@ -1,2 +1,35 @@
 @import helpers
 
+#content
+	width 800px
+	margin 40px auto
+	.meta
+		ul
+			margin-bottom 10px
+			height 16px
+			li
+				float left
+				padding-right 10px
+				display block
+				color $darkGrey
+				font-weight 500
+				h2.author, h2.pubdate
+					&:before
+						content "•"
+						padding-right 10px
+		h1
+			display block
+			clear both
+			headerText true
+			font-size $lgText
+			color $darkOrange
+	article
+		line-height 1.6
+		p
+			margin-bottom 20px
+		img
+			float right
+			width 400px
+			border 2px solid $darkGrey
+			// padding 10px
+			margin 0 0 20px 20px

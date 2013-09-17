@@ -20,12 +20,17 @@ block content
 						input#delete(type="hidden", name="delete", value="true")
 						button#submit(type="submit") Delete
 	.meta
+		ul
+			li
+				h2.section in COWS
+			li
+				h2.author= 'by '+resp.author
+			-if (date)
+				li
+					h2.pubdate
+						| on 
+						time(datetime=date.robot)= date.human
 		h1= resp.title
-		h2= 'by '+resp.author
-		-if (date)
-			h2
-				| on 
-				time(datetime=date.robot)= date.human
 	include includes/fb
 	article!= (photo ? "<img src='"+photo+"'/>" : '')+body
 	-if (staff)
