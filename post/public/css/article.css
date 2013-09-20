@@ -1,27 +1,28 @@
 #content {
-  width: 800px;
+  max-width: 800px;
   margin: 40px auto;
 }
-#content .meta {
-  margin-bottom: 20px;
-}
-#content .meta ul {
+#content .meta .metaTop ul {
   margin-bottom: 10px;
   height: 16px;
 }
-#content .meta ul li {
+#content .meta .metaTop ul li {
   float: left;
   padding-right: 10px;
   display: block;
   color: #838383;
   font-weight: 500;
 }
-#content .meta ul li h2.author:before,
-#content .meta ul li h2.pubdate:before {
+#content .meta .metaTop ul li h2.author:before,
+#content .meta .metaTop ul li h2.pubdate:before {
   content: "•";
   padding-right: 10px;
 }
-#content .meta h1 {
+#content .meta .metaBottom h1,
+#content .meta .metaBottom ul {
+  float: left;
+}
+#content .meta .metaBottom h1 {
   display: block;
   clear: both;
   text-transform: uppercase;
@@ -29,8 +30,37 @@
   font-style: italic;
   font-size: 28px;
   color: #e97747;
+  width: 85%;
+  margin-right: 4%;
+}
+#content .meta .metaBottom ul {
+  width: 11%;
+}
+#content .meta .metaBottom ul li {
+  clear: both;
+  color: #838383;
+  font-weight: 500;
+  height: 16px;
+}
+#content .meta .metaBottom ul li.tempature {
+  margin-bottom: 3px;
+}
+#content .meta .metaBottom ul li .flame,
+#content .meta .metaBottom ul li span {
+  float: left;
+}
+#content .meta .metaBottom ul li .flame {
+  background-image: url("/images/heat.png");
+  background-size: 10.3125px 15px;
+  background-repeat: no-repeat;
+  height: 15px;
+  width: 10.3125px;
+  display: block;
+  padding-right: 5px;
 }
 #content article {
+  padding-top: 20px;
+  clear: both;
   line-height: 1.6;
 }
 #content article p {

@@ -1,11 +1,10 @@
 @import helpers
 
 #content
-	width 800px
+	max-width 800px
 	margin 40px auto
 	.meta
-		margin-bottom 20px
-		ul
+		.metaTop ul
 			margin-bottom 10px
 			height 16px
 			li
@@ -18,13 +17,36 @@
 					&:before
 						content "•"
 						padding-right 10px
-		h1
-			display block
-			clear both
-			headerText true
-			font-size $lgText
-			color $darkOrange
+		.metaBottom
+			h1, ul
+				float left
+			h1
+				display block
+				clear both
+				headerText true
+				font-size $lgText
+				color $darkOrange
+				width 85%
+				margin-right 4%
+
+			ul
+				width 11%
+				li
+					clear both
+					color $darkGrey
+					font-weight 500
+					height 16px
+
+					&.tempature
+						margin-bottom 3px
+					.flame, span
+						float left
+					.flame
+						flameGlyph(15)
+						padding-right 5px
 	article
+		padding-top 20px
+		clear both
 		line-height 1.6
 		p
 			margin-bottom 20px
