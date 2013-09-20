@@ -8,6 +8,7 @@ $darkOrange = #e97747
 $bodyWidth = 1024px
 $lgText = 28px
 
+
 borderRadius()
 	-webkit-border-radius arguments
 	-moz-border-radius arguments
@@ -29,3 +30,11 @@ borderBox()
 	-ms-box-sizing border-box
 	-o-box-sizing border-box
 	box-sizing border-box
+
+flameGlyph(h)
+	background-image url('/images/heat.png')
+	background-size unit((11/16)*h, px) unit(h, px)
+	background-repeat no-repeat
+	height unit(h, px)
+	width unit((11/16)*h, px)
+	display block
