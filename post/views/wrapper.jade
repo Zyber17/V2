@@ -4,7 +4,11 @@ html
 	head
 		title= (title ? title+ ' | ' : '') + 'Pine View Torch'
 		script(src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js")
-		meta(name='viewport', content='initial-scale=1.0, maximum-scale=1.0, user-scalable=0')
+		//- Re-add after mobile responsive
+			meta(name='viewport', content='initial-scale=1.0, maximum-scale=1.0, user-scalable=0')
+		//- Fullscreen iOS stuff
+			meta(name="apple-mobile-web-app-capable", content="yes")
+			meta(name="apple-mobile-web-app-status-bar-style", content="black-translucent")
 		<link href='http://fonts.googleapis.com/css?family=Open+Sans:400italic,700italic,400,700' rel='stylesheet' type='text/css'>
 		+style(['reset','wrapper'])
 		block head
