@@ -24,7 +24,7 @@ a:active {
 #header h1 a {
   display: block;
   text-indent: -9999px;
-  background-image: url("../images/logo.png");
+  background-image: url("/images/logo.png");
   background-repeat: no-repeat;
   background-position: center center;
   height: 139px;
