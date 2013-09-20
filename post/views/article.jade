@@ -41,13 +41,14 @@ block content
 				li.facebook
 					include includes/fb
 		.metaBottom
-			h1= resp.title
 			.metrics
 				ul
 					li.tempature
 						i.flame
 						span 212
 					li.time
+			h1= resp.title
+			
 
 	article!= (photo ? "<img src='"+photo+"'/>" : '')+body
 	-if (staff)
