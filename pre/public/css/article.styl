@@ -3,6 +3,7 @@
 #content
 	max-width 800px
 	margin 40px auto
+	padding 0 20px
 	.meta
 		.metaTop ul
 			margin-bottom 10px
@@ -18,19 +19,17 @@
 						content "•"
 						padding-right 10px
 		.metaBottom
-			h1, ul
-				float left
 			h1
-				display block
-				clear both
+				display inline
 				headerText true
 				font-size $lgText
 				color $darkOrange
-				width 85%
-				margin-right 4%
-
-			ul
-				width 11%
+			.metrics
+				top 0
+				float right
+				width 88px
+				padding-left 32px
+				display inline
 				li
 					clear both
 					color $darkGrey
@@ -48,6 +47,7 @@
 		padding-top 20px
 		clear both
 		line-height 1.6
+		min-height 420px
 		p
 			margin-bottom 20px
 		img
