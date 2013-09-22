@@ -2,10 +2,27 @@
   position: relative;
   max-width: 1024px;
   margin: 0 auto;
+  clear: both;
 }
-#rotator img,
+#rotator .outside {
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  -ms-box-sizing: border-box;
+  -o-box-sizing: border-box;
+  box-sizing: border-box;
+  display: block;
+  max-width: 1024px;
+  position: relative;
+}
+#rotator .img,
 #rotator .img img {
   height: 400px;
+  max-height: 400px;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  -ms-box-sizing: border-box;
+  -o-box-sizing: border-box;
+  box-sizing: border-box;
 }
 #rotator .img {
   max-width: 600px;
@@ -22,44 +39,62 @@
   font-size: 28px;
   color: #fff;
 }
-#rotator a:link .text,
-#rotator a:visited .text {
+#rotator .text {
+  height: 60px;
+}
+#rotator .text a:link,
+#rotator .text a:visited,
+#rotator .text a:hover {
+  overflow: hidden;
+  float: left;
+  height: 60px;
   background: #7f7f7f;
   color: #fff;
   font-size: 18px;
   font-style: italic;
   display: block;
-  height: 60px;
-  overflow: hidden;
+  border-bottom: none;
 }
-#rotator a:link .text div,
-#rotator a:visited .text div {
+#rotator .text a:link div,
+#rotator .text a:visited div,
+#rotator .text a:hover div {
   float: left;
+}
+#rotator .text a:link div.body,
+#rotator .text a:visited div.body,
+#rotator .text a:hover div.body {
   height: 60px;
   -webkit-box-sizing: border-box;
   -moz-box-sizing: border-box;
   -ms-box-sizing: border-box;
   -o-box-sizing: border-box;
   box-sizing: border-box;
-}
-#rotator a:link .text div.body,
-#rotator a:visited .text div.body {
   width: 80%;
   border-right: 1px solid #fff;
 }
-#rotator a:link .text div.body p,
-#rotator a:visited .text div.body p {
-  margin: 15px 30px;
+#rotator .text a:link div.body p,
+#rotator .text a:visited div.body p,
+#rotator .text a:hover div.body p {
+  padding: 13px 30px 0;
   height: 36px;
   font-size: 18px;
   overflow: hidden;
 }
-#rotator a:link .text div.more,
-#rotator a:visited .text div.more {
+#rotator .text a:link div.more,
+#rotator .text a:visited div.more,
+#rotator .text a:hover div.more {
   width: 20%;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  -ms-box-sizing: border-box;
+  -o-box-sizing: border-box;
+  box-sizing: border-box;
+  margin: 0 auto;
 }
-#rotator a:link .text div.more span,
-#rotator a:visited .text div.more span {
+#rotator .text a:link div.more span,
+#rotator .text a:visited div.more span,
+#rotator .text a:hover div.more span {
+  width: 100%;
   display: block;
   margin: 20px 0;
   text-transform: uppercase;
@@ -67,6 +102,98 @@
   font-size: 20px;
   text-align: center;
   font-style: normal;
+}
+#rotator .recentPre {
+  left: 600px;
+  top: 0;
+  height: 400px;
+  position: absolute;
+  max-width: 424px;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  -ms-box-sizing: border-box;
+  -o-box-sizing: border-box;
+  box-sizing: border-box;
+  border-left: 7px solid #7f7f7f;
+}
+#rotator .recentPre h2 {
+  color: #e97747;
+  text-transform: uppercase;
+  font-weight: bold;
+  font-style: italic;
+  font-size: 22px;
+  padding: 15px 0;
+  text-align: center;
+}
+#rotator .recentPre li {
+  height: 116px;
+  display: block;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  -ms-box-sizing: border-box;
+  -o-box-sizing: border-box;
+  box-sizing: border-box;
+  border-top: 7px solid #7f7f7f;
+}
+#rotator .recentPre li.selected .content,
+#rotator .recentPre li:hover .content {
+  background: #cc4d18;
+}
+#rotator .recentPre li a {
+  height: 109px;
+  display: block;
+  max-width: 424px;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  -ms-box-sizing: border-box;
+  -o-box-sizing: border-box;
+  box-sizing: border-box;
+  position: relative;
+}
+#rotator .recentPre li a div {
+  height: 109px;
+  top: 0;
+  max-width: 424px;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  -ms-box-sizing: border-box;
+  -o-box-sizing: border-box;
+  box-sizing: border-box;
+}
+#rotator .recentPre li a div.background {
+  position: absolute;
+  filter: blur(3px);
+  -webkit-filter: blur(3px);
+  -moz-filter: blur(3px);
+  -o-filter: blur(3px);
+  -ms-filter: blur(3px);
+}
+#rotator .recentPre li a div.background .dark {
+  background: #000;
+  opacity: 0.5;
+}
+#rotator .recentPre li a div.content {
+  background: #e97747;
+  color: #fff;
+  padding: 7px;
+  overflow: hidden;
+}
+#rotator .recentPre li a div.content h3 {
+  font-weight: bold;
+  font-style: italic;
+  font-size: 17px;
+  margin-bottom: 7px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+#rotator .recentPre li a div.content article p {
+  line-height: 1.45;
+  height: 73px;
+  overflow: hidden;
+}
+#recent {
+  clear: both;
 }
 #recent h2 {
   color: #e97747;
@@ -90,19 +217,23 @@
   padding-left: 30px;
   height: 150px;
 }
-#recent ul li a:link .top h3,
-#recent ul li a:visited .top h3 {
-  font-weight: bold;
-  font-style: italic;
-  font-size: 17px;
-  margin-bottom: 10px;
-}
 #recent ul li a:link .top .sixty,
 #recent ul li a:visited .top .sixty {
   float: left;
   width: 60%;
   margin-top: 15px;
   margin-bottom: 10px;
+}
+#recent ul li a:link .top .sixty h3,
+#recent ul li a:visited .top .sixty h3 {
+  font-weight: bold;
+  font-style: italic;
+  font-size: 17px;
+  margin-bottom: 5px;
+}
+#recent ul li a:link .top .sixty article p,
+#recent ul li a:visited .top .sixty article p {
+  line-height: 1.5;
 }
 #recent ul li a:link .top .preview,
 #recent ul li a:visited .top .preview {

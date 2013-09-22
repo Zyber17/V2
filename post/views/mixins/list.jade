@@ -6,7 +6,8 @@ mixin list(items)
 					.top
 						.sixty
 							h3= item.title
-							article!= item.body
+							article
+								p!= item.body
 						-if(item.photo)
 							.preview
 								img(src=item.photo)

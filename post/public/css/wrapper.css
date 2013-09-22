@@ -1,3 +1,9 @@
+strong {
+  font-weight: 700;
+}
+em {
+  font-style: italic;
+}
 body {
   background: #fff;
   font-family: Avenir, 'Open Sans', 'Helvetica Neue', Helvetica, Arial, Verdana, sans-serif;
@@ -5,11 +11,15 @@ body {
 }
 a:link,
 a:visited {
-  color: #008080;
+  color: #1688b8;
   text-decoration: none;
 }
+a:hover {
+  border-bottom: 1px dashed #1688b8;
+}
 a:active {
-  color: #00f;
+  color: #104374;
+  border-bottom: 1px dashed #104374;
 }
 #wrapper {
   position: relative;

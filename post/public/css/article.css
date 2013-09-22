@@ -1,6 +1,6 @@
 #content {
   max-width: 800px;
-  margin: 40px auto;
+  margin: 25px auto;
   padding: 0 20px;
 }
 #content .meta .metaTop ul {
@@ -48,16 +48,18 @@
   float: left;
 }
 #content .meta .metaBottom .metrics li .flame {
-  background-image: url("/images/heat.png");
   background-size: 10.3125px 15px;
   background-repeat: no-repeat;
+  background-image: url("/images/heat.png");
   height: 15px;
   width: 10.3125px;
   display: block;
   padding-right: 5px;
 }
+@media screen and (-webkit-min-device-pixel-ratio:1.5) {
+}
 #content article {
-  padding-top: 20px;
+  padding-top: 25px;
   clear: both;
   line-height: 1.6;
   min-height: 420px;
