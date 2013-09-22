@@ -1,12 +1,24 @@
-mixin rotator(item)
-	a(href=item.slug)
-		.outside
-			.img
-				h3= item.title
-				img(src=item.photo)
-			.text
+mixin rotator(rotator,recent)
+	.outside
+		.img
+			a(href=rotator.slug)
+				h3= rotator.title
+				img(src=rotator.photo)
+		.recentPre
+			h2 Featured Stories
+			ul
+				for story, i in recent
+					li(class=(i == 0 ? 'selected' : ''))
+						a(href=story.slug)
+							div.content
+								h3= story.title
+								article
+									p= story.body
+
+		.text
+			a(href=rotator.slug)
 				div.body
-					p= item.body
+					p= rotator.body
 				.more
 					span Read More
 

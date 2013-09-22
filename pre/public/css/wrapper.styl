@@ -1,5 +1,10 @@
 @import helpers
 
+strong
+	font-weight 700
+em
+	font-style italic
+
 body
 	background #fff
 	font-family $fontSans
@@ -7,10 +12,13 @@ body
 
 a
 	&:link, &:visited
-		color teal
+		color invert($darkOrange)
 		text-decoration none
+	&:hover
+		border-bottom 1px dashed invert($darkOrange)
 	&:active
-		color blue
+		color invert($lightOrange)
+		border-bottom 1px dashed invert($lightOrange)
 
 #wrapper
 	position relative

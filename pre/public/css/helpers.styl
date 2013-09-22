@@ -2,18 +2,25 @@ $fontSans = Avenir,'Open Sans','Helvetica Neue',Helvetica,Arial,Verdana,sans-ser
 
 $black = #232323
 $darkGrey = #838383
+$lightGrey = #7f7f7f
 $lightOrange = #efbc8b
 $darkOrange = #e97747
 
 $bodyWidth = 1024px
 $lgText = 28px
 
+bgBlur(radius)
+	filter: blur(unit(radius, px))
+	-webkit-filter: blur(unit(radius, px))
+	-moz-filter: blur(unit(radius, px))
+	-o-filter: blur(unit(radius, px))
+	-ms-filter: blur(unit(radius, px))
 
-borderRadius()
-	-webkit-border-radius arguments
-	-moz-border-radius arguments
-	-o-border-radius arguments
-	border-radius arguments
+borderRadius(radius)
+	-webkit-border-radius radius
+	-moz-border-radius radius
+	-o-border-radius radius
+	border-radius radius
 
 hideText()
 	text-indent: -9999px
@@ -24,6 +31,11 @@ headerText(isItalic)
 	if isItalic
 		font-style italic
 
+ofEllipsis()
+	white-space nowrap
+	overflow hidden
+	text-overflow ellipsis
+
 borderBox()
 	-webkit-box-sizing border-box
 	-moz-box-sizing border-box
@@ -32,9 +44,23 @@ borderBox()
 	box-sizing border-box
 
 flameGlyph(h)
-	background-image url('/images/heat.png')
 	background-size unit((11/16)*h, px) unit(h, px)
 	background-repeat no-repeat
+	if h > 64
+		background-image url('/images/heat@2x.png')
+	else
+		background-image url('/images/heat.png')
 	height unit(h, px)
 	width unit((11/16)*h, px)
 	display block
+	@media screen and (-webkit-min-device-pixel-ratio:1.5)
+		if h <= 64 && h > 32
+			background-image url('/images/heat@2x.png')
+
+// x2img(objectHeight)
+// 	if objectHeight > 64
+// 		background-image url('image@2x.png')
+// 	else
+// 		background-image url('image.png')
+// 		@media screen and (-webkit-min-device-pixel-ratio:1.5)
+// 			background-image url('image@2x.png')
