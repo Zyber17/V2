@@ -114,7 +114,7 @@
   -ms-box-sizing: border-box;
   -o-box-sizing: border-box;
   box-sizing: border-box;
-  border-left: 7px solid #7f7f7f;
+  border-left: 3px solid #efbc8b;
 }
 #rotator .recentPre h2 {
   color: #e97747;
@@ -133,14 +133,14 @@
   -ms-box-sizing: border-box;
   -o-box-sizing: border-box;
   box-sizing: border-box;
-  border-top: 7px solid #7f7f7f;
+  border-top: 1px solid #efbc8b;
 }
 #rotator .recentPre li.selected .content,
 #rotator .recentPre li:hover .content {
-  background: #cc4d18;
+  background: #d9531a;
 }
 #rotator .recentPre li a {
-  height: 109px;
+  height: 115px;
   display: block;
   max-width: 424px;
   -webkit-box-sizing: border-box;
@@ -151,7 +151,7 @@
   position: relative;
 }
 #rotator .recentPre li a div {
-  height: 109px;
+  height: 115px;
   top: 0;
   max-width: 424px;
   -webkit-box-sizing: border-box;
@@ -175,7 +175,7 @@
 #rotator .recentPre li a div.content {
   background: #e97747;
   color: #fff;
-  padding: 7px;
+  padding: 13px;
   overflow: hidden;
 }
 #rotator .recentPre li a div.content h3 {
@@ -189,7 +189,8 @@
 }
 #rotator .recentPre li a div.content article p {
   line-height: 1.45;
-  height: 73px;
+  height: 67px;
+/*17 = @font-size*/
   overflow: hidden;
 }
 #recent {
@@ -201,7 +202,7 @@
   font-weight: bold;
   font-style: italic;
   font-size: 22px;
-  padding: 15px 0 15px 30px;
+  padding: 45px 0 15px 30px;
 }
 #recent ul li {
   margin-bottom: 30px;
@@ -210,6 +211,7 @@
 #recent ul li a:visited {
   display: block;
   color: #fff;
+  border-bottom: none;
 }
 #recent ul li a:link .top,
 #recent ul li a:visited .top {
