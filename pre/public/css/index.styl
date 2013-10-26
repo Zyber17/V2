@@ -71,7 +71,7 @@
 		// width 100%
 		max-width $bodyWidth - 600
 		borderBox()
-		border-left 7px solid $lightGrey
+		border-left 3px solid $lightOrange
 		h2
 			color $darkOrange
 			headerText(true)
@@ -82,10 +82,10 @@
 			height ((@height - 52)/3)
 			display block
 			borderBox()
-			border-top 7px solid $lightGrey
+			border-top 1px solid $lightOrange
 			&.selected, &:hover
 				.content
-					background darken($darkOrange, 25%)
+					background darken($darkOrange, 20%)
 			a
 				height @height - @border-top
 				display block
@@ -106,7 +106,7 @@
 					&.content
 						background $darkOrange
 						color #fff
-						padding 7px
+						padding 13px
 						overflow hidden
 						h3
 							font-weight bold
@@ -116,7 +116,7 @@
 							ofEllipsis()
 						article p
 							line-height 1.45
-							height @height - 14 - 17 - 5
+							height @height - @padding*2 - 17 - 5 /*17 = @font-size*/
 							overflow hidden
 #recent
 	clear both
@@ -124,12 +124,13 @@
 		color $darkOrange
 		headerText(true)
 		font-size 22px
-		padding 15px 0 15px 30px
+		padding 45px 0 15px 30px
 	ul li
 		margin-bottom 30px
 		a:link, a:visited
 			display block
 			color #fff
+			border-bottom none
 			.top
 				background $darkOrange
 				padding-left 30px
