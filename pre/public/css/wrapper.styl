@@ -27,15 +27,31 @@ a
 
 #header
 	background: $lightOrange
-	height 139px
-	padding 20px 0
+	height 181px
+	padding 10px 0
 	h1 a
 		display block
 		hideText()
 		background-image url('/images/logo.png')
 		background-repeat no-repeat
 		background-position center center
-		height @height
+		height @height - 22
+		border-bottom none
+		text-decoration none
+
+	ul
+		margin-top -15px
+		li
+			display block
+			margin 0 auto
+			width 155px
+			a
+				headerText(false)
+				color #fff
+				font-size 22px
+				border-bottom none
+				text-decoration none
+			
 
 .bar
 	background $darkOrange
