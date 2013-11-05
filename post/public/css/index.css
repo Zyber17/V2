@@ -114,7 +114,7 @@
   -ms-box-sizing: border-box;
   -o-box-sizing: border-box;
   box-sizing: border-box;
-  border-left: 3px solid #efbc8b;
+  border-left: 1px solid #efbc8b;
 }
 #rotator .recentPre h2 {
   color: #e97747;
@@ -143,12 +143,8 @@
   height: 115px;
   display: block;
   max-width: 424px;
-  -webkit-box-sizing: border-box;
-  -moz-box-sizing: border-box;
-  -ms-box-sizing: border-box;
-  -o-box-sizing: border-box;
-  box-sizing: border-box;
   position: relative;
+  border-bottom: none;
 }
 #rotator .recentPre li a div {
   height: 115px;
@@ -276,4 +272,8 @@
   background: #e97747;
   text-transform: uppercase;
   padding: 10px;
+}
+#recent ul li a:link .bottom .floatfix div.more:hover,
+#recent ul li a:visited .bottom .floatfix div.more:hover {
+  background: #d9531a;
 }
