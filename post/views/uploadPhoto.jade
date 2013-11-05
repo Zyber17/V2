@@ -27,7 +27,7 @@ block head
 block content
 	noscript
 		.error You must have JavaScript enabled to use this
-	input#files(name="filelist[]", type="file", multiple="multiple")
+	input#files(name="filelist[]", type="file", multiple="multiple", accept="image/png,image/jpg,image/jpeg,image/gif")
 	input#submit(type="Submit", onclick="handleFileSelect()")
 	#progress_bar
 		.percent 0%
