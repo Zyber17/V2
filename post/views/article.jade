@@ -25,7 +25,12 @@ block content
 				li
 					form#form(method="post", action='delete', enctype="multipart/form-data")
 						input#delete(type="hidden", name="delete", value="true")
-						button#submit(type="submit") Delete
+						button#submit(type="submit") Delete Story
+					//- Add comfirm
+				li
+					form#form(method="post", action='photosDelete', enctype="multipart/form-data")
+						input#photosDelete(type="hidden", name="photosDelete", value="true")
+						button#submit(type="submit") Delete Photos
 	.meta
 		.metaTop
 			ul
@@ -43,9 +48,10 @@ block content
 		.metaBottom
 			.metrics
 				ul
-					li.tempature
-						i.flame
-						span 212&deg;
+					//-
+						li.tempature
+							i.flame
+							span 212&deg;
 					li.time
 			h1= resp.title
 			

@@ -164,6 +164,8 @@ else if process.env.NODE_ENV != 'setup'
 
 	app.post '/staff/articles/:slug/delete', auth.requireStaff, articles.remove
 
+	app.post '/staff/articles/:slug/photosDelete', auth.requireStaff, articles.removePhotos
+
 	# End Articles
 	# Photos
 

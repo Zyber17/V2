@@ -438,6 +438,29 @@ exports.remove = (req,res,next) ->
 				console.log "Error (articles): #{err}"
 				res.end JSON.stringify err
 	else
+		res.redirect "/articles/#{resp.slug}/"
+
+exports.removePhotos = (req,res,next) ->
+	if req.body.photosDelete == "true"
+		db.Articles.findOne {
+			slug: req.params.slug
+		}, (err, resp) ->
+			if !err
+				if resp
+					resp.photos = []
+					resp.save (err, resp) ->
+						if !err
+							res.redirect "/staff/articles/#{resp.slug}/" 
+						else
+							console.log "Error (articles): #{err}"
+							res.end JSON.stringify err
+
+				else
+					res.render 'errors/404', {err: "Not found"}	
+			else
+				console.log "Error (articles): #{err}"
+				res.end JSON.stringify err
+	else
 		res.redirect "/articles/#{resp.slug}/" 
 
 findArticle = (slug, update = false, callback) ->
