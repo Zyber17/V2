@@ -87,6 +87,7 @@
     app.get('/staff/articles/:slug/edit', auth.requireStaff, articles.edit_get);
     app.post('/staff/articles/:slug/edit', auth.requireStaff, articles.edit_post);
     app.post('/staff/articles/:slug/delete', auth.requireStaff, articles.remove);
+    app.post('/staff/articles/:slug/photosDelete', auth.requireStaff, articles.removePhotos);
     app.get('/staff/articles/:slug/photos/upload', auth.requireStaff, photos.view);
     app.get("/staff/articles/:slug/photos/upload/signS3/:mime(\\w+\/\\w+)/:filename", auth.requireStaff, photos.auth);
     app.get("/staff/articles/:slug/photos/upload/confirmed/:name", auth.requireStaff, photos.addToDB);

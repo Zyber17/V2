@@ -427,6 +427,37 @@
     }
   };
 
+  exports.removePhotos = function(req, res, next) {
+    if (req.body.photosDelete === "true") {
+      return db.Articles.findOne({
+        slug: req.params.slug
+      }, function(err, resp) {
+        if (!err) {
+          if (resp) {
+            resp.photos = [];
+            return resp.save(function(err, resp) {
+              if (!err) {
+                return res.redirect("/staff/articles/" + resp.slug + "/");
+              } else {
+                console.log("Error (articles): " + err);
+                return res.end(JSON.stringify(err));
+              }
+            });
+          } else {
+            return res.render('errors/404', {
+              err: "Not found"
+            });
+          }
+        } else {
+          console.log("Error (articles): " + err);
+          return res.end(JSON.stringify(err));
+        }
+      });
+    } else {
+      return res.redirect("/articles/" + resp.slug + "/");
+    }
+  };
+
   findArticle = function(slug, update, callback) {
     if (update == null) {
       update = false;
