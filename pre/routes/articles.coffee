@@ -441,6 +441,7 @@ exports.remove = (req,res,next) ->
 		res.redirect "/articles/#{resp.slug}/"
 
 exports.removePhotos = (req,res,next) ->
+	# Removes DB recods of a photo, but does not remove the photo itself from S3
 	if req.body.photosDelete == "true"
 		db.Articles.findOne {
 			slug: req.params.slug
