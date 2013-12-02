@@ -25,21 +25,21 @@ if cluster.isMaster
 			cluster.fork()
 
 else if process.env.NODE_ENV != 'setup'
-	express    =  require 'express'
-	http       =  require 'http'
-	moment     =  require 'moment'
-	path       =  require 'path'
-	RedisStore =  require('connect-redis')(express)
+	express     =  require 'express'
+	http        =  require 'http'
+	moment      =  require 'moment'
+	path        =  require 'path'
+	RedisStore  =  require('connect-redis')(express)
 
-	articles  =  require './routes/articles'
-	auth     =  require './routes/auth'
+	articles   =  require './routes/articles'
+	auth       =  require './routes/auth'
 	# index    =  require './routes/index'
-	issues   =  require './routes/issues'
+	issues     =  require './routes/issues'
 	# search   =  require './routes/search'
-	rss  =  require './routes/rss'
-	sections  =  require './routes/sections'
-	users    =  require './routes/users'
-	photos    =  require './routes/photos'
+	rss        =  require './routes/rss'
+	sections   =  require './routes/sections'
+	users      =  require './routes/users'
+	photos     =  require './routes/photos'
 
 	# staff = []
 	# staff.articles     =  require './routes/staff/articles'
