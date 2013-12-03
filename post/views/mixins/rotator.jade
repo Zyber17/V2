@@ -1,42 +1,30 @@
-mixin rotator(rotator,recent)
+mixin rotator(items)
 	.outside
 		.img
-			a(href=rotator.slug)
-				h3= rotator.title
-				img(src=rotator.photo)
+			ul
+				for item, i in items
+					li(id="ritem#{i}", data-index=i, class=(i == 0 ? 'selected' : ''))
+						div
+							a(href=item.slug)
+								h3= item.title
+								img(src=item.photo)
 		.recentPre
 			h2 Featured Stories
 			ul
-				for story, i in recent
-					li(class=(i == 0 ? 'selected' : ''))
-						a(href=story.slug)
+				for item, i in items
+					li(id="sitem#{i}", data-index=i, class=(i == 0 ? 'selected' : ''))
+						a(href=item.slug)
 							div.content
-								h3= story.title
+								h3= item.title
 								article
-									p= story.body
+									p= item.body
 
 		.text
-			a(href=rotator.slug)
-				div.body
-					p= rotator.body
-				.more
-					span Read More
-
-	//-
-		ul.list
-			each item,i in items
-				li(class=(i == 0 ? 'selected' : ''))
-					a(href=item.slug)
-						.top
-							h3= item.title
-							article!= item.body
-						.bottom
-							.floatfix
-								.info
-									span.by by #{item.author}
-									|  on 
-									time(datetime=item.date.robot)= item.date.human
-									//-
-										|  in 
-										span.section= item.section
-								.more Read More
+			ul
+				for item, i in items
+					li(id="titem#{i}", data-index=i, class=(i == 0 ? 'selected' : ''))
+						a(href=item.slug)
+							div.body
+								p= item.body
+							.more
+								span Read More

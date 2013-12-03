@@ -28,19 +28,40 @@
   max-width: 600px;
   overflow: hidden;
 }
+#rotator .img li {
+  display: none;
+}
+#rotator .img li.selected {
+  display: block;
+}
 #rotator .img h3 {
   position: absolute;
-  top: 25px;
-  max-width: 600px;
+  padding: 15px 0;
+  width: 600px;
   text-align: center;
-  text-shadow: 0 0 6px #000;
+  text-shadow: 0 0 20px #000;
   text-transform: uppercase;
   font-weight: bold;
   font-size: 28px;
   color: #fff;
+  background: rgba(0,0,0,0.4);
 }
 #rotator .text {
   height: 60px;
+  width: 100%;
+}
+#rotator .text ul {
+  width: 100%;
+  height: 60px;
+  display: block;
+}
+#rotator .text ul li {
+  display: none;
+  width: 100%;
+  height: 60px;
+}
+#rotator .text ul li.selected {
+  display: block;
 }
 #rotator .text a:link,
 #rotator .text a:visited,
@@ -48,6 +69,7 @@
   overflow: hidden;
   float: left;
   height: 60px;
+  width: 100%;
   background: #7f7f7f;
   color: #fff;
   font-size: 18px;

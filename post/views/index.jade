@@ -1,14 +1,16 @@
 extends wrapper
 include mixins/style
+include mixins/js
 include mixins/list
 include mixins/rotator
 
 
 block head
 	+style(['index'])
+	+js(['rotator'])
 block content
 	#rotator
-		+rotator(recentAr[0],recentAr)
+		+rotator(recentAr)
 	#lists
 		//- c stands for column. Columns are labeled c[number] and stuff regating columns start with c_ (e.g. c_small, c_large)
 		#recent
