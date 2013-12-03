@@ -17,21 +17,38 @@
 	.img
 		max-width 600px
 		overflow hidden
+		li
+			display none
+			&.selected
+				display block
 		h3
 			position absolute
-			top 25px
-			max-width @max-width
+			padding 15px 0
+			width @max-width
 			text-align: center
-			text-shadow: 0 0 6px #000
+			text-shadow: 0 0 20px #000
 			headerText false
 			font-size $lgText
 			color #fff
+			background rgba(0,0,0,0.4)
 	.text
 		height 60px
+		width 100%
+		ul
+			width @width
+			height @height
+			display block
+			li
+				display none
+				width @width
+				height @height
+				&.selected
+					display block
 		a:link, a:visited, a:hover
 			overflow hidden
 			float left
 			height @height
+			width @width
 			background $lightGrey
 			color #fff
 			font-size 18px
