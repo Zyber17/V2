@@ -5,7 +5,7 @@ Schema   =  mongoose.Schema
 ObjectId =  Schema.ObjectId
 saltWorkFactor = 10
         
-mongoose.connect 'localhost','moar'
+mongoose.connect 'localhost','jffffudfff'
 database = mongoose.connection
 
 database.on 'error', console.error.bind(console, 'connection error:')
@@ -168,14 +168,19 @@ articles = new Schema
 	photos: [photos]
 
 	section:
-		type: ObjectId
+		type: Array
 		ref: 'sections'
+		#this is such a stupid way to do this
 
 	issue:
-		type: ObjectId
+		type: Array
 		ref: 'issues'
 
 	publishDate:
+		type: Date
+		default: null
+
+	lastEditDate: ## Used for sorting articles in lists
 		type: Date
 		default: null
 
@@ -239,6 +244,13 @@ articleBodies = new Schema
 		type: Date
 		default: Date.now
 
+
+articleSections = new Schema
+	title:
+		type: String
+
+	slug:
+		type: String
 
 articles.plugin monguurl
     source: 'title'

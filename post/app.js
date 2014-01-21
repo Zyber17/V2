@@ -73,6 +73,7 @@
     app.post('/login', auth.login_post);
     app.get('/logout', auth.logout);
     app.get('/rss', rss);
+    app.get('/sections/:slug', sections.view);
     /*
     	Staff Stuff
     */

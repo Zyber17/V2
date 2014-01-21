@@ -132,7 +132,7 @@ else if process.env.NODE_ENV != 'setup'
 
 	# app.get '/search/:query', search.search
 
-	# app.get '/section/:name', section.view
+	app.get '/sections/:slug', sections.view
 
 	# app.get '/settings', auth.more, settings.edit.get
 
