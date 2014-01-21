@@ -67,6 +67,10 @@
 #content article p {
   margin-bottom: 20px;
 }
+#content article p cite {
+  color: #7f7f7f;
+  font-size: 0.89em;
+}
 #content article img {
   float: right;
   width: 400px;
