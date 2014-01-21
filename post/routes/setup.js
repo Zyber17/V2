@@ -49,24 +49,12 @@
             }
           }
         }).save(function(err) {
-          var sectionErrs, sectionList, sections, _i, _len;
+          var sectionErrs;
 
           if (err) {
             return callback(err);
           } else {
             sectionErrs = 0;
-            sectionList = ["News", "Entertainment", "Science and Technology", "Humor", "Features", "Opinion", "Sports", "Focus"];
-            for (_i = 0, _len = sectionList.length; _i < _len; _i++) {
-              sections = sectionList[_i];
-              new db.Sections({
-                title: sections
-              }).save(function(err) {
-                if (err) {
-                  sectionErrs++;
-                  return callback(err);
-                }
-              });
-            }
             if (sectionErrs > 0) {
               return callback("The setup was completed successfully. You may now run the production server.");
             } else {
