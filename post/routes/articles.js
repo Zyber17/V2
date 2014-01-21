@@ -32,13 +32,15 @@
       author: 1,
       slug: 1,
       photos: 1
-    }).sort('-publishDate').limit(3).execFind(function(err, recent) {
-      var article, i, recentAr, _i, _len, _results;
+    }).sort({
+      'publishDate': -1,
+      'lastEditDate': -1
+    }).limit(3).execFind(function(err, recent) {
+      var article, i, recentAr, _i, _len;
 
       if (!err) {
         if (recent.length) {
           recentAr = [];
-          _results = [];
           for (i = _i = 0, _len = recent.length; _i < _len; i = ++_i) {
             article = recent[i];
             recentAr[i] = {
@@ -51,55 +53,13 @@
               },
               slug: "/articles/" + article.slug + "/",
               section: JSON.stringify(article.section),
-              photo: article.photos[0] ? "http://s3.amazonaws.com/V2_test/" + article._id + "/" + article.photos[0].name : void 0
+              photo: article.photos[0] ? "http://s3.amazonaws.com/V2_test/" + article._id + "/" + article.photos[0].name : void 0,
+              rotator: article.photos[0] ? "http://s3.amazonaws.com/V2_test/" + article._id + "/" + article.photos[article.photos.length - 1].name : void 0
             };
-            _results.push(db.Articles.find({
-              publishDate: {
-                $lte: moment().toDate()
-              },
-              status: 4,
-              isRotator: true
-            }, {
-              publishDate: 1,
-              body: 1,
-              title: 1,
-              author: 1,
-              slug: 1
-            }).sort('-publishDate').limit(4).execFind(function(err, rotator) {
-              var rotatorAr, _j, _len1;
-
-              if (!err) {
-                if (rotator.length > 0) {
-                  rotatorAr = [];
-                  for (i = _j = 0, _len1 = rotator.length; _j < _len1; i = ++_j) {
-                    article = rotator[i];
-                    rotatorAr[i] = {
-                      body: string(htmlToText.fromString(article.body[0].body)).truncate(250).s,
-                      author: article.author,
-                      title: string(article.title).truncate(75).s,
-                      date: {
-                        human: moment(article.publishDate).format("MMM D, YYYY"),
-                        robot: moment(article.publishDate).toISOString().split('T')[0]
-                      },
-                      slug: "/articles/" + article.slug + "/"
-                    };
-                  }
-                  return res.render('index', {
-                    recentAr: recentAr,
-                    rotatorAr: rotatorAr
-                  });
-                } else {
-                  return res.render('index', {
-                    recentAr: recentAr
-                  });
-                }
-              } else {
-                console.log("Error (articles): " + err);
-                return res.end(JSON.stringify(err));
-              }
-            }));
           }
-          return _results;
+          return res.render('index', {
+            recentAr: recentAr
+          });
         } else {
           return res.render('errors/404', {
             _err: ["Article not found"]
@@ -160,6 +120,7 @@
         section: req.body.section,
         author: req.body.author,
         publishDate: req.body.date ? moment(req.body.date, "MM-DD-YYYY").toDate() : void 0,
+        lastEditDate: moment().toDate(),
         lockHTML: string(req.body.lockHTML).toBoolean(),
         createdDate: moment().toDate(),
         status: req.body.status,
@@ -379,6 +340,7 @@
             resp.section = req.body.section;
             resp.status = req.body.status;
             resp.publication = req.body.publication;
+            resp.lastEditDate = moment().toDate();
             resp.approvedBy = {
               advisor: req.body.advisorapproval || resp.approvedBy.advisor || 0,
               administration: req.body.administrationapproval || resp.approvedBy.administration || 0
