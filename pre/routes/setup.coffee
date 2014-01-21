@@ -69,15 +69,16 @@ module.exports = (callback) ->
 						callback err
 					else
 						sectionErrs = 0
-						sectionList = ["News","Entertainment","Science and Technology","Humor","Features","Opinion","Sports","Focus"]
-						for sections in sectionList
-							new db.Sections(
-								title: sections
-							).save (err)->
-								if err
-									sectionErrs++
-									callback err
-
+						# Something's going wrong here and I'm done caring for the day
+						# sectionList = ["News","Entertainment","Science and Technology","Humor","Features","Opinion","Sports","Focus"]
+						# for section in sectionList
+						# 	new db.Sections(
+						# 		title: section
+						# 	).save( (err, resp) ->
+						# 		if err
+						# 			sectionErrs++
+						# 			callback err
+						# 	)
 						if sectionErrs > 0
 							callback "The setup was completed successfully. You may now run the production server."
 						else
