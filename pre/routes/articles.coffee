@@ -34,7 +34,7 @@ exports.index = (req,res,next) ->
 			1
 		photos:
 			1}
-	).sort('-publishDate'
+	).sort({'publishDate':-1, 'lastEditDate': -1}
 	).limit(3
 	).execFind(
 		(err, recent) ->
@@ -60,55 +60,60 @@ exports.index = (req,res,next) ->
 								JSON.stringify(article.section)
 							photo:
 								if article.photos[0] then "http://s3.amazonaws.com/V2_test/#{article._id}/#{article.photos[0].name}"
+							rotator:
+								if article.photos[0] then "http://s3.amazonaws.com/V2_test/#{article._id}/#{article.photos[article.photos.length - 1].name}"
 
-						db.Articles.find(
-							{publishDate:
-								$lte:
-									moment().toDate()
-							status:
-								4
-							isRotator:
-								true},
-							{publishDate:
-								1
-							body:
-								1
-							title:
-								1
-							author:
-								1
-							slug:
-								1}
-						).sort('-publishDate'
-						).limit(4
-						).execFind(
-							(err, rotator) ->
-								if !err
-									if rotator.length > 0
-										rotatorAr = []
-										for article, i in rotator
-											rotatorAr[i] =
-												body:
-													string(htmlToText.fromString(article.body[0].body)).truncate(250).s
-												author:
-													article.author
-												title:
-													string(article.title).truncate(75).s
-												date:
-													human:
-														moment(article.publishDate).format("MMM D, YYYY")
-													robot:
-														moment(article.publishDate).toISOString().split('T')[0]
-												slug:
-													"/articles/#{article.slug}/"
+					res.render 'index', {recentAr: recentAr}
 
-										res.render 'index', {recentAr: recentAr, rotatorAr: rotatorAr}
-									else
-										res.render 'index', {recentAr: recentAr}
-								else
-									console.log "Error (articles): #{err}"
-									res.end JSON.stringify err
-						)
+					# This will happen late when I have time and stuff yeah that jazzy
+					# db.Articles.find(
+					# 	{publishDate:
+					# 		$lte:
+					# 			moment().toDate()
+					# 	status:
+					# 		4
+					# 	isRotator:
+					# 		true},
+					# 	{publishDate:
+					# 		1
+					# 	body:
+					# 		1
+					# 	title:
+					# 		1
+					# 	author:
+					# 		1
+					# 	slug:
+					# 		1}
+					# ).sort('-publishDate'
+					# ).limit(4
+					# ).execFind(
+					# 	(err, rotator) ->
+					# 		if !err
+					# 			if rotator.length > 0
+					# 				rotatorAr = []
+					# 				for article, i in rotator
+					# 					rotatorAr[i] =
+					# 						body:
+					# 							string(htmlToText.fromString(article.body[0].body)).truncate(250).s
+					# 						author:
+					# 							article.author
+					# 						title:
+					# 							string(article.title).truncate(75).s
+					# 						date:
+					# 							human:
+					# 								moment(article.publishDate).format("MMM D, YYYY")
+					# 							robot:
+					# 								moment(article.publishDate).toISOString().split('T')[0]
+					# 						slug:
+					# 							"/articles/#{article.slug}/"
+
+					# 				res.render 'index', {recentAr: recentAr, rotatorAr: rotatorAr}
+					# 			else
+					# 				res.render 'index', {recentAr: recentAr}
+					# 		else
+					# 			console.log "Error (articles): #{err}"
+					# 			res.end JSON.stringify err
+					# )
 				else
 					res.render 'errors/404', {_err: ["Article not found"]}
 			else
@@ -170,6 +175,8 @@ exports.new_post = (req,res,next) ->
 				req.body.author
 			publishDate:
 				if req.body.date then moment(req.body.date, "MM-DD-YYYY").toDate()
+			lastEditDate:
+				moment().toDate()
 			lockHTML:
 				string(req.body.lockHTML).toBoolean()
 			createdDate:
@@ -400,6 +407,7 @@ exports.edit_post = (req,res,next) ->
 					resp.section =  req.body.section
 					resp.status  =  req.body.status
 					resp.publication  =  req.body.publication
+					resp.lastEditDate = moment().toDate()
 					
 					resp.approvedBy=
 						advisor:
