@@ -84,8 +84,6 @@
 		top 0
 		height 400px
 		position absolute
-		// min-width 250px
-		// width 100%
 		max-width $bodyWidth - 600
 		borderBox()
 		border-left 1px solid $lightOrange
@@ -135,6 +133,7 @@
 							line-height 1.45
 							height @height - @padding*2 - 17 - 5 /*17 = @font-size*/
 							overflow hidden
+							// There'll be a bug if there's three stoies with not enoguh content
 #recent
 	clear both
 	h2
