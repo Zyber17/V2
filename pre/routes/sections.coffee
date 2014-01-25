@@ -218,6 +218,16 @@ exports.edit_post = (req,res,next) ->
 				console.log "Error (sections): #{err}"
 				res.end JSON.stringify err
 
+exports.remove = (req,res,next) ->
+	db.Sections.findOneAndRemove {
+		slug: req.params.slug
+	}, (err, resp) ->
+		if !err
+			res.redirect '/staff/sections/'
+		else
+			console.log "Error (sections): #{err}"
+			res.end JSON.stringify err
+
 
 findSection = (slug, callback) ->
 	db.Sections.findOne(

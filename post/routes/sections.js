@@ -195,6 +195,19 @@
     }
   };
 
+  exports.remove = function(req, res, next) {
+    return db.Sections.findOneAndRemove({
+      slug: req.params.slug
+    }, function(err, resp) {
+      if (!err) {
+        return res.redirect('/staff/sections/');
+      } else {
+        console.log("Error (sections): " + err);
+        return res.end(JSON.stringify(err));
+      }
+    });
+  };
+
   findSection = function(slug, callback) {
     return db.Sections.findOne({
       slug: slug

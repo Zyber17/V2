@@ -168,8 +168,7 @@ articles = new Schema
 	photos: [photos]
 
 	section:
-		type: Array
-		ref: 'sections'
+		type: String
 		#this is such a stupid way to do this
 
 	issue:

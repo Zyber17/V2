@@ -40,7 +40,7 @@ block content
 			label(for="section") Section:
 			select#section(name="section")
 				each section in sections
-					option(value=section.slug, selected=section.slug == sections.selected ? 'selected' : null)= section.title
+					option(value=section.title, selected=section.title == sections.selected ? 'selected' : null)= section.title
 
 			label(for="status") Status:
 			select#section(name="status")

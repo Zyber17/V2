@@ -102,6 +102,7 @@
     app.post('/staff/sections/new', auth.requireStaff, sections.new_post);
     app.get('/staff/sections/:slug', auth.requireStaff, sections.edit_get);
     app.post('/staff/sections/:slug', auth.requireStaff, sections.edit_post);
+    app.get('/staff/sections/:slug/delete', auth.requireStaff, sections.remove);
     app.get('/staff/users', auth.requireStaff, users.list);
     app.get('/staff/users/new', auth.requireStaff, users.new_get);
     app.post('/staff/users/new', auth.requireStaff, users.new_post);
