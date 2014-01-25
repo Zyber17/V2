@@ -54,9 +54,9 @@
           go = false;
       }
       if (go) {
-        S3_BUCKET_NAME = 'V2_test';
-        S3_ACCESS_KEY = 'AKIAIX3NWOKW26ASJHVQ';
-        S3_SECRET_KEY = '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';
+        S3_BUCKET_NAME = 'torch_photos';
+        S3_ACCESS_KEY = '***REMOVED***';
+        S3_SECRET_KEY = '***REMOVED***';
         name = crypto.createHmac("sha1", S3_SECRET_KEY).update("" + name + ": " + mime + " at " + (new Date().getTime()) + " random is " + (Math.floor(Math.random() * 99999999).toString())).digest("base64").replace('=', '_').replace('/', '__');
         expires = moment().add('minutes', 10).unix();
         amzHeaders = "x-amz-acl:public-read";
