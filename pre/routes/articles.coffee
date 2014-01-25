@@ -3,6 +3,7 @@ moment = require 'moment'
 marked = require 'marked'
 string = require 'string'
 htmlToText = require 'html-to-text'
+photo_bucket_name = "torch_photos"
 
 marked.setOptions
 	gfm:
@@ -13,7 +14,6 @@ marked.setOptions
 	 	false
 	sanitize:
 		true
-
 
 exports.index = (req,res,next) ->
 	db.Articles.find(
@@ -59,9 +59,9 @@ exports.index = (req,res,next) ->
 							section:
 								JSON.stringify(article.section)
 							photo:
-								if article.photos[0] then "http://s3.amazonaws.com/V2_test/#{article._id}/#{article.photos[0].name}"
+								if article.photos[0] then "http://s3.amazonaws.com/#{photo_bucket_name}/#{article._id}/#{article.photos[0].name}"
 							rotator:
-								if article.photos[0] then "http://s3.amazonaws.com/V2_test/#{article._id}/#{article.photos[article.photos.length - 1].name}"
+								if article.photos[0] then "http://s3.amazonaws.com/#{photo_bucket_name}/#{article._id}/#{article.photos[article.photos.length - 1].name}"
 
 					res.render 'index', {recentAr: recentAr}
 
@@ -267,7 +267,9 @@ exports.view = (req,res,next) ->
 					comments:
 						comments
 					photo:
-						if resp.photos[0] then "http://s3.amazonaws.com/V2_test/#{resp._id}/#{resp.photos[0].name}"
+						if resp.photos[0] then "http://s3.amazonaws.com/#{photo_bucket_name}/#{resp._id}/#{resp.photos[0].name}"
+					section:
+						resp.section
 
 				if resp.publishDate
 					options.resp.date = moment(resp.publishDate).format("MMMM D, YYYY")
