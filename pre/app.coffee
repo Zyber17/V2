@@ -201,6 +201,8 @@ else if process.env.NODE_ENV != 'setup'
 
 	app.post '/staff/sections/:slug', auth.requireStaff, sections.edit_post
 
+	app.get '/staff/sections/:slug/delete', auth.requireStaff, sections.remove
+
 	# End Sections
 	# Users
 

@@ -180,8 +180,7 @@
     body: [articleBodies],
     photos: [photos],
     section: {
-      type: Array,
-      ref: 'sections'
+      type: String
     },
     issue: {
       type: Array,
