@@ -51,7 +51,8 @@
             };
           }
           return res.render('index', {
-            recentAr: recentAr
+            recentAr: recentAr,
+            section: recent[0].section.title
           });
         } else {
           return res.render('errors/404', {
