@@ -25,9 +25,9 @@ html
 			header#header
 				h1
 					a(href="/") The Torch
-				//- ul
-				//- 	li
-				//- 		a(href="/issues/current") Read Online
+				ul
+					li
+						a(href="/issues/current") Read Online
 				//-
 					ul
 						li
@@ -36,12 +36,20 @@ html
 								input(type='submit') Go
 						li
 							a(href='/issues/') Read the print edition online
-					-if(sections)
-						nav#nav
-							ul
-								each section in sections
-									li
-										a(href='/#{section}') section
+			nav#nav
+				ul 
+					li
+						a(href='/sections/news') News
+					li
+						a(href='/sections/science-and-technology') Sci & Tech
+					li
+						a(href='/sections/entertainment') Entertainment
+					li
+						a(href='/sections/sports') Sports
+					li
+						a(href='/sections/humor') Humor
+					li
+						a(href='/sections/focus') Focus
 			//- .bar
 			//- 	h2 Please pardon our dust as we remodel
 			#content
