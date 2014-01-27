@@ -9,7 +9,10 @@ block head
 	+style(['index'])
 	+js(['rotator'])
 block content
+	if section
+		h2.section= section
 	#rotator
+		input(type="hidden",class="rotatorCount",value=recentAr.length)
 		+rotator(recentAr)
 	#lists
 		#recent
