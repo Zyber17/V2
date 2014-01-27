@@ -120,6 +120,8 @@ else if process.env.NODE_ENV != 'setup'
 
 	# app.get '/issues', issues.list
 
+	app.get '/issues/current', (req,res,next) -> res.redirect 'https://s3.amazonaws.com/torch_issues/january_2014.pdf'
+
 	# app.get '/issues/:id', issues.edit_get
 
 	app.get '/login', auth.login_get

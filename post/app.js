@@ -69,6 +69,9 @@
     	/Update this stuff
     */
 
+    app.get('/issues/current', function(req, res, next) {
+      return res.redirect('https://s3.amazonaws.com/torch_issues/january_2014.pdf');
+    });
     app.get('/login', auth.login_get);
     app.post('/login', auth.login_post);
     app.get('/logout', auth.logout);
