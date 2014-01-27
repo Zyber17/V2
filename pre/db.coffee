@@ -168,7 +168,15 @@ articles = new Schema
 	photos: [photos]
 
 	section:
-		type: String
+		title:
+			type: String
+			required: true
+		slug:
+			type: String
+			required: true
+		id:
+			type: String
+			required: true
 		#this is such a stupid way to do this
 
 	issue:
@@ -242,14 +250,6 @@ articleBodies = new Schema
 	editDate:
 		type: Date
 		default: Date.now
-
-
-articleSections = new Schema
-	title:
-		type: String
-
-	slug:
-		type: String
 
 articles.plugin monguurl
     source: 'title'

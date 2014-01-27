@@ -161,56 +161,58 @@ exports.new_post = (req,res,next) ->
 				req.body.administrationapproval || 0
 		res.redirect '/'
 	else
-		# db.Sections.findOne(_id: req.body.section).exec((err, resp) ->
-		# 	if !err
-		# 		if resp
-		newArticle = new db.Articles
-			title:
-				req.body.title
-			# issue:
-			# 	req.body.issue #is val and not dsiplay val
-			section:
-				req.body.section
-			author:
-				req.body.author
-			publishDate:
-				if req.body.date then moment(req.body.date, "MM-DD-YYYY").toDate()
-			lastEditDate:
-				moment().toDate()
-			lockHTML:
-				string(req.body.lockHTML).toBoolean()
-			createdDate:
-				moment().toDate()
-			status:
-				req.body.status
-			publication:
-				2    # change to `req.body.publication` later
-			approvedBy:
-				advisor:
-					req.body.advisorapproval || 0
-				administration:
-					req.body.administrationapproval || 0
+		findSection req.body.section,(err,resp) ->
+			if !err
+				if resp
+					newArticle = new db.Articles
+						title:
+							req.body.title
+						section:
+							title:
+								resp.title
+							slug:
+								resp.slug
+							id:
+								resp._id
+						author:
+							req.body.author
+						publishDate:
+							if req.body.date then moment(req.body.date, "MM-DD-YYYY").toDate()
+						lastEditDate:
+							moment().toDate()
+						lockHTML:
+							string(req.body.lockHTML).toBoolean()
+						createdDate:
+							moment().toDate()
+						status:
+							req.body.status
+						publication:
+							2    # change to `req.body.publication` later
+						approvedBy:
+							advisor:
+								req.body.advisorapproval || 0
+							administration:
+								req.body.administrationapproval || 0
 
-		newArticle.body.unshift
-			body:
-				req.body.body
-			editor:
-				req.body.author #change later
-			editDate:
-				moment().toDate()
+					newArticle.body.unshift
+						body:
+							req.body.body
+						editor:
+							req.body.author #change later
+						editDate:
+							moment().toDate()
 
-		newArticle.save (err,resp) ->
-			if err == null
-				res.redirect "/articles/#{resp.slug}/"
+					newArticle.save (err,resp) ->
+						if err == null
+							res.redirect "/articles/#{resp.slug}/"
+						else
+				        	console.log "Error (articles): #{err}"
+							res.end JSON.stringify err
+				else
+					res.render 'errors/404', {err: "Section not found"}
 			else
-	        	console.log "Error (articles): #{err}"
+				console.log "Error (articles): #{err}"
 				res.end JSON.stringify err
-		# 		else
-		# 			res.render 'errors/404', {err: "Section not found"}
-		# 	else
-		# 		console.log "Error (articles): #{err}"
-		# 		res.end JSON.stringify err
-		# )
 
 exports.view = (req,res,next) ->	
 	update = true
@@ -402,39 +404,53 @@ exports.edit_post = (req,res,next) ->
 		findArticle req.params.slug, false, (err, resp) ->
 			if !err
 				if resp
-					resp.title   =  req.body.title
-					resp.author  =  req.body.author
-					resp.publishDate    =  if req.body.date then moment(req.body.date, "MM-DD-YYYY").toDate()
-					resp.issue   =  req.body.issue
-					resp.section =  req.body.section
-					resp.status  =  req.body.status
-					resp.publication  =  req.body.publication
-					resp.lastEditDate = moment().toDate()
-					
-					resp.approvedBy=
-						advisor:
-							req.body.advisorapproval || resp.approvedBy.advisor || 0
-						administration:
-							req.body.administrationapproval || resp.approvedBy.administration || 0
+					findSection req.body.section,(err,section_resp) ->
+						if !err
+							if resp
+								resp.title   =  req.body.title
+								resp.author  =  req.body.author
+								resp.publishDate    =  if req.body.date then moment(req.body.date, "MM-DD-YYYY").toDate()
+								resp.issue   =  req.body.issue
+								resp.status  =  req.body.status
+								resp.publication  =  req.body.publication
+								resp.lastEditDate = moment().toDate()
+								
+								resp.section =
+									title:
+										section_resp.title
+									slug:
+										section_resp.slug
+									id:
+										section_resp._id
 
-					if resp.body[0].body != req.body.body
-						resp.body.unshift
-							body:
-								req.body.body
-							editor:
-								req.body.author #change later
-							editDate:
-								moment().toDate()
+								resp.approvedBy=
+									advisor:
+										req.body.advisorapproval || resp.approvedBy.advisor || 0
+									administration:
+										req.body.administrationapproval || resp.approvedBy.administration || 0
 
-					resp.save (err, resp) ->
-						if err then res.end JSON.stringify err else res.redirect "/articles/#{resp.slug}/" #do not use 'is not' instead of != here
+								if resp.body[0].body != req.body.body
+									resp.body.unshift
+										body:
+											req.body.body
+										editor:
+											req.body.author #change later
+										editDate:
+											moment().toDate()
 
-
+								resp.save (err, resp) ->
+									if err then res.end JSON.stringify err else res.redirect "/articles/#{resp.slug}/" #do not use 'is not' instead of != here
+							else
+								res.render 'errors/404', {err: "Section not found"}
+						else
+							console.log "Error (articles): #{err}"
+							res.end JSON.stringify err
 				else
 					res.render 'errors/404', {err: "Article not found"}
 			else
 				console.log "Error (articles): #{err}"
 				res.end JSON.stringify err
+			
 
 
 exports.remove = (req,res,next) ->
@@ -514,4 +530,16 @@ findArticle = (slug, update = false, callback) ->
 		else
 			callback(err,resp)
 	)
-	
+
+findSection = (id,callback) ->
+	db.Sections.findOne(
+		_id:
+			id
+	).select(
+		title:
+			1
+		slug:
+			1
+	).exec((err, resp) ->
+		callback(err,resp)
+	)
