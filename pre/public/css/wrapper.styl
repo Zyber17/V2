@@ -52,15 +52,35 @@ a
 				border-bottom none
 				text-decoration none
 			
-
-.bar
+nav
 	background $darkOrange
 	color #fff
 	text-transform uppercase
 	font-weight bold
-	text-align center
-	font-size 22px
-	padding 15px 0
+	padding 6px 0
+	height 31px
+	line-height 1
+	ul
+		margin 0 30px
+		display block
+		width 100%
+		height @height
+		li
+			float left
+			font-size 1.6em
+			margin-right 36px
+			height 23px
+			padding 4px
+			display block
+			overflow hidden
+			a
+				&:link, &:visited, &:hover, &:active
+					color #fff
+					border none
+				&:hover
+					background #fff
+					color $darkOrange
+
 
 #footer 
 	background $lightOrange
