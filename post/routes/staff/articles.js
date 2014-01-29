@@ -65,7 +65,7 @@
           });
         }
       } else {
-        console.log("Error (articles): " + err);
+        console.log("Error (staff/articles): " + err);
         return res.end(JSON.stringify(err));
       }
     });

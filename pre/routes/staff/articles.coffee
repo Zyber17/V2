@@ -115,7 +115,7 @@ exports.index = (req,res,next) ->
 				else
 					res.render 'errors/404', {_err: ["Article not found"]}
 			else
-				console.log "Error (articles): #{err}"
+				console.log "Error (staff/articles): #{err}"
 				res.end JSON.stringify err
 	)
 
