@@ -49,9 +49,9 @@ exports.index = (req,res,next) ->
 								string(article.title).truncate(75).s
 							date:
 								human:
-									moment(article.publishDate).format("MMM D, YYYY")
+									if article.publishDate then moment(article.publishDate).format("MMM D, YYYY")
 								robot:
-									moment(article.publishDate).toISOString().split('T')[0]
+									if article.publishDate then moment(article.publishDate).toISOString().split('T')[0]
 							slug:
 								"/articles/#{article.slug}/"
 							section:
