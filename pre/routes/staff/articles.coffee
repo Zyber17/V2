@@ -37,7 +37,7 @@ exports.index = (req,res,next) ->
 	).execFind(
 		(err, recent) ->
 			if !err
-				if recent.length
+				if recent.length && recent?
 					recentAr = []
 					for article, i in recent
 						recentAr[i] =

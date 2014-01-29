@@ -37,7 +37,7 @@
       var article, i, recentAr, _i, _len;
 
       if (!err) {
-        if (recent.length) {
+        if (recent.length && (recent != null)) {
           recentAr = [];
           for (i = _i = 0, _len = recent.length; _i < _len; i = ++_i) {
             article = recent[i];
