@@ -158,8 +158,11 @@ h2.section
 				background $darkOrange
 				padding-left 30px
 				height 150px
-				&.notPublished
+				&.draft
 					background $lightGrey
+				&.queued
+					background $lightOrange
+					color $veryDarkGrey
 				.sixty
 					float left
 					width 60%
@@ -199,8 +202,13 @@ h2.section
 							background $darkOrange
 							text-transform uppercase
 							padding 10px
-							&.notPublished
+							&.draft
 								background $lightGrey
+								&:hover
+									background darken(@background, 20%)
+							&.queued
+								background $lightOrange
+								color $veryDarkGrey
 								&:hover
 									background darken(@background, 20%)
 							&:hover

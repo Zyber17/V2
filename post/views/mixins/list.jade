@@ -3,7 +3,7 @@ mixin list(items)
 		each item in items
 			li
 				a(href=item.slug)
-					.top(class=((item.isPublished == false) ? "notPublished" : ""))
+					.top(class=((item.isPublished !== 2) ? (item.isPublished == 1 ? "queued" : "draft") : ""))
 						.sixty
 							h3= item.title
 							article
@@ -20,4 +20,4 @@ mixin list(items)
 								//-
 									|  in 
 									span.section= item.section
-							.more(class=(item.isPublished == false ? "notPublished" : "")) Read More
+							.more(class=((item.isPublished !== 2) ? (item.isPublished == 1 ? "queued" : "draft") : "")) Read More
