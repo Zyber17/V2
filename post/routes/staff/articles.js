@@ -46,8 +46,8 @@
               author: article.author,
               title: string(article.title).truncate(75).s,
               date: {
-                human: moment(article.publishDate).format("MMM D, YYYY"),
-                robot: moment(article.publishDate).toISOString().split('T')[0]
+                human: article.publishDate ? moment(article.publishDate).format("MMM D, YYYY") : void 0,
+                robot: article.publishDate ? moment(article.publishDate).toISOString().split('T')[0] : void 0
               },
               slug: "/articles/" + article.slug + "/",
               section: JSON.stringify(article.section),

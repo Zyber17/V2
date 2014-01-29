@@ -211,8 +211,8 @@
             versions: versions.reverse(),
             resp: resp,
             date: {
-              human: moment(resp.publishDate).format("MMM D, YYYY"),
-              robot: moment(resp.publishDate).toISOString().split('T')[0]
+              human: article.publishDate ? moment(resp.publishDate).format("MMM D, YYYY") : void 0,
+              robot: article.publishDate ? moment(resp.publishDate).toISOString().split('T')[0] : void 0
             },
             msg: null,
             title: resp.title,

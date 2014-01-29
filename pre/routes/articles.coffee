@@ -261,9 +261,9 @@ exports.view = (req,res,next) ->
 						resp
 					date:
 						human:
-							moment(resp.publishDate).format("MMM D, YYYY")
+							if article.publishDate then moment(resp.publishDate).format("MMM D, YYYY")
 						robot:
-							moment(resp.publishDate).toISOString().split('T')[0]
+							if article.publishDate then moment(resp.publishDate).toISOString().split('T')[0]
 					msg:
 						null
 					title:
