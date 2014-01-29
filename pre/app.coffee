@@ -41,8 +41,8 @@ else if process.env.NODE_ENV != 'setup'
 	users      =  require './routes/users'
 	photos     =  require './routes/photos'
 
-	# staff = []
-	# staff.articles     =  require './routes/staff/articles'
+	staff = []
+	staff.articles     =  require './routes/staff/articles'
 	# staff.index        =  require './routes/staff/index'
 	# staff.issues       =  require './routes/staff/issues'
 	# staff.permissions  =  require './routes/staff/permissions'
@@ -151,6 +151,7 @@ else if process.env.NODE_ENV != 'setup'
 
 	app.get '/staff', auth.requireStaff, (req,res,next) -> res.render 'staff'
 
+	app.get '/staff/articles/', auth.requireStaff, staff.articles.index
 
 	app.get '/staff/articles/new', auth.requireStaff, articles.new_get
 
