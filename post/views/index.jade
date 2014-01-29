@@ -11,12 +11,13 @@ block head
 block content
 	if section
 		h2.section= section
-	#rotator
-		input(type="hidden",class="rotatorCount",value=recentAr.length)
-		+rotator(recentAr)
+	if !isStaffView
+		#rotator
+			input(type="hidden",class="rotatorCount",value=recentAr.length)
+			+rotator(recentAr)
 	#lists
 		#recent
-			h2 Recent Stories
+			h2= (!isStaffView ? "Recent" : "All") + " Stories"
 				//-
 					a.rss(href='/rss') Subscribe
 			+list(recentAr)
