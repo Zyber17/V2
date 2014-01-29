@@ -1,6 +1,6 @@
 mongoose =  require 'mongoose'
 monguurl =  require 'monguurl'
-bcrypt  =  require 'bcrypt'
+bcrypt   =  require 'bcrypt'
 Schema   =  mongoose.Schema
 ObjectId =  Schema.ObjectId
 saltWorkFactor = 10
