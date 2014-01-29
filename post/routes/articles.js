@@ -33,7 +33,8 @@
       title: 1,
       author: 1,
       slug: 1,
-      photos: 1
+      photos: 1,
+      status: 1
     }).sort({
       'publishDate': -1,
       'lastEditDate': -1
@@ -56,7 +57,8 @@
               slug: "/articles/" + article.slug + "/",
               section: JSON.stringify(article.section),
               photo: article.photos[0] ? "http://s3.amazonaws.com/" + photo_bucket_name + "/" + article._id + "/" + article.photos[0].name : void 0,
-              rotator: article.photos[0] ? "http://s3.amazonaws.com/" + photo_bucket_name + "/" + article._id + "/" + article.photos[article.photos.length - 1].name : void 0
+              rotator: article.photos[0] ? "http://s3.amazonaws.com/" + photo_bucket_name + "/" + article._id + "/" + article.photos[article.photos.length - 1].name : void 0,
+              isPublished: article.status === 4 ? true : false
             };
           }
           return res.render('index', {

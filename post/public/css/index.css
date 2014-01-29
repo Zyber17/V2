@@ -245,6 +245,10 @@ h2.section {
   padding-left: 30px;
   height: 150px;
 }
+#recent ul li a:link .top.notPublished,
+#recent ul li a:visited .top.notPublished {
+  background: #7f7f7f;
+}
 #recent ul li a:link .top .sixty,
 #recent ul li a:visited .top .sixty {
   float: left;
@@ -302,6 +306,14 @@ h2.section {
   background: #e97747;
   text-transform: uppercase;
   padding: 10px;
+}
+#recent ul li a:link .bottom .floatfix div.more.notPublished,
+#recent ul li a:visited .bottom .floatfix div.more.notPublished {
+  background: #7f7f7f;
+}
+#recent ul li a:link .bottom .floatfix div.more.notPublished:hover,
+#recent ul li a:visited .bottom .floatfix div.more.notPublished:hover {
+  background: #666;
 }
 #recent ul li a:link .bottom .floatfix div.more:hover,
 #recent ul li a:visited .bottom .floatfix div.more:hover {

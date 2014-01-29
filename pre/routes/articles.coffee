@@ -33,6 +33,8 @@ exports.index = (req,res,next) ->
 		slug:
 			1
 		photos:
+			1
+		status:
 			1}
 	).sort({'publishDate':-1, 'lastEditDate': -1}
 	).limit(3
@@ -62,6 +64,8 @@ exports.index = (req,res,next) ->
 								if article.photos[0] then "http://s3.amazonaws.com/#{photo_bucket_name}/#{article._id}/#{article.photos[0].name}"
 							rotator:
 								if article.photos[0] then "http://s3.amazonaws.com/#{photo_bucket_name}/#{article._id}/#{article.photos[article.photos.length - 1].name}"
+							isPublished:
+								if article.status == 4 then true else false
 
 					res.render 'index', {recentAr: recentAr}
 
