@@ -245,9 +245,14 @@ h2.section {
   padding-left: 30px;
   height: 150px;
 }
-#recent ul li a:link .top.notPublished,
-#recent ul li a:visited .top.notPublished {
+#recent ul li a:link .top.draft,
+#recent ul li a:visited .top.draft {
   background: #7f7f7f;
+}
+#recent ul li a:link .top.queued,
+#recent ul li a:visited .top.queued {
+  background: #efbc8b;
+  color: #333;
 }
 #recent ul li a:link .top .sixty,
 #recent ul li a:visited .top .sixty {
@@ -307,13 +312,22 @@ h2.section {
   text-transform: uppercase;
   padding: 10px;
 }
-#recent ul li a:link .bottom .floatfix div.more.notPublished,
-#recent ul li a:visited .bottom .floatfix div.more.notPublished {
+#recent ul li a:link .bottom .floatfix div.more.draft,
+#recent ul li a:visited .bottom .floatfix div.more.draft {
   background: #7f7f7f;
 }
-#recent ul li a:link .bottom .floatfix div.more.notPublished:hover,
-#recent ul li a:visited .bottom .floatfix div.more.notPublished:hover {
+#recent ul li a:link .bottom .floatfix div.more.draft:hover,
+#recent ul li a:visited .bottom .floatfix div.more.draft:hover {
   background: #666;
+}
+#recent ul li a:link .bottom .floatfix div.more.queued,
+#recent ul li a:visited .bottom .floatfix div.more.queued {
+  background: #efbc8b;
+  color: #333;
+}
+#recent ul li a:link .bottom .floatfix div.more.queued:hover,
+#recent ul li a:visited .bottom .floatfix div.more.queued:hover {
+  background: #e69649;
 }
 #recent ul li a:link .bottom .floatfix div.more:hover,
 #recent ul li a:visited .bottom .floatfix div.more:hover {
