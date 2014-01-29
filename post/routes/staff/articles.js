@@ -29,10 +29,10 @@
       author: 1,
       slug: 1,
       photos: 1,
-      status: 1
+      status: 1,
+      createdDate: 1
     }).sort({
-      'publishDate': -1,
-      'lastEditDate': -1
+      'createdDate': -1
     }).limit(30).execFind(function(err, recent) {
       var article, i, recentAr, _i, _len;
 
