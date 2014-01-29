@@ -31,8 +31,10 @@ exports.index = (req,res,next) ->
 		photos:
 			1
 		status:
+			1
+		createdDate:
 			1}
-	).sort({'publishDate':-1, 'lastEditDate': -1}
+	).sort({'createdDate':-1}
 	).limit(30
 	).execFind(
 		(err, recent) ->
