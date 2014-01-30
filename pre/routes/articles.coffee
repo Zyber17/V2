@@ -35,7 +35,7 @@ exports.index = (req,res,next) ->
 		photos:
 			1}
 	).sort({'publishDate':-1, 'lastEditDate': -1}
-	).limit(3
+	).limit(6
 	).execFind(
 		(err, recent) ->
 			if !err
