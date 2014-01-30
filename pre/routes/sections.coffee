@@ -4,6 +4,7 @@ htmlToText = require 'html-to-text'
 # marked = require 'marked'
 string = require 'string'
 # string = require 'string'
+bucket_name = 'torch_photos'
 
 exports.view = (req,res,next) ->
 	db.Articles.find(
@@ -29,7 +30,7 @@ exports.view = (req,res,next) ->
 		section:
 			1}
 	).sort({'publishDate':-1, 'lastEditDate': -1}
-	).limit(3
+	).limit(6
 	).execFind(
 		(err, recent) ->
 			if !err
@@ -53,11 +54,11 @@ exports.view = (req,res,next) ->
 							section:
 								JSON.stringify(article.section)
 							photo:
-								if article.photos[0] then "http://s3.amazonaws.com/V2_test/#{article._id}/#{article.photos[0].name}"
+								if article.photos[0] then "http://s3.amazonaws.com/#{bucket_name}/#{article._id}/#{article.photos[0].name}"
 							rotator:
-								if article.photos[0] then "http://s3.amazonaws.com/V2_test/#{article._id}/#{article.photos[article.photos.length - 1].name}"
+								if article.photos[0] then "http://s3.amazonaws.com/#{bucket_name}/#{article._id}/#{article.photos[article.photos.length - 1].name}"
 							isPublished:
-								if article.status == 4 && article.publishDate then (if moment(article.publishDate) < moment() then 2 else 1) else 0
+								2
 							isRotatable:
 								if article.photos[0] then yes else no
 
