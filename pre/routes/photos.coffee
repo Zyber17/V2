@@ -80,7 +80,7 @@ exports.addToDB = (req,res,next) ->
 					date:
 						moment().toDate()
 					photographer:
-						req.session.user.name
+						req.session.user.name # Update this later
 				resp.save (err, resp)->
 					if !err
 						res.end 'success'
