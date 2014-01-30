@@ -55,7 +55,7 @@ exports.index = (req,res,next) ->
 								robot:
 									if article.publishDate then moment(article.publishDate).toISOString().split('T')[0]
 							slug:
-								"/articles/#{article.slug}/"
+								"/staff/articles/#{article.slug}/"
 							section:
 								JSON.stringify(article.section)
 							photo:
