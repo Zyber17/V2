@@ -46,7 +46,7 @@
           for (i = _i = 0, _len = recent.length; _i < _len; i = ++_i) {
             article = recent[i];
             recentAr[i] = {
-              body: string(htmlToText.fromString(article.body[0].body)).truncate(250).s,
+              body: string(htmlToText.fromString(article.body[0].body)).truncate(400).s,
               author: article.author,
               title: string(article.title).truncate(75).s,
               date: {
