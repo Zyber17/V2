@@ -56,6 +56,10 @@ exports.view = (req,res,next) ->
 								if article.photos[0] then "http://s3.amazonaws.com/V2_test/#{article._id}/#{article.photos[0].name}"
 							rotator:
 								if article.photos[0] then "http://s3.amazonaws.com/V2_test/#{article._id}/#{article.photos[article.photos.length - 1].name}"
+							isPublished:
+								if article.status == 4 && article.publishDate then (if moment(article.publishDate) < moment() then 2 else 1) else 0
+							isRotatable:
+								if article.photos[0] then yes else no
 
 					res.render 'index', {recentAr: recentAr, section: recent[0].section.title}
 				else
