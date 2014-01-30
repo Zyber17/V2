@@ -4,18 +4,14 @@ A [Node.js](http://nodejs.org/) hand coded from the ground up in [CoffeeScript](
 
 ## Roadmap
 
-* Style the website
 * Add briefs
 * Add upcoming events
-* Make the rotator rotate
 * Allow stories to be marked as rotator stories
 * Allow photos to be marked as either rotator or article preview
 * Add temperature metric
-* Display sections on index
-	* Have individual sections pages
 * Have public user pages
-* Allow users to change their password'
-	* Add a force–change password upon login function.
+* Allow users to change their password
+	* Add a force–change password upon login function
 * Display article version differences
 * Add planner support
 	* Add staff report support
