@@ -6,6 +6,7 @@ mixin rotator(items)
 	-	}
 	-})
 	-(usableItems.length > 3 ? usableItems = usableItems.slice(0,3) : null)
+	input(type="hidden",class="rotatorCount",value=usableItems.length)
 	.outside
 		.img
 			ul

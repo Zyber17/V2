@@ -13,7 +13,6 @@ block content
 		h2.section= section
 	if !isStaffView
 		#rotator
-			input(type="hidden",class="rotatorCount",value=recentAr.length)
 			+rotator(recentAr)
 	#lists
 		#recent
