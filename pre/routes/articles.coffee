@@ -44,7 +44,7 @@ exports.index = (req,res,next) ->
 					for article, i in recent
 						recentAr[i] =
 							body:
-								string(htmlToText.fromString(article.body[0].body)).truncate(250).s
+								string(htmlToText.fromString(article.body[0].body)).truncate(400).s
 							author:
 								article.author
 							title:
