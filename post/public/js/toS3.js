@@ -41,7 +41,7 @@ function handleFileSelect(evt)
 function executeOnSignedUrl(file, callback)
 {
   var xhr = new XMLHttpRequest();
-  xhr.open('GET', 'signS3/'+file.type+'/'+file.name);
+  xhr.open('GET', 'signS3/'+file.type+'/'+file.name+'/?update='+new Date().getTime());
 
   // Hack to pass bytes through unprocessed.
   xhr.overrideMimeType('text/plain; charset=x-user-defined');
