@@ -52,7 +52,8 @@
               slug: "/staff/articles/" + article.slug + "/",
               section: JSON.stringify(article.section),
               photo: article.photos[0] ? "http://s3.amazonaws.com/" + photo_bucket_name + "/" + article._id + "/" + article.photos[0].name : void 0,
-              isPublished: article.status === 4 && article.publishDate ? (moment(article.publishDate) < moment() ? 2 : 1) : 0
+              isPublished: article.status === 4 && article.publishDate ? (moment(article.publishDate) < moment() ? 2 : 1) : 0,
+              isRotatable: article.photos[0] ? true : false
             };
           }
           return res.render('index', {

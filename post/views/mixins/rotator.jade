@@ -1,9 +1,15 @@
 mixin rotator(items)
-	-(items.length > 3 ? items = items.slice(0,3) : null)
+	-var usableItems = [];
+	-items.forEach(function(canidate) {
+	-	if (canidate.isRotatable == true) {
+	-		usableItems.push(canidate);
+	-	}
+	-})
+	-(usableItems.length > 3 ? usableItems = usableItems.slice(0,3) : null)
 	.outside
 		.img
 			ul
-				for item, i in items
+				for item, i in usableItems
 					li(id="ritem#{i}", data-index=i, class=(i == 0 ? 'selected' : ''))
 						div
 							a(href=item.slug)
@@ -12,7 +18,7 @@ mixin rotator(items)
 		.recentPre
 			h2 Featured Stories
 			ul
-				for item, i in items
+				for item, i in usableItems
 					li(id="sitem#{i}", data-index=i, class=(i == 0 ? 'selected' : ''))
 						a(href=item.slug)
 							div.content
@@ -22,7 +28,7 @@ mixin rotator(items)
 
 		.text
 			ul
-				for item, i in items
+				for item, i in usableItems
 					li(id="titem#{i}", data-index=i, class=(i == 0 ? 'selected' : ''))
 						a(href=item.slug)
 							div.body
