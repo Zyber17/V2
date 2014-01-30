@@ -463,7 +463,7 @@ exports.remove = (req,res,next) ->
 			slug: req.params.slug
 		}, (err, resp) ->
 			if !err
-				res.redirect '/'
+				res.redirect '/staff/articles/'
 			else
 				console.log "Error (articles): #{err}"
 				res.end JSON.stringify err
