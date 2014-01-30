@@ -49,7 +49,7 @@
                 human: article.publishDate ? moment(article.publishDate).format("MMM D, YYYY") : void 0,
                 robot: article.publishDate ? moment(article.publishDate).toISOString().split('T')[0] : void 0
               },
-              slug: "/articles/" + article.slug + "/",
+              slug: "/staff/articles/" + article.slug + "/",
               section: JSON.stringify(article.section),
               photo: article.photos[0] ? "http://s3.amazonaws.com/" + photo_bucket_name + "/" + article._id + "/" + article.photos[0].name : void 0,
               isPublished: article.status === 4 && article.publishDate ? (moment(article.publishDate) < moment() ? 2 : 1) : 0
