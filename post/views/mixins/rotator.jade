@@ -14,7 +14,9 @@ mixin rotator(items)
 					li(id="ritem#{i}", data-index=i, class=(i == 0 ? 'selected' : ''))
 						div
 							a(href=item.slug)
-								h3= item.title
+								div.title
+									h3= item.title
+									div.background
 								img(src=item.rotator)
 		.recentPre
 			h2 Featured Stories
@@ -27,12 +29,12 @@ mixin rotator(items)
 								article
 									p= item.body
 
-		.text
-			ul
-				for item, i in usableItems
-					li(id="titem#{i}", data-index=i, class=(i == 0 ? 'selected' : ''))
-						a(href=item.slug)
-							div.body
-								p= item.body
-							.more
-								span Read More
+		//- .text
+		//- 	ul
+		//- 		for item, i in usableItems
+		//- 			li(id="titem#{i}", data-index=i, class=(i == 0 ? 'selected' : ''))
+		//- 				a(href=item.slug)
+		//- 					div.body
+		//- 						p= item.body
+		//- 					.more
+		//- 						span Read More
