@@ -47,7 +47,9 @@
               slug: "/articles/" + article.slug + "/",
               section: JSON.stringify(article.section),
               photo: article.photos[0] ? "http://s3.amazonaws.com/V2_test/" + article._id + "/" + article.photos[0].name : void 0,
-              rotator: article.photos[0] ? "http://s3.amazonaws.com/V2_test/" + article._id + "/" + article.photos[article.photos.length - 1].name : void 0
+              rotator: article.photos[0] ? "http://s3.amazonaws.com/V2_test/" + article._id + "/" + article.photos[article.photos.length - 1].name : void 0,
+              isPublished: article.status === 4 && article.publishDate ? (moment(article.publishDate) < moment() ? 2 : 1) : 0,
+              isRotatable: article.photos[0] ? true : false
             };
           }
           return res.render('index', {
