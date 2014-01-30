@@ -37,7 +37,7 @@
     }).sort({
       'publishDate': -1,
       'lastEditDate': -1
-    }).limit(3).execFind(function(err, recent) {
+    }).limit(6).execFind(function(err, recent) {
       var article, i, recentAr, _i, _len;
 
       if (!err) {

@@ -1,4 +1,5 @@
 mixin rotator(items)
+	-(items.length > 3 ? items = items.slice(0,3) : null)
 	.outside
 		.img
 			ul
