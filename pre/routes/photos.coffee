@@ -45,7 +45,7 @@ createS3Policy = (slug, mime, name, callback) ->
 
 			name = crypto.createHmac("sha1", S3_SECRET_KEY).update("#{name}: #{mime} at #{new Date().getTime()} random is #{Math.floor(Math.random()*99999999).toString()}").digest("base64").replace('=','_').replace('/','__')
 
-			expires = moment().add('minutes', 10).unix()
+			expires = moment().add('minutes', 15).unix()
 
 			amzHeaders = "x-amz-acl:public-read"	
 
