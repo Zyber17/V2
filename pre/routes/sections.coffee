@@ -3,7 +3,7 @@ moment = require 'moment'
 htmlToText = require 'html-to-text'
 # marked = require 'marked'
 string = require 'string'
-# string = require 'string'
+
 bucket_name = 'torch_photos'
 
 exports.view = (req,res,next) ->
