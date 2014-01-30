@@ -271,6 +271,8 @@ h2.section {
 #recent ul li a:link .top .sixty article p,
 #recent ul li a:visited .top .sixty article p {
   line-height: 1.5;
+  height: 100px;
+  overflow-y: hidden;
 }
 #recent ul li a:link .top .preview,
 #recent ul li a:visited .top .preview {
