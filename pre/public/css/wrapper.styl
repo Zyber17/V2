@@ -57,8 +57,7 @@ nav
 	color #fff
 	text-transform uppercase
 	font-weight bold
-	padding 6px 0
-	height 31px
+	height 43px
 	line-height 1
 	overflow hidden
 	ul
@@ -67,15 +66,20 @@ nav
 		width 100%
 		height @height
 		overflow hidden
+		borderBox()
 		li
 			float left
 			font-size 1.6em
-			margin-right 36px
-			height 23px
-			padding 4px
+			// margin-right 36px
+			height 43px
 			display block
 			overflow hidden
+			borderBox()
 			a
+				display block
+				borderBox()
+				padding 10px 19px
+				height 43px
 				&:link, &:visited, &:hover, &:active
 					color #fff
 					border none

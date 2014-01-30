@@ -42,17 +42,33 @@ h2.section {
 #rotator .img li.selected {
   display: block;
 }
-#rotator .img h3 {
+#rotator .img li div.title {
   position: absolute;
   padding: 15px 0;
   width: 600px;
+  overflow-y: hidden;
+  z-index: 10;
+}
+#rotator .img li div.title h3 {
   text-align: center;
   text-shadow: 0 0 20px #000;
   text-transform: uppercase;
   font-weight: bold;
   font-size: 28px;
   color: #fff;
-  background: rgba(0,0,0,0.4);
+  z-index: 1;
+}
+#rotator .img li div.title .background {
+  display: block;
+  position: absolute;
+  top: 0;
+  left: 0;
+  display: block;
+  background: #000;
+  opacity: 0.4;
+  width: 100%;
+  height: 400px;
+  z-index: -2;
 }
 #rotator .text {
   height: 60px;

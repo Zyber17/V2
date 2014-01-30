@@ -26,12 +26,12 @@ $(document).ready ->
 			cleanse()
 			$("#ritem#{item}").addClass 'selected'
 			$("#sitem#{item}").addClass 'selected'
-			$("#titem#{item}").addClass 'selected'
+			# $("#titem#{item}").addClass 'selected'
 
 		cleanse = () ->
 			$(".img>ul>li").removeClass 'selected'
 			$(".recentPre>ul>li").removeClass 'selected'
-			$(".text>ul>li").removeClass 'selected'
+			# $(".text>ul>li").removeClass 'selected'
 
 		rotate = () ->
 			item = (item+1) % totalitems
