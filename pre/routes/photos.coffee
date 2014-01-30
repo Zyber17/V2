@@ -27,7 +27,7 @@ createS3Policy = (slug, mime, name, callback) ->
 	).exec((err, resp) ->
 		go = true
 		extention = ''
-		switch mime
+		switch mime.toLowerCase()
 			when 'image/png'
 				extension = 'png'
 			when 'image/jpg'
