@@ -64,6 +64,8 @@ exports.index = (req,res,next) ->
 								if article.photos[0] then "http://s3.amazonaws.com/#{photo_bucket_name}/#{article._id}/#{article.photos[article.photos.length - 1].name}"
 							isPublished:
 								2 #harcoded becase all artices returned this way will be pushed, which is a status of 2
+							isRotatable:
+								if article.photos[0] then yes else no
 
 					res.render 'index', {recentAr: recentAr}
 

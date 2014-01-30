@@ -62,6 +62,8 @@ exports.index = (req,res,next) ->
 								if article.photos[0] then "http://s3.amazonaws.com/#{photo_bucket_name}/#{article._id}/#{article.photos[0].name}"
 							isPublished:
 								if article.status == 4 && article.publishDate then (if moment(article.publishDate) < moment() then 2 else 1) else 0
+							isRotatable:
+								if article.photos[0] then yes else no
 
 					res.render 'index', {recentAr: recentAr, isStaffView: true}
 
