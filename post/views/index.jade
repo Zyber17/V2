@@ -11,7 +11,7 @@ block head
 block content
 	if section
 		h2.section= section
-	if !isStaffView
+	if !isStaffView && !section
 		#rotator
 			+rotator(recentAr)
 	#lists
