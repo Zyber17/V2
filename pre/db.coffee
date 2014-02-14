@@ -179,6 +179,10 @@ articles = new Schema
 			required: true
 		#this is such a stupid way to do this
 
+	isGallery:
+		type: Boolean
+		default: false
+
 	issue:
 		type: Array
 		ref: 'issues'
