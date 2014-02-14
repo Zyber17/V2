@@ -4,6 +4,9 @@ marked = require 'marked'
 string = require 'string'
 htmlToText = require 'html-to-text'
 photo_bucket_name = "torch_photos"
+if process.env.NODE_ENV == 'localdev'
+	photo_bucket_name = 'V2_test'
+photo_bucket_url = "http://s3.amazonaws.com/#{photo_bucket_name}/"
 
 marked.setOptions
 	gfm:
@@ -59,9 +62,9 @@ exports.index = (req,res,next) ->
 							section:
 								JSON.stringify(article.section)
 							photo:
-								if article.photos[0] then "http://s3.amazonaws.com/#{photo_bucket_name}/#{article._id}/#{article.photos[0].name}"
+								if article.photos[0] then (photo_bucket_url + article._id + '/' + if article.photos[0].length > 1 then article.photos[article.photos.length - 2].name else article.photos[article.photos.length - 1].name)
 							rotator:
-								if article.photos[0] then "http://s3.amazonaws.com/#{photo_bucket_name}/#{article._id}/#{article.photos[article.photos.length - 1].name}"
+								if article.photos[0] then photo_bucket_url + article._id + '/' + article.photos[article.photos.length - 1].name
 							isPublished:
 								2 #harcoded becase all artices returned this way will be pushed, which is a status of 2
 							isRotatable:
@@ -273,9 +276,11 @@ exports.view = (req,res,next) ->
 					comments:
 						comments
 					photo:
-						if resp.photos[0] then "http://s3.amazonaws.com/#{photo_bucket_name}/#{resp._id}/#{resp.photos[0].name}"
+						if resp.photos[0] then (photo_bucket_url + resp._id + '/' + if resp.photos[0].length > 1 then resp.photos[resp.photos.length - 2].name else resp.photos[article.photos.length - 1].name)
 					section:
 						resp.section
+					isGallery:
+						if resp.isGallery then resp.isGallery else false
 
 				if resp.publishDate
 					options.resp.date = moment(resp.publishDate).format("MMMM D, YYYY")
@@ -289,8 +294,6 @@ exports.view = (req,res,next) ->
 						options.msg = "This article is not yet released, you’re seeing it because you’#{if req.session.user.isStaff then "re on staff" else "ve been granted early access"}." #req.session.isStaff not true
 						res.render 'article', options
 					else
-						# req.session.message = 'boo'
-						# res.redirect '/'
 						res.render 'errors/404', {err: "Article not found"}
 			else
 				res.render 'errors/404', {err: "Article not found"}
@@ -438,7 +441,7 @@ exports.edit_post = (req,res,next) ->
 										body:
 											req.body.body
 										editor:
-											req.body.author #change later
+											req.session.user.name
 										editDate:
 											moment().toDate()
 
@@ -526,6 +529,8 @@ findArticle = (slug, update = false, callback) ->
 		photos:
 			1
 		section:
+			1
+		isGallery:
 			1
 	).exec((err, resp) ->
 		if update
