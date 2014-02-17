@@ -57,9 +57,18 @@
 			cite //Photo attribution kludge
 				color $lightGrey
 				font-size .89em
-		img
+		img#articlePhoto
 			float right
 			width 400px
 			border 3px solid $lightOrange
 			// padding 10px
 			margin 0 0 20px 20px
+		#gallery
+			max-width: @max-width
+			display block
+			li
+				img
+					max-width @max-width
+					borderBox()
+					border 3px solid $lightOrange
+					margin-bottom 20px

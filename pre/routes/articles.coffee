@@ -200,12 +200,14 @@ exports.new_post = (req,res,next) ->
 								req.body.advisorapproval || 0
 							administration:
 								req.body.administrationapproval || 0
+						isGallery:
+							req.body.isGallery
 
 					newArticle.body.unshift
 						body:
 							req.body.body
 						editor:
-							req.body.author #change later
+							req.session.user.name
 						editDate:
 							moment().toDate()
 
@@ -255,6 +257,12 @@ exports.view = (req,res,next) ->
 							comment.body
 						edited:
 							comment.edited
+
+				isGallery = if resp.isGallery && resp.photos[0] then true else false
+				if isGallery
+					galleryUrls = []
+					for photo in resp.photos
+						galleryUrls.push photo_bucket_url + resp._id + '/' + photo.name
 				options = 
 					body:
 						resp.body[0].body
@@ -276,11 +284,13 @@ exports.view = (req,res,next) ->
 					comments:
 						comments
 					photo:
-						if resp.photos[0] then (photo_bucket_url + resp._id + '/' + if resp.photos[0].length > 1 then resp.photos[resp.photos.length - 2].name else resp.photos[article.photos.length - 1].name)
+						if resp.photos[0] then (photo_bucket_url + resp._id + '/' + if resp.photos[0].length > 1 then resp.photos[resp.photos.length - 2].name else resp.photos[resp.photos.length - 1].name)
 					section:
 						resp.section
 					isGallery:
-						if resp.isGallery then resp.isGallery else false
+						if isGallery then resp.isGallery else false
+					galleryItems:
+						if isGallery then galleryUrls else null
 
 				if resp.publishDate
 					options.resp.date = moment(resp.publishDate).format("MMMM D, YYYY")
@@ -421,6 +431,7 @@ exports.edit_post = (req,res,next) ->
 								resp.status  =  req.body.status
 								resp.publication  =  req.body.publication
 								resp.lastEditDate = moment().toDate()
+								resp.isGallery = req.body.isGallery
 								
 								resp.section =
 									title:

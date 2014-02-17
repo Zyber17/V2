@@ -76,9 +76,23 @@
   color: #7f7f7f;
   font-size: 0.89em;
 }
-#content article img {
+#content article img#articlePhoto {
   float: right;
   width: 400px;
   border: 3px solid #efbc8b;
   margin: 0 0 20px 20px;
+}
+#content article #gallery {
+  max-width: 800px;
+  display: block;
+}
+#content article #gallery li img {
+  max-width: 800px;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  -ms-box-sizing: border-box;
+  -o-box-sizing: border-box;
+  box-sizing: border-box;
+  border: 3px solid #efbc8b;
+  margin-bottom: 20px;
 }
