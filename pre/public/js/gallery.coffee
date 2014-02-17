@@ -1,10 +1,26 @@
+totalitems = 0
+item = 0
+
 $(document).ready ->
 
 	totalitems = parseInt $('.galleryCount').val()
 
-	if totalitems != 1 && totalitems != 0 && totalitems?
-		item = 0
-
+	$('#prevPhoto').click ->
+		prevPhoto()
 		
-	else
-		# console.log 'Only one item'
+	$('#nextPhoto').click ->
+		nextPhoto()
+
+cleanse = () ->
+	$("#gallery>ul>li").removeClass 'selected'
+
+prevPhoto = ->
+	cleanse()
+	item = (item-1) % totalitems
+	$("#galleryLi#{item}").addClass 'selected'
+
+nextPhoto = ->
+	cleanse()
+	item = (item+1) % totalitems
+	$("#galleryLi#{item}").addClass 'selected'
+

@@ -1,5 +1,9 @@
 mixin gallery(photos)
-	ul#gallery
-		for photo in photos
-			li
-				img(src=photo)
+	#gallery
+		input(type="hidden",class="galleryCount",value=photos.length)
+		button#prevPhoto.galleryControl <
+		ul
+			for photo,i in photos
+				li(id="galleryLi#{i}", data-index=i, class=(i == 0 ? 'selected' : ''))
+					img(src=photo)
+		button#nextPhoto.galleryControl >

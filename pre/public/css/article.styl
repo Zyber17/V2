@@ -65,10 +65,45 @@
 			margin 0 0 20px 20px
 		#gallery
 			max-width: @max-width
-			display block
-			li
-				img
-					max-width @max-width
+			height 600px
+			margin-bottom 20px
+			.galleryControl
+				width: 50px
+				font-size 30px
+				background $lightOrange
+				border none
+				height @height
+				display inline-block
+				cursor pointer
+				&#prevPhoto
+					margin-right 10px
+					float left
+				&#nextPhoto
+					margin-left 10px
+					float right
+			ul
+				// float left
+				// margin-left 60px
+				display inline-block
+				position relative
+				max-width @max-width - 2*(50+10)
+				width 100%
+				height @height
+				borderBox()
+				border 3px solid $lightOrange
+				background $lightOrange
+				li
+					list-style-type none
+					display none
+					position relative
+					max-width @max-width - 2*3
 					borderBox()
-					border 3px solid $lightOrange
-					margin-bottom 20px
+					&.selected
+						display block
+					img
+						display block
+						max-width @max-width
+						max-height @height - 2*3
+						borderBox()
+						// border 3px solid $lightOrange
+						margin 0 auto
