@@ -92,7 +92,7 @@ exports.new_post = (req,res,next) ->
 			email:
 				req.body.email || "#{req.body.name.toLowerCase().replace(' ','.')}@pineviewtorch.com"
 			isStaff:
-					req.body.isStaff
+				req.body.isStaff
 			password:
 				req.body.password
 			permissions:
