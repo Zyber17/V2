@@ -4,6 +4,7 @@ block head
 	link(rel='stylesheet', href='/css/jquery-ui/theme.css')
 	style.
 		form input, form select, form textarea, form button { display: block; width: 40%; padding: 10px; margin: 10px; clear: both}
+		.isGallery {width: 20px; display: inline;}
 	script(src="/js/jquery-ui.js")
 	-if (!lockHTML)
 		script(src="/js/ckeditor/ckeditor.js")
@@ -51,6 +52,7 @@ block content
 				option(value="4", selected=status == 4 ? 'selected' : null) Good to Go
 				option(value="5", selected=status == 5 ? 'selected' : null) On Hold
 
+
 			label(for="publication") Publication:
 			select#section(name="publication", disabled="disbaled")
 				option(value="2", selected='selected') Web
@@ -76,6 +78,17 @@ block content
 					option(value="0", selected=approval.administration == 0 ? 'selected' : null) Awaiting Approval
 					option(value="1", selected=approval.administration == 1 ? 'selected' : null) Approved
 					option(value="2", selected=approval.administration == 2  ? 'selected' : null) Rejected (Leave rejection reason in comments)
+
+			hr
+
+			legend Is this a photo gallery?
+			br
+			fieldset#isGallery
+				input#isNotGallery.isGallery(type="radio", name="isGallery", value="false", checked=!isGallery || isGallery != null ? 'checked' : null)
+				label(for="isNotGallery") This <em>is not</em> a photo gallery.
+				br
+				input#isGallery.isGallery(type="radio", name="isGallery", value="true", checked=isGallery && isGallery != null ? 'checked' : null))
+				label(for="isGallery") This <em>is</em> a photo gallery.
 
 			hr
 

@@ -1,9 +1,15 @@
 extends wrapper
 include mixins/style
+-if (isGallery)
+	include mixins/js
+	include mixins/gallery
+
 
 
 block head
 	+style(['article'])
+	-if (isGallery)
+		+js(['gallery'])
 	script(src="/js/minread.js")
 	script.
 		$(document).ready(function() {
@@ -55,8 +61,12 @@ block content
 					li.time
 			h1= resp.title
 			
-
-	article!= (photo ? "<img src='"+photo+"'/>" : '')+body
+	article
+		if (!isGallery)
+			!= (photo ? "<img src='"+photo+"' id='articlePhoto'/>" : '')+body
+		else
+			+gallery(galleryItems)
+			!= body
 	-if (staff)
 		aside.views This article has been viewed #{resp.views} time#{resp.views != 1 ? 's' : ''}
 		div#revisions

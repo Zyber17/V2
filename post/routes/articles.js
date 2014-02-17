@@ -144,11 +144,12 @@
               approvedBy: {
                 advisor: req.body.advisorapproval || 0,
                 administration: req.body.administrationapproval || 0
-              }
+              },
+              isGallery: req.body.isGallery
             });
             newArticle.body.unshift({
               body: req.body.body,
-              editor: req.body.author,
+              editor: req.session.user.name,
               editDate: moment().toDate()
             });
             return newArticle.save(function(err, resp) {
@@ -179,7 +180,7 @@
       update = false;
     }
     return findArticle(req.params.slug, update, function(err, resp) {
-      var comment, comments, i, now, options, revbody, revision, versions, _i, _j, _len, _len1, _ref, _ref1;
+      var comment, comments, galleryUrls, i, isGallery, now, options, photo, revbody, revision, versions, _i, _j, _k, _len, _len1, _len2, _ref, _ref1, _ref2;
       res.end('hi');
       if (!err) {
         if (resp) {
@@ -207,6 +208,15 @@
               edited: comment.edited
             };
           }
+          isGallery = resp.isGallery && resp.photos[0] ? true : false;
+          if (isGallery) {
+            galleryUrls = [];
+            _ref2 = resp.photos;
+            for (_k = 0, _len2 = _ref2.length; _k < _len2; _k++) {
+              photo = _ref2[_k];
+              galleryUrls.push(photo_bucket_url + resp._id + '/' + photo.name);
+            }
+          }
           options = {
             body: resp.body[0].body,
             versions: versions.reverse(),
@@ -219,9 +229,10 @@
             title: resp.title,
             staff: req.session.isStaff || false,
             comments: comments,
-            photo: resp.photos[0] ? photo_bucket_url + resp._id + '/' + (resp.photos[0].length > 1 ? resp.photos[resp.photos.length - 2].name : resp.photos[article.photos.length - 1].name) : void 0,
+            photo: resp.photos[0] ? photo_bucket_url + resp._id + '/' + (resp.photos[0].length > 1 ? resp.photos[resp.photos.length - 2].name : resp.photos[resp.photos.length - 1].name) : void 0,
             section: resp.section,
-            isGallery: resp.isGallery ? resp.isGallery : false
+            isGallery: isGallery ? resp.isGallery : false,
+            galleryItems: isGallery ? galleryUrls : null
           };
           if (resp.publishDate) {
             options.resp.date = moment(resp.publishDate).format("MMMM D, YYYY");
@@ -367,6 +378,7 @@
                   resp.status = req.body.status;
                   resp.publication = req.body.publication;
                   resp.lastEditDate = moment().toDate();
+                  resp.isGallery = req.body.isGallery;
                   resp.section = {
                     title: section_resp.title,
                     slug: section_resp.slug,
