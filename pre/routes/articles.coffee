@@ -263,6 +263,7 @@ exports.view = (req,res,next) ->
 					galleryUrls = []
 					for photo in resp.photos
 						galleryUrls.push photo_bucket_url + resp._id + '/' + photo.name
+				
 				options = 
 					body:
 						resp.body[0].body
@@ -377,6 +378,8 @@ exports.edit_get = (req,res,next) ->
 								true
 							sections:
 								sections
+							isGallery:
+								article.isGallery
 							# issues:
 							# 	issues
 							status:
