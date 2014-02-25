@@ -321,6 +321,7 @@
                 lockHTML: article.lockHTML,
                 editing: true,
                 sections: sections,
+                isGallery: article.isGallery,
                 status: article.status || 0,
                 approval: {
                   advisor: article.approvedBy.advisor || 0,

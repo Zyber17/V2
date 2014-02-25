@@ -84,7 +84,7 @@
 }
 #content article #gallery {
   max-width: 800px;
-  height: 600px;
+  height: 455px;
   margin-bottom: 20px;
 }
 #content article #gallery .galleryControl {
@@ -92,7 +92,7 @@
   font-size: 30px;
   background: #efbc8b;
   border: none;
-  height: 600px;
+  height: 455px;
   display: inline-block;
   cursor: pointer;
 }
@@ -109,7 +109,7 @@
   position: relative;
   max-width: 680px;
   width: 100%;
-  height: 600px;
+  height: 455px;
   -webkit-box-sizing: border-box;
   -moz-box-sizing: border-box;
   -ms-box-sizing: border-box;
@@ -135,7 +135,7 @@
 #content article #gallery ul li img {
   display: block;
   max-width: 674px;
-  max-height: 594px;
+  max-height: 449px;
   -webkit-box-sizing: border-box;
   -moz-box-sizing: border-box;
   -ms-box-sizing: border-box;
