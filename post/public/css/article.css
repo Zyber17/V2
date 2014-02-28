@@ -86,6 +86,11 @@
   max-width: 800px;
   height: 455px;
   margin-bottom: 20px;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  -ms-box-sizing: border-box;
+  -o-box-sizing: border-box;
+  box-sizing: border-box;
 }
 #content article #gallery .galleryControl {
   width: 50px;
@@ -107,14 +112,9 @@
 #content article #gallery ul {
   display: inline-block;
   position: relative;
-  max-width: 680px;
+  max-width: 674px;
   width: 100%;
   height: 455px;
-  -webkit-box-sizing: border-box;
-  -moz-box-sizing: border-box;
-  -ms-box-sizing: border-box;
-  -o-box-sizing: border-box;
-  box-sizing: border-box;
   border: 3px solid #efbc8b;
   background: #efbc8b;
 }
@@ -122,7 +122,7 @@
   list-style-type: none;
   display: none;
   position: relative;
-  max-width: 674px;
+  max-width: 668px;
   -webkit-box-sizing: border-box;
   -moz-box-sizing: border-box;
   -ms-box-sizing: border-box;
@@ -134,7 +134,7 @@
 }
 #content article #gallery ul li img {
   display: block;
-  max-width: 674px;
+  max-width: 668px;
   max-height: 449px;
   -webkit-box-sizing: border-box;
   -moz-box-sizing: border-box;

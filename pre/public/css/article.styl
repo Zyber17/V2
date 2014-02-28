@@ -67,6 +67,7 @@
 			max-width: @max-width
 			height 455px
 			margin-bottom 20px
+			borderBox()
 			.galleryControl
 				width: 50px
 				font-size 30px
@@ -86,10 +87,9 @@
 				// margin-left 60px
 				display inline-block
 				position relative
-				max-width @max-width - 2*(50+10)
+				max-width @max-width - 2*(50+10+3)
 				width 100%
 				height @height
-				borderBox()
 				border 3px solid $lightOrange
 				background $lightOrange
 				li
