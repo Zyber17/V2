@@ -22,7 +22,7 @@
 
   prevPhoto = function() {
     cleanse();
-    item = (item - 1) % totalitems;
+    item = item !== 0 ? (item - 1) % totalitems : totalitems - 1;
     return $("#galleryLi" + item).addClass('selected');
   };
 
