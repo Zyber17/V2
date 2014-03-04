@@ -14,8 +14,8 @@
 
   photo_bucket_name = "torch_photos";
 
-  if (process.env.NODE_ENV === 'localdev') {
-    photo_bucket_name = 'V2_test';
+  if (process.env.NODE_ENV === 'dev') {
+    photo_bucket_name = 'torch_test';
   }
 
   photo_bucket_url = "http://s3.amazonaws.com/" + photo_bucket_name + "/";
