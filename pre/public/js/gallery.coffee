@@ -16,7 +16,7 @@ cleanse = () ->
 
 prevPhoto = ->
 	cleanse()
-	item = (item-1) % totalitems
+	item = if item != 0 then (item-1) % totalitems else totalitems - 1
 	$("#galleryLi#{item}").addClass 'selected'
 
 nextPhoto = ->
