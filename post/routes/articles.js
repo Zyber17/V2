@@ -60,7 +60,7 @@
               },
               slug: "/articles/" + article.slug + "/",
               section: JSON.stringify(article.section),
-              photo: article.photos[0] ? photo_bucket_url + article._id + '/' + (article.photos[0].length > 1 ? article.photos[article.photos.length - 1].name : article.photos[article.photos.length - 2].name) : void 0,
+              photo: article.photos[0] ? photo_bucket_url + article._id + '/' + (article.photos.length > 1 ? article.photos[article.photos.length - 2].name : article.photos[0].name) : void 0,
               rotator: article.photos[0] ? photo_bucket_url + article._id + '/' + article.photos[article.photos.length - 1].name : void 0,
               isPublished: 2,
               isRotatable: article.photos[0] ? true : false
@@ -229,7 +229,7 @@
             title: resp.title,
             staff: req.session.isStaff || false,
             comments: comments,
-            photo: resp.photos[0] ? photo_bucket_url + resp._id + '/' + (resp.photos[0].length > 1 ? resp.photos[resp.photos.length - 1].name : resp.photos[resp.photos.length - 2].name) : void 0,
+            photo: resp.photos[0] ? photo_bucket_url + resp._id + '/' + (resp.photos.length > 1 ? resp.photos[resp.photos.length - 2].name : resp.photos[0].name) : void 0,
             section: resp.section,
             isGallery: isGallery ? resp.isGallery : false,
             galleryItems: isGallery ? galleryUrls : null
