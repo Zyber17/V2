@@ -62,7 +62,7 @@ exports.index = (req,res,next) ->
 							section:
 								JSON.stringify(article.section)
 							photo:
-								if article.photos[0] then (photo_bucket_url + article._id + '/' + if article.photos[0].length > 1 then article.photos[article.photos.length - 1].name else article.photos[article.photos.length - 2].name)
+								if article.photos[0] then (photo_bucket_url + article._id + '/' + if article.photos.length > 1 then article.photos[article.photos.length - 2].name else article.photos[0].name)
 							rotator:
 								if article.photos[0] then photo_bucket_url + article._id + '/' + article.photos[article.photos.length - 1].name
 							isPublished:
@@ -285,7 +285,7 @@ exports.view = (req,res,next) ->
 					comments:
 						comments
 					photo:
-						if resp.photos[0] then (photo_bucket_url + resp._id + '/' + if resp.photos[0].length > 1 then resp.photos[resp.photos.length - 1].name else resp.photos[resp.photos.length - 2].name)
+						if resp.photos[0] then (photo_bucket_url + resp._id + '/' + if resp.photos.length > 1 then resp.photos[resp.photos.length - 2].name else resp.photos[0].name)
 					section:
 						resp.section
 					isGallery:
