@@ -196,6 +196,14 @@
       type: Boolean,
       "default": false
     },
+    isVideo: {
+      type: Boolean,
+      "default": false
+    },
+    videoEmebed: {
+      type: String,
+      "default": null
+    },
     issue: {
       type: Array,
       ref: 'issues'

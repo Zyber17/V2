@@ -145,7 +145,9 @@
                 advisor: req.body.advisorapproval || 0,
                 administration: req.body.administrationapproval || 0
               },
-              isGallery: req.body.isGallery
+              isGallery: req.body.isGallery,
+              isVideo: req.body.isVideo,
+              videoEmebed: req.body.videoEmebed ? req.body.videoEmebed : ''
             });
             newArticle.body.unshift({
               body: req.body.body,
@@ -232,7 +234,8 @@
             photo: resp.photos[0] ? photo_bucket_url + resp._id + '/' + (resp.photos.length > 1 ? resp.photos[resp.photos.length - 2].name : resp.photos[0].name) : void 0,
             section: resp.section,
             isGallery: isGallery ? resp.isGallery : false,
-            galleryItems: isGallery ? galleryUrls : null
+            isVideo: resp.isVideo ? resp.isVideo : false,
+            videoEmebed: resp.videoEmebed ? resp.videoEmebed : null
           };
           if (resp.publishDate) {
             options.resp.date = moment(resp.publishDate).format("MMMM D, YYYY");
@@ -322,6 +325,8 @@
                 editing: true,
                 sections: sections,
                 isGallery: article.isGallery,
+                isVideo: article.isVideo,
+                videoEmebed: article.videoEmebed,
                 status: article.status || 0,
                 approval: {
                   advisor: article.approvedBy.advisor || 0,
@@ -380,6 +385,8 @@
                   resp.publication = req.body.publication;
                   resp.lastEditDate = moment().toDate();
                   resp.isGallery = req.body.isGallery;
+                  resp.isVideo = req.body.isVideo;
+                  resp.videoEmebed = req.body.videoEmebed ? req.body.videoEmebed : '';
                   resp.section = {
                     title: section_resp.title,
                     slug: section_resp.slug,
@@ -495,7 +502,9 @@
       slug: 1,
       photos: 1,
       section: 1,
-      isGallery: 1
+      isGallery: 1,
+      isVideo: 1,
+      videoEmebed: 1
     }).exec(function(err, resp) {
       if (update) {
         resp.views++;

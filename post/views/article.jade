@@ -62,11 +62,14 @@ block content
 			h1= resp.title
 			
 	article
-		if (!isGallery)
-			!= (photo ? "<img src='"+photo+"' id='articlePhoto'/>" : '')+body
-		else
+		if (isVideo && !isGallery)
+			!= videoEmebed
+			!= body
+		else if (isGallery && !isVideo)
 			+gallery(galleryItems)
 			!= body
+		else
+			!= (photo ? "<img src='"+photo+"' id='articlePhoto'/>" : '')+body
 	-if (staff)
 		aside.views This article has been viewed #{resp.views} time#{resp.views != 1 ? 's' : ''}
 		div#revisions
