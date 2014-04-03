@@ -8,11 +8,15 @@ include mixins/style
 
 block head
 	+style(['article'])
-	-if (isGallery)
+	-if (isGallery && !isVideo)
 		+js(['gallery'])
-	script(src="/js/minread.js")
+	-if (isVideo && !isGallery)
+		+js(['jquery.fitvids'])
+	+js(['minread.js'])
 	script.
 		$(document).ready(function() {
+			$(".videoEmebed").fitVids()
+			
 			$("article").minRead({
 				where: ".time"
 			});
@@ -63,7 +67,7 @@ block content
 			
 	article
 		if (isVideo && !isGallery)
-			!= videoEmebed
+			div.videoEmebed!= videoEmebed
 			!= body
 		else if (isGallery && !isVideo)
 			+gallery(galleryItems)
