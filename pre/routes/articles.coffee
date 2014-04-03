@@ -202,6 +202,10 @@ exports.new_post = (req,res,next) ->
 								req.body.administrationapproval || 0
 						isGallery:
 							req.body.isGallery
+						isVideo:
+							req.body.isVideo
+						videoEmebed:
+							if req.body.videoEmebed then req.body.videoEmebed else ''
 
 					newArticle.body.unshift
 						body:
@@ -290,8 +294,10 @@ exports.view = (req,res,next) ->
 						resp.section
 					isGallery:
 						if isGallery then resp.isGallery else false
-					galleryItems:
-						if isGallery then galleryUrls else null
+					isVideo:
+						if resp.isVideo then resp.isVideo else false
+					videoEmebed:
+						if resp.videoEmebed then resp.videoEmebed else null
 
 				if resp.publishDate
 					options.resp.date = moment(resp.publishDate).format("MMMM D, YYYY")
@@ -380,6 +386,10 @@ exports.edit_get = (req,res,next) ->
 								sections
 							isGallery:
 								article.isGallery
+							isVideo:
+								article.isVideo
+							videoEmebed:
+								article.videoEmebed
 							# issues:
 							# 	issues
 							status:
@@ -435,6 +445,9 @@ exports.edit_post = (req,res,next) ->
 								resp.publication  =  req.body.publication
 								resp.lastEditDate = moment().toDate()
 								resp.isGallery = req.body.isGallery
+								resp.isVideo = req.body.isVideo
+								resp.videoEmebed = if req.body.videoEmebed then req.body.videoEmebed else ''
+
 								
 								resp.section =
 									title:
@@ -545,6 +558,10 @@ findArticle = (slug, update = false, callback) ->
 		section:
 			1
 		isGallery:
+			1
+		isVideo:
+			1
+		videoEmebed:
 			1
 	).exec((err, resp) ->
 		if update
