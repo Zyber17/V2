@@ -294,6 +294,8 @@ exports.view = (req,res,next) ->
 						resp.section
 					isGallery:
 						if isGallery then resp.isGallery else false
+					galleryItems:
+ 						if isGallery then galleryUrls else null
 					isVideo:
 						if resp.isVideo then resp.isVideo else false
 					videoEmebed:

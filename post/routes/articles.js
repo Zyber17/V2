@@ -234,6 +234,7 @@
             photo: resp.photos[0] ? photo_bucket_url + resp._id + '/' + (resp.photos.length > 1 ? resp.photos[resp.photos.length - 2].name : resp.photos[0].name) : void 0,
             section: resp.section,
             isGallery: isGallery ? resp.isGallery : false,
+            galleryItems: isGallery ? galleryUrls : null,
             isVideo: resp.isVideo ? resp.isVideo : false,
             videoEmebed: resp.videoEmebed ? resp.videoEmebed : null
           };
