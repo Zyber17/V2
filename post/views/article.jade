@@ -1,7 +1,7 @@
 extends wrapper
 include mixins/style
+include mixins/js
 -if (isGallery)
-	include mixins/js
 	include mixins/gallery
 
 
@@ -16,7 +16,7 @@ block head
 	script.
 		$(document).ready(function() {
 			$(".videoEmebed").fitVids()
-			
+
 			$("article").minRead({
 				where: ".time"
 			});
