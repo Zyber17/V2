@@ -5,6 +5,7 @@
   cluster = require('cluster');
 
   if (cluster.isMaster) {
+    console.log("V2 running in a " + (process.env.NODE_ENV ? '`' + process.env.NODE_ENV + '`' : 'production') + " environment.");
     if (process.env.NODE_ENV === 'setup') {
       console.log('Starting setup process.');
       express = require('express');
