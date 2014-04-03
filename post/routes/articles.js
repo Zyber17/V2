@@ -280,7 +280,7 @@
             if (err) {
               return res.end(JSON.stringify(err));
             } else {
-              return res.redirect("/articles/" + resp.slug + "/");
+              return res.redirect("/staff/articles/" + resp.slug + "/");
             }
           });
         } else {

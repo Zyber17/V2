@@ -331,7 +331,7 @@ exports.comment = (req,res,next) ->
 						moment().toDate()
 
 				resp.save (err, resp) ->
-						if err then res.end JSON.stringify err else res.redirect "/articles/#{resp.slug}/"
+						if err then res.end JSON.stringify err else res.redirect "/staff/articles/#{resp.slug}/"
 			else
 				res.render 'errors/404', {err: "Article not found"}
 		else
