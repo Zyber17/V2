@@ -1,5 +1,6 @@
 cluster = require 'cluster'
 if cluster.isMaster
+	console.log "V2 running in a #{if process.env.NODE_ENV then '`'+process.env.NODE_ENV+'`' else 'production'} environment."
 
 	if process.env.NODE_ENV == 'setup'
 		console.log 'Starting setup process.'
