@@ -148,3 +148,6 @@
   box-sizing: border-box;
   margin: 0 auto;
 }
+#content article .videoEmebed {
+  padding-bottom: 45px;
+}
