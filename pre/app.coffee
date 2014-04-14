@@ -122,7 +122,7 @@ else if process.env.NODE_ENV != 'setup'
 	# app.get '/issues', issues.list
 
 	app.get '/issues/current', (req,res,next) ->
-		res.redirect 'https://s3.amazonaws.com/torch_issues/' + (if moment() < moment("2014-3-7") then 'january_2014' else 'march_2014') + '.pdf'
+		res.redirect 'https://s3.amazonaws.com/torch_issues/' + (if moment() < moment("2014-4-17") then 'march_2014' else 'april_2014') + '.pdf'
 
 	# app.get '/issues/:id', issues.edit_get
 
