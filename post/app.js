@@ -74,7 +74,7 @@
     */
 
     app.get('/issues/current', function(req, res, next) {
-      return res.redirect('https://s3.amazonaws.com/torch_issues/' + (moment() < moment("2014-3-7") ? 'january_2014' : 'march_2014') + '.pdf');
+      return res.redirect('https://s3.amazonaws.com/torch_issues/' + (moment() < moment("2014-4-17") ? 'march_2014' : 'april_2014') + '.pdf');
     });
     app.get('/login', auth.login_get);
     app.post('/login', auth.login_post);
