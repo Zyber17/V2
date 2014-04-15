@@ -153,7 +153,7 @@ else if process.env.NODE_ENV != 'setup'
 
 	app.get '/staff', auth.requireStaff, (req,res,next) -> res.render 'staff'
 
-	app.get '/staff/articles/', auth.requireStaff, staff.articles.index
+	app.get '/staff/articles', auth.requireStaff, staff.articles.index
 
 	app.get '/staff/articles/new', auth.requireStaff, articles.new_get
 
