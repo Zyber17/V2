@@ -88,7 +88,7 @@
     app.get('/staff', auth.requireStaff, function(req, res, next) {
       return res.render('staff');
     });
-    app.get('/staff/articles/', auth.requireStaff, staff.articles.index);
+    app.get('/staff/articles', auth.requireStaff, staff.articles.index);
     app.get('/staff/articles/new', auth.requireStaff, articles.new_get);
     app.post('/staff/articles/new', auth.requireStaff, articles.new_post);
     app.get('/staff/articles/:slug', auth.requireStaff, articles.view);
