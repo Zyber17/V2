@@ -63,8 +63,24 @@
 			border 3px solid $lightOrange
 			// padding 10px
 			margin 0 0 20px 20px
+		ul, ol
+			list-style-position inside
+		ul
+			li
+				list-style-type disc
+				ol,ul
+					li
+						margin-left 20px
+					li
+						list-style-type circle
+		ol
+			li
+				list-style-type decimal
+				ol,ul
+					li
+						margin-left 20px
 		#gallery
-			max-width: @max-width
+			max-width @max-width
 			height 455px
 			margin-bottom 20px
 			borderBox()
