@@ -14,7 +14,7 @@
 
   saltWorkFactor = 10;
 
-  mongoose.connect('localhost', 'torch_2');
+  mongoose.connect('localhost', 'torch');
 
   database = mongoose.connection;
 
