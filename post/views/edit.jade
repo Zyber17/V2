@@ -5,6 +5,7 @@ block head
 	style.
 		form input, form select, form textarea, form button { display: block; width: 40%; padding: 10px; margin: 10px; clear: both}
 		.isGallery, .isVideo {width: 20px; display: inline;}
+	include mixins/jquery
 	script(src="/js/jquery-ui.js")
 	-if (!lockHTML)
 		script(src="/js/ckeditor/ckeditor.js")
