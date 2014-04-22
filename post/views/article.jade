@@ -8,7 +8,7 @@ include mixins/js
 
 block head
 	+style(['article'])
-	include mixins/jquery
+	include includes/jquery
 	-if (isGallery && !isVideo)
 		+js(['gallery'])
 	-if (isVideo && !isGallery)
