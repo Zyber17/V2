@@ -5,7 +5,7 @@ Schema   =  mongoose.Schema
 ObjectId =  Schema.ObjectId
 saltWorkFactor = 10
         
-mongoose.connect 'localhost','jffffudfff'
+mongoose.connect 'localhost','Torch'
 database = mongoose.connection
 
 database.on 'error', console.error.bind(console, 'connection error:')
