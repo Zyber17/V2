@@ -1,11 +1,3 @@
-h2.section {
-  text-transform: uppercase;
-  font-weight: bold;
-  font-style: italic;
-  font-size: 2.2em;
-  padding: 30px 0 0px 30px;
-  color: #e97747;
-}
 #rotator {
   position: relative;
   max-width: 1024px;
@@ -71,30 +63,13 @@ h2.section {
   height: 400px;
   z-index: -2;
 }
-#rotator .text {
-  height: 60px;
-  width: 100%;
-}
-#rotator .text ul {
-  width: 100%;
-  height: 60px;
-  display: block;
-}
-#rotator .text ul li {
-  display: none;
-  width: 100%;
-  height: 60px;
-}
-#rotator .text ul li.selected {
-  display: block;
-}
-#rotator .text a:link,
-#rotator .text a:visited,
-#rotator .text a:hover {
+#rotator .img a:link,
+#rotator .img a:visited,
+#rotator .img a:hover {
   overflow: hidden;
   float: left;
-  height: 60px;
-  width: 100%;
+  height: ;
+  width: ;
   background: #7f7f7f;
   color: #fff;
   font-size: 18px;
@@ -102,15 +77,15 @@ h2.section {
   display: block;
   border-bottom: none;
 }
-#rotator .text a:link div,
-#rotator .text a:visited div,
-#rotator .text a:hover div {
+#rotator .img a:link div,
+#rotator .img a:visited div,
+#rotator .img a:hover div {
   float: left;
 }
-#rotator .text a:link div.body,
-#rotator .text a:visited div.body,
-#rotator .text a:hover div.body {
-  height: 60px;
+#rotator .img a:link div.body,
+#rotator .img a:visited div.body,
+#rotator .img a:hover div.body {
+  height: ;
   -webkit-box-sizing: border-box;
   -moz-box-sizing: border-box;
   -ms-box-sizing: border-box;
@@ -119,17 +94,17 @@ h2.section {
   width: 80%;
   border-right: 1px solid #fff;
 }
-#rotator .text a:link div.body p,
-#rotator .text a:visited div.body p,
-#rotator .text a:hover div.body p {
+#rotator .img a:link div.body p,
+#rotator .img a:visited div.body p,
+#rotator .img a:hover div.body p {
   padding: 13px 30px 0;
   height: 36px;
   font-size: 18px;
   overflow: hidden;
 }
-#rotator .text a:link div.more,
-#rotator .text a:visited div.more,
-#rotator .text a:hover div.more {
+#rotator .img a:link div.more,
+#rotator .img a:visited div.more,
+#rotator .img a:hover div.more {
   width: 20%;
   -webkit-box-sizing: border-box;
   -moz-box-sizing: border-box;
@@ -138,9 +113,9 @@ h2.section {
   box-sizing: border-box;
   margin: 0 auto;
 }
-#rotator .text a:link div.more span,
-#rotator .text a:visited div.more span,
-#rotator .text a:hover div.more span {
+#rotator .img a:link div.more span,
+#rotator .img a:visited div.more span,
+#rotator .img a:hover div.more span {
   width: 100%;
   display: block;
   margin: 20px 0;
@@ -209,18 +184,6 @@ h2.section {
   -ms-box-sizing: border-box;
   -o-box-sizing: border-box;
   box-sizing: border-box;
-}
-#rotator .recentPre li a div.background {
-  position: absolute;
-  filter: blur(3px);
-  -webkit-filter: blur(3px);
-  -moz-filter: blur(3px);
-  -o-filter: blur(3px);
-  -ms-filter: blur(3px);
-}
-#rotator .recentPre li a div.background .dark {
-  background: #000;
-  opacity: 0.5;
 }
 #rotator .recentPre li a div.content {
   background: #e97747;
