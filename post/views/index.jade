@@ -6,9 +6,9 @@ include mixins/rotator
 
 
 block head
-	+style(['index'])
+	+style([['index','1']])
 	include includes/jquery
-	+js(['rotator'])
+	+js([['rotator','1']])
 block content
 	if section
 		h2.section= section

@@ -7,17 +7,17 @@ include mixins/js
 
 
 block head
-	+style(['article'])
+	+style([['article','1']])
 	include includes/jquery
 	-if (isGallery && !isVideo)
-		+js(['gallery'])
+		+js([['gallery','1']])
 	-if (isVideo && !isGallery)
-		+js(['jquery.fitvids'])
+		+js([['jquery.fitvids','1']])
 		script.
 			$(document).ready(function() {
 				$(".videoEmebed").fitVids();
 			});
-	+js(['minread'])
+	+js([['minread','1']])
 	script.
 		$(document).ready(function() {
 			$("article").minRead({
