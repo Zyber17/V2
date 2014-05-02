@@ -1,3 +1,3 @@
 mixin js(items)
 	for item in items
-		script(src="/js/#{item}.js")
+		script(src="/js/#{item[0]}.js?version=#{item[1]}")
