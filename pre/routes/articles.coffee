@@ -436,7 +436,7 @@ exports.edit_post = (req,res,next) ->
 		findArticle req.params.slug, false, (err, resp) ->
 			if !err
 				if resp
-					findSection req.body.section,(err,section_resp) ->
+					findSection req.body.section, (err,section_resp) ->
 						if !err
 							if resp
 								resp.title   =  req.body.title
