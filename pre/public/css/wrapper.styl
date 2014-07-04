@@ -26,9 +26,10 @@ a
 	margin 0 auto
 
 #header
-	background: $lightOrange
+	background $lightOrange
 	height 181px
 	padding 10px 0
+	position relative
 	h1 a
 		display block
 		hideText()
@@ -39,20 +40,60 @@ a
 		height @height - 22
 		border-bottom none
 		text-decoration none
-
-	ul
-		margin-top -15px
-		li
-			display block
-			margin 0 auto
-			width 155px
-			a
-				headerText(false)
-				color #fff
-				font-size 22px
+		@media screen and (-webkit-min-device-pixel-ratio 1.25), (min-resolution 120dpi)
+			background-image url('/images/logo_2x.png')
+	aside
+		position absolute
+		top 0
+		right 0
+		z-index 10
+		@media screen and (max-width 749px)
+			position relative
+			margin-top -20px
+		a
+			&:link, &:visited, &:hover, &:active
+				display block
+				position relative
+				width 180px
+				height @width
 				border-bottom none
-				text-decoration none
-			
+				text-align right
+				border-bottom none
+				color #fff
+				font-size 20px
+				headerText false
+				@media screen and (max-width 749px)
+					width auto
+					height 28px
+					text-align center
+				div.triangle
+					border-width 0 @width @width 0
+					border-style solid
+					border-color transparent $darkOrange transparent transparent
+					line-height 0px
+					position absolute
+					top 0
+					right 0
+					width 0
+					height 0
+					z-index -1
+					@media screen and (max-width 749px)
+						display none
+				div.text
+					position absolute
+					right 6px
+					top 6px
+					z-index 100
+					display block
+					width 105px
+					@media screen and (max-width 749px)
+						position relative
+						width auto
+			&:hover
+				div.triangle
+					border-right-color darken($darkOrange, 20%)
+						
+
 nav
 	background $darkOrange
 	color #fff
@@ -85,8 +126,8 @@ nav
 					color #fff
 					border none
 				&:hover
-					background #fff
-					color $darkOrange
+					background darken(@background, 20%)
+					// color $darkOrange
 
 
 #footer 
