@@ -27,7 +27,7 @@ a
 
 #header
 	background $lightOrange
-	height 181px
+	height 168px
 	padding 10px 0
 	position relative
 	h1 a
@@ -37,7 +37,7 @@ a
 		background-size 465px 139px
 		background-repeat no-repeat
 		background-position center center
-		height @height - 22
+		height @height - 5
 		border-bottom none
 		text-decoration none
 		@media screen and (-webkit-min-device-pixel-ratio 1.25), (min-resolution 120dpi)
@@ -47,9 +47,9 @@ a
 		top 0
 		right 0
 		z-index 10
-		@media screen and (max-width 749px)
+		@media screen and (max-width $readOnlineWidth)
 			position relative
-			margin-top -20px
+			margin-top -32px
 		a
 			&:link, &:visited, &:hover, &:active
 				display block
@@ -62,7 +62,7 @@ a
 				color #fff
 				font-size 20px
 				headerText false
-				@media screen and (max-width 749px)
+				@media screen and (max-width $readOnlineWidth)
 					width auto
 					height 28px
 					text-align center
@@ -77,7 +77,7 @@ a
 					width 0
 					height 0
 					z-index -1
-					@media screen and (max-width 749px)
+					@media screen and (max-width $readOnlineWidth)
 						display none
 				div.text
 					position absolute
@@ -86,13 +86,21 @@ a
 					z-index 100
 					display block
 					width 105px
-					@media screen and (max-width 749px)
+					@media screen and (max-width $readOnlineWidth)
 						position relative
-						width auto
+						right 0
+						top 0
+						width 370px
+						background $darkOrange
+						padding 5px 0 3px
+						line-height 1.1
+						margin 0 auto
 			&:hover
 				div.triangle
 					border-right-color darken($darkOrange, 20%)
-						
+				@media screen and (max-width $readOnlineWidth)
+					div.text
+						background darken($darkOrange, 20%)						
 
 nav
 	background $darkOrange
