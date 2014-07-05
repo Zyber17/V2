@@ -148,6 +148,7 @@ articles = new Schema
 	title:
 		type: String
 		required: true
+		index: true
 
 	slug:
 		type: String
@@ -164,6 +165,11 @@ articles = new Schema
 		default: false
 
 	body: [articleBodies]
+
+	bodyPlain:
+		type: String
+		required: true
+		index: true
 
 	photos: [photos]
 
@@ -263,9 +269,9 @@ articleBodies = new Schema
 		type: Date
 		default: Date.now
 
-articles.plugin monguurl
-    source: 'title'
-    target: 'slug'
+# articles.plugin monguurl
+#     source: 'title'
+#     target: 'slug'
 
 #End Articles
 
