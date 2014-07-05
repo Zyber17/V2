@@ -160,7 +160,8 @@
   articles = new Schema({
     title: {
       type: String,
-      required: true
+      required: true,
+      index: true
     },
     slug: {
       type: String,
@@ -177,6 +178,11 @@
       "default": false
     },
     body: [articleBodies],
+    bodyPlain: {
+      type: String,
+      required: true,
+      index: true
+    },
     photos: [photos],
     section: {
       title: {
@@ -283,11 +289,6 @@
       "default": Date.now
     }
   });
-
-  articles.plugin(monguurl({
-    source: 'title',
-    target: 'slug'
-  }));
 
   photos = new Schema({
     name: {

@@ -36,6 +36,7 @@
     }, {
       publishDate: 1,
       body: 1,
+      bodyPlain: 1,
       title: 1,
       author: 1,
       slug: 1,
@@ -51,7 +52,7 @@
           for (i = _i = 0, _len = recent.length; _i < _len; i = ++_i) {
             article = recent[i];
             recentAr[i] = {
-              body: string(htmlToText.fromString(article.body[0].body)).truncate(400).s,
+              body: string(article.bodyPlain).truncate(400),
               author: article.author,
               title: string(article.title).truncate(75).s,
               date: {
@@ -134,6 +135,7 @@
                 slug: resp.slug,
                 id: resp._id
               },
+              bodyPlain: htmlToText.fromString(req.body.body),
               author: req.body.author,
               publishDate: req.body.date ? moment(req.body.date, "MM-DD-YYYY").toDate() : void 0,
               lastEditDate: moment().toDate(),
@@ -380,6 +382,7 @@
                 if (resp) {
                   resp.title = req.body.title;
                   resp.author = req.body.author;
+                  resp.bodyPlain = htmlToText.fromString(req.body.body);
                   resp.publishDate = req.body.date ? moment(req.body.date, "MM-DD-YYYY").toDate() : void 0;
                   resp.issue = req.body.issue;
                   resp.status = req.body.status;
@@ -491,6 +494,7 @@
     }).select({
       publishDate: 1,
       body: 1,
+      bodyPlain: 1,
       title: 1,
       author: 1,
       bodyType: 1,

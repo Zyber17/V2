@@ -29,6 +29,8 @@ exports.index = (req,res,next) ->
 			1
 		body:
 			1
+		bodyPlain:
+			1
 		title:
 			1
 		author:
@@ -47,7 +49,7 @@ exports.index = (req,res,next) ->
 					for article, i in recent
 						recentAr[i] =
 							body:
-								string(htmlToText.fromString(article.body[0].body)).truncate(400).s
+								string(article.bodyPlain).truncate(400)
 							author:
 								article.author
 							title:
@@ -181,6 +183,8 @@ exports.new_post = (req,res,next) ->
 								resp.slug
 							id:
 								resp._id
+						bodyPlain:
+							htmlToText.fromString(req.body.body)
 						author:
 							req.body.author
 						publishDate:
@@ -441,6 +445,7 @@ exports.edit_post = (req,res,next) ->
 							if resp
 								resp.title   =  req.body.title
 								resp.author  =  req.body.author
+								resp.bodyPlain	=  htmlToText.fromString(req.body.body)
 								resp.publishDate    =  if req.body.date then moment(req.body.date, "MM-DD-YYYY").toDate()
 								resp.issue   =  req.body.issue
 								resp.status  =  req.body.status
@@ -475,7 +480,7 @@ exports.edit_post = (req,res,next) ->
 											moment().toDate()
 
 								resp.save (err, resp) ->
-									if err then res.end JSON.stringify err else res.redirect "/articles/#{resp.slug}/" #do not use 'is not' instead of != here
+									if err then res.end JSON.stringify err else res.redirect "/articles/#{resp.slug}/"
 							else
 								res.render 'errors/404', {err: "Section not found"}
 						else
@@ -534,6 +539,8 @@ findArticle = (slug, update = false, callback) ->
 		publishDate:
 			1
 		body:
+			1
+		bodyPlain:
 			1
 		title:
 			1
