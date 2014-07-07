@@ -5,7 +5,7 @@ Schema   =  mongoose.Schema
 ObjectId =  Schema.ObjectId
 saltWorkFactor = 10
         
-mongoose.connect 'localhost',if process.env.NODE_ENV == 'dev' then 'torch4' else "torch"
+mongoose.connect 'localhost', if process.env.NODE_ENV == 'dev' then 'torch4' else "torch"
 database = mongoose.connection
 
 database.on 'error', console.error.bind(console, 'connection error:')
