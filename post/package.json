@@ -23,6 +23,7 @@
     "bcrypt": "~0.7.6",
     "connect-redis": "~1.4.5",
     "cson": "~1.4.2",
+    "elasticsearch": "^2.2.0",
     "express": "~3.2.6",
     "html-to-text": "0.0.6",
     "jade": "~0.31.2",
