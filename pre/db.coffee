@@ -5,7 +5,7 @@ Schema   =  mongoose.Schema
 ObjectId =  Schema.ObjectId
 saltWorkFactor = 10
         
-mongoose.connect 'localhost','torch'
+mongoose.connect 'localhost',if process.env.NODE_ENV == 'dev' then 'torch4' else "torch"
 database = mongoose.connection
 
 database.on 'error', console.error.bind(console, 'connection error:')
@@ -148,7 +148,6 @@ articles = new Schema
 	title:
 		type: String
 		required: true
-		index: true
 
 	slug:
 		type: String
@@ -169,7 +168,6 @@ articles = new Schema
 	bodyPlain:
 		type: String
 		required: true
-		index: true
 
 	photos: [photos]
 
@@ -269,9 +267,9 @@ articleBodies = new Schema
 		type: Date
 		default: Date.now
 
-# articles.plugin monguurl
-#     source: 'title'
-#     target: 'slug'
+articles.plugin monguurl
+    source: 'title'
+    target: 'slug'
 
 #End Articles
 
