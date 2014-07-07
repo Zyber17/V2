@@ -96,7 +96,7 @@
     }).sort({
       'publishDate': -1,
       'lastEditDate': -1
-    }).limit(6).execFind(function(err, recent) {
+    }).limit(10).execFind(function(err, recent) {
       var article, i, _i, _len;
       if (!err) {
         if (recent.length) {
