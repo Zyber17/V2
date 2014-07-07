@@ -1,0 +1,9 @@
+extends wrapper
+
+block content
+	h2 Search
+	form#form(method="get", action='/search/', enctype="multipart/form-data")
+
+		input#q(type="text", placeholder="Query", name="q")
+
+		button#submit(type="submit") Submit

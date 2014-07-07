@@ -36,7 +36,7 @@ else if process.env.NODE_ENV != 'setup'
 	auth       =  require './routes/auth'
 	# index    =  require './routes/index'
 	issues     =  require './routes/issues'
-	# search   =  require './routes/search'
+	search		=  require './routes/search'
 	rss        =  require './routes/rss'
 	sections   =  require './routes/sections'
 	users      =  require './routes/users'
@@ -113,6 +113,8 @@ else if process.env.NODE_ENV != 'setup'
 	app.get '/', articles.index
 
 	app.get '/articles/:slug', auth.optionalLogin, articles.view # Middleware for auth? Update: No. Just check for session in article.view. WAIT. I MEAN YES. Just make sure the user in reference exists. Add later
+
+	app.get '/search', search.searchDirector
 
 
 	###
