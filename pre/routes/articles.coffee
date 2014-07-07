@@ -152,7 +152,7 @@ exports.json = (req,res,next) ->
 		_id:
 			0}
 	).sort({'publishDate':-1, 'lastEditDate': -1}
-	).limit(6
+	).limit(10
 	).execFind(
 		(err, recent) ->
 			if !err
