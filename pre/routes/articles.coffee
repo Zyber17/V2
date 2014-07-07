@@ -3,9 +3,7 @@ moment = require 'moment'
 marked = require 'marked'
 string = require 'string'
 htmlToText = require 'html-to-text'
-photo_bucket_name = "torch_photos"
-if process.env.NODE_ENV == 'dev'
-	photo_bucket_name = 'torch_test'
+photo_bucket_name = if process.env.NODE_ENV == 'dev' then 'torch_test' else "torch_photos"
 photo_bucket_url = "http://s3.amazonaws.com/#{photo_bucket_name}/"
 
 marked.setOptions

@@ -12,11 +12,7 @@
 
   htmlToText = require('html-to-text');
 
-  photo_bucket_name = "torch_photos";
-
-  if (process.env.NODE_ENV === 'dev') {
-    photo_bucket_name = 'torch_test';
-  }
+  photo_bucket_name = process.env.NODE_ENV === 'dev' ? 'torch_test' : "torch_photos";
 
   photo_bucket_url = "http://s3.amazonaws.com/" + photo_bucket_name + "/";
 
