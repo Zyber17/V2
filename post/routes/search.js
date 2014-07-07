@@ -31,12 +31,17 @@
   };
 
   searchGet = function(req, res, next) {
-    var query2;
-    query2 = decodeURIComponent(req.query.q);
+    var query;
+    query = decodeURIComponent(req.query.q);
     return es.search({
       index: 'torch',
       type: 'article',
-      q: query2
+      query: {
+        query_string: {
+          feilds: ["title", "body"],
+          query: query
+        }
+      }
     }, function(err, resp) {
       if (!err) {
         return res.end(JSON.stringify(resp));
