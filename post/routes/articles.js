@@ -102,9 +102,9 @@
         if (recent.length) {
           for (i = _i = 0, _len = recent.length; _i < _len; i = ++_i) {
             article = recent[i];
-            recent[i].body = article.body[0].body;
+            recent[i].body.slice(0);
           }
-          return res.end(JSON.stringify(recent));
+          return res.json(recent);
         } else {
           return res.render('errors/404', {
             _err: ["Article not found"]

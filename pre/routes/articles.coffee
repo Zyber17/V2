@@ -158,8 +158,8 @@ exports.json = (req,res,next) ->
 			if !err
 				if recent.length
 					for article, i in recent
-						recent[i].body = article.body[0].body
-					res.end JSON.stringify recent
+						recent[i].body.slice(0)
+					res.json recent
 				else
 					res.render 'errors/404', {_err: ["Article not found"]}
 			else
