@@ -78,6 +78,45 @@
     });
   };
 
+  exports.json = function(req, res, next) {
+    exports.index = function(req, res, next) {};
+    return db.Articles.find({
+      publishDate: {
+        $lte: moment().toDate()
+      },
+      status: 4
+    }, {
+      publishDate: 1,
+      body: 1,
+      title: 1,
+      author: 1,
+      slug: 1,
+      photos: 1,
+      _id: 0
+    }).sort({
+      'publishDate': -1,
+      'lastEditDate': -1
+    }).limit(6).execFind(function(err, recent) {
+      var article, i, _i, _len;
+      if (!err) {
+        if (recent.length) {
+          for (i = _i = 0, _len = recent.length; _i < _len; i = ++_i) {
+            article = recent[i];
+            recent[i].body = article.body[0].body;
+          }
+          return res.end(JSON.stringify(recent));
+        } else {
+          return res.render('errors/404', {
+            _err: ["Article not found"]
+          });
+        }
+      } else {
+        console.log("Error (articles): " + err);
+        return res.end(JSON.stringify(err));
+      }
+    });
+  };
+
   exports.new_get = function(req, res, next) {
     return db.Sections.find().select({
       title: 1,

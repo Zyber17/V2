@@ -129,6 +129,44 @@ exports.index = (req,res,next) ->
 	)
 
 
+exports.json = (req,res,next) ->
+	exports.index = (req,res,next) ->
+	db.Articles.find(
+		{publishDate:
+			$lte:
+				moment().toDate()
+		status:
+			4},
+		{publishDate:
+			1
+		body:
+			1
+		title:
+			1
+		author:
+			1
+		slug:
+			1
+		photos:
+			1
+		_id:
+			0}
+	).sort({'publishDate':-1, 'lastEditDate': -1}
+	).limit(6
+	).execFind(
+		(err, recent) ->
+			if !err
+				if recent.length
+					for article, i in recent
+						recent[i].body = article.body[0].body
+					res.end JSON.stringify recent
+				else
+					res.render 'errors/404', {_err: ["Article not found"]}
+			else
+				console.log "Error (articles): #{err}"
+				res.end JSON.stringify err
+	)
+
 exports.new_get = (req,res,next) ->
 	db.Sections.find().select(
 		title:
