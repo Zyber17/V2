@@ -18,11 +18,14 @@ searchView = (req,res,next) ->
 	res.render 'search'
 
 searchGet = (req,res,next) ->
-	query2 = decodeURIComponent(req.query.q)
+	query = decodeURIComponent(req.query.q)
 	es.search {
 		index: 'torch'
 		type: 'article'
-		q: query2
+		query:
+			query_string:
+				feilds: ["title", "body"]
+				query: query
 		}, (err,resp) ->
 			if !err
 				res.end JSON.stringify resp
