@@ -14,7 +14,7 @@
 
   saltWorkFactor = 10;
 
-  mongoose.connect('localhost', 'torch');
+  mongoose.connect('localhost', process.env.NODE_ENV === 'dev' ? 'torch4' : "torch");
 
   database = mongoose.connection;
 
@@ -160,8 +160,7 @@
   articles = new Schema({
     title: {
       type: String,
-      required: true,
-      index: true
+      required: true
     },
     slug: {
       type: String,
@@ -180,8 +179,7 @@
     body: [articleBodies],
     bodyPlain: {
       type: String,
-      required: true,
-      index: true
+      required: true
     },
     photos: [photos],
     section: {
@@ -289,6 +287,11 @@
       "default": Date.now
     }
   });
+
+  articles.plugin(monguurl({
+    source: 'title',
+    target: 'slug'
+  }));
 
   photos = new Schema({
     name: {
