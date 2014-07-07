@@ -69,6 +69,7 @@
     */
 
     app.get('/', articles.index);
+    app.get('/articles.json', articles.json);
     app.get('/articles/:slug', auth.optionalLogin, articles.view);
     app.get('/search', search.searchDirector);
     /*

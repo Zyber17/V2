@@ -112,6 +112,8 @@ else if process.env.NODE_ENV != 'setup'
 	###
 	app.get '/', articles.index
 
+	app.get '/articles.json', articles.json
+
 	app.get '/articles/:slug', auth.optionalLogin, articles.view # Middleware for auth? Update: No. Just check for session in article.view. WAIT. I MEAN YES. Just make sure the user in reference exists. Add later
 
 	app.get '/search', search.searchDirector
