@@ -42,10 +42,10 @@ exports.requireStaff = (req,res,next) ->
 
 exports.login_get = (req,res,next) ->
 	if req.session.message
-		res.render 'login', req.session.message
+		res.render 'staff/login', req.session.message
 		req.session.message = null
 	else
-		res.render 'login'
+		res.render 'staff/login'
 
 exports.login_post = (req,res,next) ->
 	err = []

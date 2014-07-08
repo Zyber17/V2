@@ -1,12 +1,5 @@
 @import helpers
 
-h2.section
-	headerText(true)
-	font-size 2.2em
-	padding 30px 0 0px 30px
-	color $darkOrange
-
-
 #rotator
 	position relative
 	max-width $bodyWidth
@@ -161,80 +154,4 @@ h2.section
 		headerText(true)
 		font-size 22px
 		padding 45px 0 15px 30px
-	ul li
-		margin-bottom 30px
-		a:link, a:visited
-			display block
-			color #fff
-			border-bottom none
-			.top
-				background $darkOrange
-				padding-left 30px
-				height 150px
-				overflow-y hidden
-				&.draft
-					background $lightGrey
-				&.queued
-					background $lightOrange
-					color $veryDarkGrey
-				.sixty
-					float left
-					width 60%
-					margin-top 15px
-					margin-bottom 10px
-					overflow hidden
-					h3
-						font-weight bold
-						font-style italic
-						font-size 17px
-						margin-bottom 5px
-						overflow hidden
-					article p
-						line-height 1.5
-						height 100px
-						overflow hidden
-
-				.preview
-					float right
-					width 38%
-					max-height @height
-					overflow hidden
-					img
-						max-height @height
-						float right
-			.bottom
-				background #fff
-				color $black
-				font-style italic
-				height 30px
-				clear both
-				.floatfix
-					float right
-					div
-						float left
-						&.info
-							margin-top 10px
-						&.more
-							margin-left 20px
-							color #fff
-							background $darkOrange
-							text-transform uppercase
-							padding 10px
-							&.draft
-								background $lightGrey
-							&.queued
-								background $lightOrange
-								color $veryDarkGrey
-		a:hover
-			.top
-				background darken($darkOrange, 20%)
-				&.draft
-					background darken($lightGrey, 20%)
-				&.queued
-					background darken($lightOrange, 20%)
-			.bottom .floatfix div.more
-				background darken($darkOrange, 20%)
-				&.draft
-					background darken($lightGrey, 20%)
-				&.queued
-					background darken($lightOrange, 20%)
+	@import 'includes/list.styl'

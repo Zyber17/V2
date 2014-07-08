@@ -1,9 +1,9 @@
+db = require '../../db'
 crypto = require 'crypto'
 moment = require 'moment'
-db = require '../db'
 
 exports.view = (req,res,next) ->
-	res.render 'uploadPhoto'
+	res.render 'staff/uploadPhoto'
 
 exports.auth = (req,res,next) ->
 	createS3Policy req.params.slug, req.params.mime, req.params.filename, (err, policy, name) ->

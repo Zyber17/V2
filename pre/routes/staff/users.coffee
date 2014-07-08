@@ -1,4 +1,4 @@
-db = require '../db'
+db = require '../../db'
 moment = require 'moment'
 marked = require 'marked'
 string = require 'string'
@@ -30,16 +30,16 @@ exports.list = (req,res,next) ->
 	).execFind(
 		(err, resp) ->
 			#slug defined in userList
-			res.render 'userList', {users: resp}
+			res.render 'staff/userList', {users: resp}
 	)
 
 
 exports.new_get = (req,res,next) ->
 	if req.session.message
-		res.render 'newUser', req.session.message
+		res.render 'staff/newUser', req.session.message
 		req.session.message = null
 	else
-		res.render 'newUser'
+		res.render 'staff/newUser'
 
 exports.new_post = (req,res,next) ->
 	err = []
@@ -136,7 +136,7 @@ exports.new_post = (req,res,next) ->
 
 exports.edit_get = (req,res,next) ->
 	if req.session.message
-		res.render 'newUser', req.session.message
+		res.render 'staff/newUser', req.session.message
 		req.session.message = null
 	else
 		findUser req.params.slug,(err, resp) ->
@@ -148,7 +148,7 @@ exports.edit_get = (req,res,next) ->
 						delete ret.accountStatus
 						delete ret.bio
 						ret.dispBio = resp.bio.notRendered
-						res.render 'newUser', ret
+						res.render 'staff/newUser', ret
 				else
 					res.render 'errors/404', {err: "User not found"}
 			else
@@ -268,7 +268,7 @@ exports.remove = (req,res,next) ->
 # Fix these later
 exports.change_get = (req,res,next) ->
 	if req.session.message
-		res.render 'newUser', req.session.message
+		res.render 'staff/newUser', req.session.message
 		req.session.message = null
 	else
 		db.Users.findById req.session.user._id, {
@@ -279,7 +279,7 @@ exports.change_get = (req,res,next) ->
 			}, (err, resp) ->
 			if !err
 				if resp
-					res.render 'userSettings', resp
+					res.render 'staff/userSettings', resp
 				else
 					res.render '/logout'
 			else

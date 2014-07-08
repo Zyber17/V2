@@ -1,4 +1,4 @@
-db = require '../db'
+db = require '../../db'
 moment = require 'moment'
 # string = require 'string'
 
@@ -31,7 +31,7 @@ exports.list = (req,res,next) ->
 						publication:
 							issue.publication
 
-				res.render 'issuesList', {issues: issues}
+				res.render 'staff/issuesList', {issues: issues}
 			else
 				console.log "Error (issues): #{err}"
 				res.end JSON.stringify err
@@ -40,10 +40,10 @@ exports.list = (req,res,next) ->
 exports.new_get = (req,res,next) ->
 	if req.session.message
 		req.session.message.editing = false
-		res.render 'newIssue', req.session.message
+		res.render 'staff/newIssue', req.session.message
 		req.session.message = null
 	else
-		res.render 'newIssue', {editing: false}
+		res.render 'staff/newIssue', {editing: false}
 
 exports.new_post = (req,res,next) ->
 	err = []
@@ -77,7 +77,7 @@ exports.new_post = (req,res,next) ->
 exports.edit_get = (req,res,next) ->
 	if req.session.message
 		req.session.message.editing = true
-		res.render 'newIssue', req.session.message
+		res.render 'staff/newIssue', req.session.message
 		req.session.message = null
 	else
 		findIssue req.params.slug, (err,resp) ->
@@ -93,7 +93,7 @@ exports.edit_get = (req,res,next) ->
 						editing:
 							true
 
-					res.render 'newIssue', send
+					res.render 'staff/newIssue', send
 				else
 					res.render 'errors/404', {err: "Issue not found"}
 			else

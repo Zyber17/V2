@@ -32,25 +32,26 @@ else if process.env.NODE_ENV != 'setup'
 	path        =  require 'path'
 	RedisStore  =  require('connect-redis')(express)
 
-	articles   =  require './routes/articles'
 	auth       =  require './routes/auth'
+
+	articles   =  require './routes/articles'
 	# index    =  require './routes/index'
-	issues     =  require './routes/issues'
+	# issues     =  require './routes/issues'
 	search		=  require './routes/search'
 	rss        =  require './routes/rss'
 	sections   =  require './routes/sections'
-	users      =  require './routes/users'
-	photos     =  require './routes/photos'
+	# users      =  require './routes/users'
+	# photos     =  require './routes/photos'
 
 	staff = []
 	staff.articles     =  require './routes/staff/articles'
 	# staff.index        =  require './routes/staff/index'
-	# staff.issues       =  require './routes/staff/issues'
+	staff.issues       =  require './routes/staff/issues'
 	# staff.permissions  =  require './routes/staff/permissions'
-	# staff.photos       =  require './routes/staff/photos'
+	staff.photos       =  require './routes/staff/photos'
 	# staff.rotator      =  require './routes/staff/rotator'
-	# staff.sections     =  require './routes/staff/sections'
-	# staff.users        =  require './routes/staff/users'
+	staff.sections     =  require './routes/staff/sections'
+	staff.users        =  require './routes/staff/users'
 
 	app = express()
 
@@ -155,108 +156,79 @@ else if process.env.NODE_ENV != 'setup'
 
 	# Articles
 
-	app.get '/staff', auth.requireStaff, (req,res,next) -> res.render 'staff'
+	app.get '/staff', auth.requireStaff, (req,res,next) -> res.render 'staff/staff'
 
 	app.get '/staff/articles', auth.requireStaff, staff.articles.index
 
-	app.get '/staff/articles/new', auth.requireStaff, articles.new_get
+	app.get '/staff/articles/new', auth.requireStaff, staff.articles.new_get
 
-	app.post '/staff/articles/new', auth.requireStaff, articles.new_post
+	app.post '/staff/articles/new', auth.requireStaff, staff.articles.new_post
 
 	app.get '/staff/articles/:slug', auth.requireStaff, articles.view # Middleware for auth? Update: No. Just check for session in article.view. WAIT. I MEAN YES. Just make sure the user in reference exists. Add later
 
-	app.post '/staff/articles/:slug/comment', auth.requireStaff, articles.comment
+	app.post '/staff/articles/:slug/comment', auth.requireStaff, staff.articles.comment
 
-	app.get '/staff/articles/:slug/edit', auth.requireStaff, articles.edit_get
+	app.get '/staff/articles/:slug/edit', auth.requireStaff, staff.articles.edit_get
 
-	app.post '/staff/articles/:slug/edit', auth.requireStaff, articles.edit_post
+	app.post '/staff/articles/:slug/edit', auth.requireStaff, staff.articles.edit_post
 
-	app.post '/staff/articles/:slug/delete', auth.requireStaff, articles.remove
+	app.post '/staff/articles/:slug/delete', auth.requireStaff, staff.articles.remove
 
-	app.post '/staff/articles/:slug/photosDelete', auth.requireStaff, articles.removePhotos
+	app.post '/staff/articles/:slug/photosDelete', auth.requireStaff, staff.articles.removePhotos
 
 	# End Articles
 	# Photos
 
-	app.get '/staff/articles/:slug/photos/upload', auth.requireStaff, photos.view
+	app.get '/staff/articles/:slug/photos/upload', auth.requireStaff, staff.photos.view
 
-	app.get "/staff/articles/:slug/photos/upload/signS3/:mime(\\w+\/\\w+)/:filename", auth.requireStaff, photos.auth
+	app.get "/staff/articles/:slug/photos/upload/signS3/:mime(\\w+\/\\w+)/:filename", auth.requireStaff, staff.photos.auth
 
-	app.get "/staff/articles/:slug/photos/upload/confirmed/:name", auth.requireStaff, photos.addToDB
+	app.get "/staff/articles/:slug/photos/upload/confirmed/:name", auth.requireStaff, staff.photos.addToDB
 
 	# End Photos
 	# Issues
 
-	app.get '/staff/issues', auth.requireStaff, issues.list
+	app.get '/staff/issues', auth.requireStaff, staff.issues.list
 
-	app.get '/staff/issues/new', auth.requireStaff, issues.new_get
+	app.get '/staff/issues/new', auth.requireStaff, staff.issues.new_get
 
-	app.post '/staff/issues/new', auth.requireStaff, issues.new_post
+	app.post '/staff/issues/new', auth.requireStaff, staff.issues.new_post
 
-	app.get '/staff/issues/:slug', auth.requireStaff, issues.edit_get
+	app.get '/staff/issues/:slug', auth.requireStaff, staff.issues.edit_get
 
-	app.post '/staff/issues/:slug', auth.requireStaff, issues.edit_post
+	app.post '/staff/issues/:slug', auth.requireStaff, staff.issues.edit_post
 
 	# End Issues
 	# Sections
 
-	app.get '/staff/sections', auth.requireStaff, sections.list
+	app.get '/staff/sections', auth.requireStaff, staff.sections.list
 
-	app.get '/staff/sections/new', auth.requireStaff, sections.new_get
+	app.get '/staff/sections/new', auth.requireStaff, staff.sections.new_get
 
-	app.post '/staff/sections/new', auth.requireStaff, sections.new_post
+	app.post '/staff/sections/new', auth.requireStaff, staff.sections.new_post
 
-	app.get '/staff/sections/:slug', auth.requireStaff, sections.edit_get
+	app.get '/staff/sections/:slug', auth.requireStaff, staff.sections.edit_get
 
-	app.post '/staff/sections/:slug', auth.requireStaff, sections.edit_post
+	app.post '/staff/sections/:slug', auth.requireStaff, staff.sections.edit_post
 
-	app.get '/staff/sections/:slug/delete', auth.requireStaff, sections.remove
+	app.get '/staff/sections/:slug/delete', auth.requireStaff, staff.sections.remove
 
 	# End Sections
 	# Users
 
-	app.get '/staff/users', auth.requireStaff, users.list
+	app.get '/staff/users', auth.requireStaff, staff.users.list
 
-	app.get '/staff/users/new', auth.requireStaff, users.new_get
+	app.get '/staff/users/new', auth.requireStaff, staff.users.new_get
 
-	app.post '/staff/users/new', auth.requireStaff, users.new_post
+	app.post '/staff/users/new', auth.requireStaff, staff.users.new_post
 
-	app.get '/staff/users/:slug', auth.requireStaff, users.edit_get
+	app.get '/staff/users/:slug', auth.requireStaff, staff.users.edit_get
 
-	app.post '/staff/users/:slug', auth.requireStaff, users.edit_post
+	app.post '/staff/users/:slug', auth.requireStaff, staff.users.edit_post
 
-	app.post '/staff/users/:slug/delete', auth.requireStaff, users.remove
+	app.post '/staff/users/:slug/delete', auth.requireStaff, staff.users.remove
 
 	# End Users
-
-
-	# app.get '/staff/planners/:name', auth.staff, staff.planners.view
-
-	# app.get '/staff/planners/view/:section', auth.staff, staff.planners.list
-
-	# app.get '/staff/planners/:name/edit', auth.staff, staff.planners.edit.get
-
-	# app.post '/staff/planners/:name/edit', auth.staff, staff.planners.edit.post
-
-	# app.get '/staff/planners/new', auth.staff, staff.planners.new.get
-
-	# app.post '/staff/planners/new', auth.staff, staff.planners.new.post
-
-	# app.post '/staff/planners/:name/delete', auth.staff, staff.permissions.delete
-
-
-
-	# app.get '/staff/users', auth.staff, staff.users.list
-
-	# app.get '/staff/users/:slug', auth.staff, staff.users.edit_get
-
-	# app.post '/staff/users/:slug', auth.staff, staff.users.edit_post
-
-	# app.get '/staff/users/new', auth.staff, staff.users.new_get
-
-	# app.post '/staff/users/new', auth.staff, staff.users.new_post
-
-	# app.post '/staff/users/:id/delete', auth.staff, staff.users.remove
 
 	###
 	End Staff Suff
