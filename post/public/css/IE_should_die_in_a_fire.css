@@ -1,4 +1,4 @@
-#content article #gallery ul{max-width:671px;-ms-box-sizing:content-box;box-sizing:content-box}#header aside div.traingle {
+#wrapper{height:100%}#content article #gallery ul{max-width:671px;-ms-box-sizing:content-box;box-sizing:content-box}#header aside div.traingle {
 		_border-color #000000 $darkOrange #000000 #000000
 		_filter: progid:DXImageTransform.Microsoft.Chroma(color='#000000');
 	}
