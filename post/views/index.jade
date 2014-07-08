@@ -10,14 +10,11 @@ block head
 	include includes/jquery
 	+js([['rotator','1']])
 block content
-	if section
-		h2.section= section
-	if !isStaffView && !section
-		#rotator
-			+rotator(recentAr)
+	#rotator
+		+rotator(recentAr)
 	#lists
 		#recent
-			h2= (!isStaffView ? "Recent" : "All") + " Stories"
+			h2 Recent Stories
 				//-
 					a.rss(href='/rss') Subscribe
 			+list(recentAr)

@@ -3,7 +3,7 @@ moment = require 'moment'
 marked = require 'marked'
 string = require 'string'
 htmlToText = require 'html-to-text'
-photo_bucket_name = "torch_photos"
+photo_bucket_name = if process.env.NODE_ENV == 'dev' then 'torch_test' else "torch_photos"
 
 marked.setOptions
 	gfm:
@@ -20,7 +20,7 @@ exports.index = (req,res,next) ->
 		{},
 		{publishDate:
 			1
-		body:
+		bodyPlain:
 			1
 		title:
 			1
@@ -44,7 +44,7 @@ exports.index = (req,res,next) ->
 					for article, i in recent
 						recentAr[i] =
 							body:
-								string(htmlToText.fromString(article.body[0].body)).truncate(250).s
+								string(article.bodyPlain).truncate(250).s
 							author:
 								article.author
 							title:
@@ -65,57 +65,8 @@ exports.index = (req,res,next) ->
 							isRotatable:
 								if article.photos[0] then yes else no
 
-					res.render 'index', {recentAr: recentAr, isStaffView: true}
+					res.render 'articleList', {recentAr: recentAr, section: "All Stories"}
 
-					# This will happen late when I have time and stuff yeah that jazzy
-					# db.Articles.find(
-					# 	{publishDate:
-					# 		$lte:
-					# 			moment().toDate()
-					# 	status:
-					# 		4
-					# 	isRotator:
-					# 		true},
-					# 	{publishDate:
-					# 		1
-					# 	body:
-					# 		1
-					# 	title:
-					# 		1
-					# 	author:
-					# 		1
-					# 	slug:
-					# 		1}
-					# ).sort('-publishDate'
-					# ).limit(4
-					# ).execFind(
-					# 	(err, rotator) ->
-					# 		if !err
-					# 			if rotator.length > 0
-					# 				rotatorAr = []
-					# 				for article, i in rotator
-					# 					rotatorAr[i] =
-					# 						body:
-					# 							string(htmlToText.fromString(article.body[0].body)).truncate(250).s
-					# 						author:
-					# 							article.author
-					# 						title:
-					# 							string(article.title).truncate(75).s
-					# 						date:
-					# 							human:
-					# 								moment(article.publishDate).format("MMM D, YYYY")
-					# 							robot:
-					# 								moment(article.publishDate).toISOString().split('T')[0]
-					# 						slug:
-					# 							"/articles/#{article.slug}/"
-
-					# 				res.render 'index', {recentAr: recentAr, rotatorAr: rotatorAr}
-					# 			else
-					# 				res.render 'index', {recentAr: recentAr}
-					# 		else
-					# 			console.log "Error (articles): #{err}"
-					# 			res.end JSON.stringify err
-					# )
 				else
 					res.render 'errors/404', {_err: ["Article not found"]}
 			else
@@ -123,6 +74,313 @@ exports.index = (req,res,next) ->
 				res.end JSON.stringify err
 	)
 
+
+exports.new_get = (req,res,next) ->
+	db.Sections.find().select(
+		title:
+			1
+		slug:
+			1
+	).exec((err, resp) ->
+		if req.session.message
+			req.session.message.sections = resp
+
+			res.render 'staff/edit', req.session.message
+			req.session.message = null
+		else
+			res.render 'staff/edit', {knowsHTML: false, sections: resp, author: req.session.user.name} #fix this too
+	)
+
+exports.new_post = (req,res,next) ->
+	err = []
+	if !req.body.body or req.body.body.length < 3
+		err.push 'Article must be longer than three characters.'
+
+	if !req.body.title or req.body.title.length < 3
+		err.pu
+		sh 'Title must be longer than three characters.'
+	
+	if !req.body.author or req.body.author.length < 3
+		err.push 'Author’s name must be longer than three characters.'
+
+	if err.length > 0
+		req.session.message = req.body
+		req.session.message._err = err
+		req.session.message.selectedIssue = req.body.issue
+		req.session.message.selectedSection = req.body.section
+		req.session.message.approval =
+			advisor:
+				req.body.advisorapproval || 0
+			administration:
+				req.body.administrationapproval || 0
+		res.redirect '/'
+	else
+		findSection req.body.section,(err,resp) ->
+			if !err
+				if resp
+					newArticle = new db.Articles
+						title:
+							req.body.title
+						section:
+							title:
+								resp.title
+							slug:
+								resp.slug
+							id:
+								resp._id
+						bodyPlain:
+							htmlToText.fromString(req.body.body)
+						author:
+							req.body.author
+						publishDate:
+							if req.body.date then moment(req.body.date, "MM-DD-YYYY").toDate()
+						lastEditDate:
+							moment().toDate()
+						lockHTML:
+							string(req.body.lockHTML).toBoolean()
+						createdDate:
+							moment().toDate()
+						status:
+							req.body.status
+						publication:
+							2    # change to `req.body.publication` later
+						approvedBy:
+							advisor:
+								req.body.advisorapproval || 0
+							administration:
+								req.body.administrationapproval || 0
+						isGallery:
+							req.body.isGallery
+						isVideo:
+							req.body.isVideo
+						videoEmebed:
+							if req.body.videoEmebed then req.body.videoEmebed else ''
+
+					newArticle.body.unshift
+						body:
+							req.body.body
+						editor:
+							req.session.user.name
+						editDate:
+							moment().toDate()
+
+					newArticle.save (err,resp) ->
+						if err == null
+							res.redirect "/staff/articles/#{resp.slug}/"
+						else
+				        	console.log "Error (articles): #{err}"
+							res.end JSON.stringify err
+				else
+					res.render 'errors/404', {err: "Section not found"}
+			else
+				console.log "Error (articles): #{err}"
+				res.end JSON.stringify err
+
+exports.comment = (req,res,next) ->
+	findArticle req.params.slug, false, (err, resp) ->
+		if !err
+			if resp
+				resp.staffComments.push
+					body:
+						notRendered:
+							req.body.body
+						rendered:
+							marked(req.body.body)
+					author:
+						req.body.author
+					edited:
+						string(req.body.edited).toBoolean()
+					createdDate:
+						moment().toDate()
+
+				resp.save (err, resp) ->
+						if err then res.end JSON.stringify err else res.redirect "/staff/articles/#{resp.slug}/"
+			else
+				res.render 'errors/404', {err: "Article not found"}
+		else
+			console.log "Error (articles): #{err}"
+			res.end JSON.stringify err
+
+
+exports.edit_get = (req,res,next) ->
+	db.Sections.find().select(
+		title:
+			1
+		slug:
+			1
+	).exec((err, sections) ->
+		req.session.message = null
+		if req.session.message
+			req.session.message.sections = sections
+
+			res.render 'staff/edit', req.session.message
+		else
+			findArticle req.params.slug, false, (err, article) ->
+				if !err
+					if article
+						content =
+							title:
+								article.title
+							author:
+								article.author
+							body:
+								article.body[0].body
+							date:
+								if article.publishDate then moment(article.publishDate).format("MM-DD-YYYY")
+							issue:
+								article.issue
+							section:
+								article.section
+							publication:
+								article.publication
+							knowsHTML:
+								false
+							lockHTML:
+								article.lockHTML
+							editing:
+								true
+							sections:
+								sections
+							isGallery:
+								article.isGallery
+							isVideo:
+								article.isVideo
+							videoEmebed:
+								article.videoEmebed
+							# issues:
+							# 	issues
+							status:
+								article.status || 0
+							approval:
+								advisor:
+									article.approvedBy.advisor || 0
+								administration:
+									article.approvedBy.administration || 0
+
+						res.render 'staff/edit', content
+					else
+						res.render 'errors/404', {err: "Article not found"}
+				else
+					console.log "Error (articles): #{err}"
+					res.end JSON.stringify err
+	)
+
+exports.edit_post = (req,res,next) ->
+	err = []
+	if !req.body.body or req.body.body.length < 3
+		err.push 'Article must be longer than three characters.'
+
+	if !req.body.title or req.body.title.length < 3
+		err.push 'Title must be longer than three characters.'
+	
+	if !req.body.author or req.body.author.length < 3
+		err.push 'Author’s name must be longer than three characters.'
+	
+	if err.length > 0
+		req.session.message = req.body
+		req.session.message._err = err
+		req.session.message.selectedIssue = req.body.issue
+		req.session.message.selectedSection = req.body.section
+		req.session.message.approval =
+			advisor:
+				req.body.advisorapproval || 0
+			administration:
+				req.body.administrationapproval || 0
+		res.redirect "/staff/articles/#{req.params.slug}/edit"
+	else
+		findArticle req.params.slug, false, (err, resp) ->
+			if !err
+				if resp
+					findSection req.body.section, (err,section_resp) ->
+						if !err
+							if resp
+								resp.title   =  req.body.title
+								resp.author  =  req.body.author
+								resp.bodyPlain	=  htmlToText.fromString(req.body.body)
+								resp.publishDate    =  if req.body.date then moment(req.body.date, "MM-DD-YYYY").toDate()
+								resp.issue   =  req.body.issue
+								resp.status  =  req.body.status
+								resp.publication  =  req.body.publication
+								resp.lastEditDate = moment().toDate()
+								resp.isGallery = req.body.isGallery
+								resp.isVideo = req.body.isVideo
+								resp.videoEmebed = if req.body.videoEmebed then req.body.videoEmebed else ''
+
+								
+								resp.section =
+									title:
+										section_resp.title
+									slug:
+										section_resp.slug
+									id:
+										section_resp._id
+
+								resp.approvedBy=
+									advisor:
+										req.body.advisorapproval || resp.approvedBy.advisor || 0
+									administration:
+										req.body.administrationapproval || resp.approvedBy.administration || 0
+
+								if resp.body[0].body != req.body.body
+									resp.body.unshift
+										body:
+											req.body.body
+										editor:
+											req.session.user.name
+										editDate:
+											moment().toDate()
+
+								resp.save (err, resp) ->
+									if err then res.end JSON.stringify err else res.redirect "/staff/articles/#{resp.slug}/"
+							else
+								res.render 'errors/404', {err: "Section not found"}
+						else
+							console.log "Error (articles): #{err}"
+							res.end JSON.stringify err
+				else
+					res.render 'errors/404', {err: "Article not found"}
+			else
+				console.log "Error (articles): #{err}"
+				res.end JSON.stringify err
+			
+
+
+exports.remove = (req,res,next) ->
+	if req.body.delete == "true"
+		db.Articles.findOneAndRemove {
+			slug: req.params.slug
+		}, (err, resp) ->
+			if !err
+				res.redirect '/staff/articles/'
+			else
+				console.log "Error (articles): #{err}"
+				res.end JSON.stringify err
+	else
+		res.redirect "/staff/articles/#{resp.slug}/"
+
+exports.removePhotos = (req,res,next) ->
+	# Removes DB recods of a photo, but does not remove the photo itself from S3
+	if req.body.photosDelete == "true"
+		db.Articles.findOne {
+			slug: req.params.slug
+		}, (err, resp) ->
+			if !err
+				if resp
+					resp.photos = []
+					resp.save (err, resp) ->
+						if !err
+							res.redirect "/staff/articles/#{resp.slug}/" 
+						else
+							console.log "Error (articles): #{err}"
+							res.end JSON.stringify err
+
+				else
+					res.render 'errors/404', {err: "Not found"}	
+			else
+				console.log "Error (articles): #{err}"
+				res.end JSON.stringify err
+	else
+		res.redirect "/staff/articles/#{resp.slug}/" 
 
 
 findArticle = (slug, update = false, callback) ->
@@ -133,6 +391,8 @@ findArticle = (slug, update = false, callback) ->
 		publishDate:
 			1
 		body:
+			1
+		bodyPlain:
 			1
 		title:
 			1
@@ -158,10 +418,29 @@ findArticle = (slug, update = false, callback) ->
 			1
 		section:
 			1
+		isGallery:
+			1
+		isVideo:
+			1
+		videoEmebed:
+			1
 	).exec((err, resp) ->
 		if update
 			resp.views++
 			resp.save callback(err,resp)
 		else
 			callback(err,resp)
+	)
+
+findSection = (id,callback) ->
+	db.Sections.findOne(
+		_id:
+			id
+	).select(
+		title:
+			1
+		slug:
+			1
+	).exec((err, resp) ->
+		callback(err,resp)
 	)

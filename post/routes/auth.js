@@ -67,10 +67,10 @@
 
   exports.login_get = function(req, res, next) {
     if (req.session.message) {
-      res.render('login', req.session.message);
+      res.render('staff/login', req.session.message);
       return req.session.message = null;
     } else {
-      return res.render('login');
+      return res.render('staff/login');
     }
   };
 

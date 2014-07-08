@@ -4,7 +4,7 @@
     __slice = [].slice,
     __hasProp = {}.hasOwnProperty;
 
-  db = require('../db');
+  db = require('../../db');
 
   moment = require('moment');
 
@@ -26,7 +26,7 @@
       bio: 0,
       email: 0
     }).sort('name').execFind(function(err, resp) {
-      return res.render('userList', {
+      return res.render('staff/userList', {
         users: resp
       });
     });
@@ -34,10 +34,10 @@
 
   exports.new_get = function(req, res, next) {
     if (req.session.message) {
-      res.render('newUser', req.session.message);
+      res.render('staff/newUser', req.session.message);
       return req.session.message = null;
     } else {
-      return res.render('newUser');
+      return res.render('staff/newUser');
     }
   };
 
@@ -121,7 +121,7 @@
 
   exports.edit_get = function(req, res, next) {
     if (req.session.message) {
-      res.render('newUser', req.session.message);
+      res.render('staff/newUser', req.session.message);
       return req.session.message = null;
     } else {
       return findUser(req.params.slug, function(err, resp) {
@@ -133,7 +133,7 @@
               delete ret.accountStatus;
               delete ret.bio;
               ret.dispBio = resp.bio.notRendered;
-              return res.render('newUser', ret);
+              return res.render('staff/newUser', ret);
             });
           } else {
             return res.render('errors/404', {
@@ -257,7 +257,7 @@
 
   exports.change_get = function(req, res, next) {
     if (req.session.message) {
-      res.render('newUser', req.session.message);
+      res.render('staff/newUser', req.session.message);
       return req.session.message = null;
     } else {
       db.Users.findById(req.session.user._id, {
@@ -266,7 +266,7 @@
       }, function(err, resp) {});
       if (!err) {
         if (resp) {
-          return res.render('userSettings', resp);
+          return res.render('staff/userSettings', resp);
         } else {
           return res.render('/logout');
         }

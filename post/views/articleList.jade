@@ -1,0 +1,11 @@
+extends wrapper
+include mixins/style
+include mixins/list
+
+
+block head
+	+style([['articleList','1']])
+block content
+	h2.section= section
+	#sectionArticles
+		+list(recentAr)

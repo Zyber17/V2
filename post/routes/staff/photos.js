@@ -2,14 +2,14 @@
 (function() {
   var createS3Policy, crypto, db, moment;
 
+  db = require('../../db');
+
   crypto = require('crypto');
 
   moment = require('moment');
 
-  db = require('../db');
-
   exports.view = function(req, res, next) {
-    return res.render('uploadPhoto');
+    return res.render('staff/uploadPhoto');
   };
 
   exports.auth = function(req, res, next) {
