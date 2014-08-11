@@ -181,6 +181,10 @@
       type: String,
       required: true
     },
+    truncated: {
+      type: String,
+      required: true
+    },
     photos: [photos],
     section: {
       title: {

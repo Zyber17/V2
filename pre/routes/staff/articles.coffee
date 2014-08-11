@@ -20,7 +20,7 @@ exports.index = (req,res,next) ->
 		{},
 		{publishDate:
 			1
-		bodyPlain:
+		truncated:
 			1
 		title:
 			1
@@ -44,7 +44,7 @@ exports.index = (req,res,next) ->
 					for article, i in recent
 						recentAr[i] =
 							body:
-								string(article.bodyPlain).truncate(250).s
+								article.truncated
 							author:
 								article.author
 							title:
@@ -130,6 +130,8 @@ exports.new_post = (req,res,next) ->
 								resp._id
 						bodyPlain:
 							htmlToText.fromString(req.body.body)
+						truncated:
+							string(htmlToText.fromString(req.body.body)).truncate(400).s
 						author:
 							req.body.author
 						publishDate:
@@ -297,6 +299,7 @@ exports.edit_post = (req,res,next) ->
 								resp.title   =  req.body.title
 								resp.author  =  req.body.author
 								resp.bodyPlain	=  htmlToText.fromString(req.body.body)
+								resp.truncated	=  string(htmlToText.fromString(req.body.body)).truncate(400).s
 								resp.publishDate    =  if req.body.date then moment(req.body.date, "MM-DD-YYYY").toDate()
 								resp.issue   =  req.body.issue
 								resp.status  =  req.body.status
@@ -392,7 +395,7 @@ findArticle = (slug, update = false, callback) ->
 			1
 		body:
 			1
-		bodyPlain:
+		truncated:
 			1
 		title:
 			1

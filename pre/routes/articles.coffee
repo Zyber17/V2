@@ -13,7 +13,7 @@ exports.index = (req,res,next) ->
 			4},
 		{publishDate:
 			1
-		bodyPlain:
+		truncated:
 			1
 		title:
 			1
@@ -33,7 +33,7 @@ exports.index = (req,res,next) ->
 					for article, i in recent
 						recentAr[i] =
 							body:
-								string(article.bodyPlain).truncate(400)
+								article.truncated
 							author:
 								article.author
 							title:
@@ -257,7 +257,7 @@ findArticle = (slug, update = false, callback) ->
 			1
 		body:
 			1
-		bodyPlain:
+		truncated:
 			1
 		title:
 			1
