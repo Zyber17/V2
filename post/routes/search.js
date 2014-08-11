@@ -46,8 +46,8 @@
               author: article._source.author,
               title: string(article._source.title).truncate(75).s,
               date: {
-                human: moment(article._source.publishDate).format("MMM D, YYYY"),
-                robot: moment(article._source.publishDate).toISOString().split('T')[0]
+                human: moment(article._source.date).format("MMM D, YYYY"),
+                robot: moment(article._source.date).toISOString().split('T')[0]
               },
               slug: "/articles/" + article._source.slug + "/",
               photo: article._source.photo ? "" + photo_bucket_url + article._id + "/" + article._source.photo : void 0,
