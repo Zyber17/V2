@@ -8,7 +8,7 @@ up = () ->
 			$lte:
 				moment().toDate()
 		status:
-			4}).select({bodyPlain: 1, title: 1, slug: 1, photos: 1}).exec(
+			4}).select({bodyPlain: 1, title: 1, slug: 1, photos: 1, author: 1, publishDate: 1}).exec(
 		(err, articles) ->
 			if !err
 				if articles.length
@@ -21,10 +21,12 @@ up = () ->
 									id: article._id.toString()
 									body: {
 										title: article.title
-										body: article.bodyPlain
-										truncated: string(article.bodyPlain).truncate(400).s
+										author: article.author
+										date: article.publishDate
 										slug: article.slug
 										photo: if article.photos[0] then (if article.photos.length > 1 then article.photos[article.photos.length - 2].name else article.photos[0].name)
+										body: article.bodyPlain
+										truncated: string(article.bodyPlain).truncate(400).s
 									}
 								}, (err,esresp) ->
 									if !err
