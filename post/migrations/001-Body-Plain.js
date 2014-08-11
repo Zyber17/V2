@@ -44,7 +44,7 @@
           return _results;
         }
       } else {
-        console.log("Error (articles): " + err);
+        console.log("Error (Migration 001): " + err);
       }
     });
   };

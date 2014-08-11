@@ -18,7 +18,7 @@ up = () ->
 										article.save (err, resp) ->
 											console.log(if err then JSON.stringify err else "Okay: #{i}")
 			else
-				console.log "Error (articles): #{err}"
+				console.log "Error (Migration 001): #{err}"
 				return
 	)
 

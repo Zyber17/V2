@@ -49,7 +49,7 @@
                   if (!err) {
                     return console.log("Okay: " + i);
                   } else {
-                    console.log("Error (articles): " + err);
+                    console.log("Error (Migration 002): " + err);
                   }
                 }));
               } else {
