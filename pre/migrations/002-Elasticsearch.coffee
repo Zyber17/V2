@@ -1,8 +1,14 @@
 db = require '../db'
 es = require '../es'
+string = require 'string'
+moment = require 'moment'
 
 up = () ->
-	db.Articles.find().select({bodyPlain: 1, title: 1, slug: 1, photos: 1}).exec(
+	db.Articles.find({publishDate:
+			$lte:
+				moment().toDate()
+		status:
+			4}).select({bodyPlain: 1, title: 1, slug: 1, photos: 1}).exec(
 		(err, articles) ->
 			if !err
 				if articles.length
@@ -16,6 +22,7 @@ up = () ->
 									body: {
 										title: article.title
 										body: article.bodyPlain
+										truncated: string(article.bodyPlain).truncate(400).s
 										slug: article.slug
 										photo: if article.photos[0] then (if article.photos.length > 1 then article.photos[article.photos.length - 2].name else article.photos[0].name)
 									}
