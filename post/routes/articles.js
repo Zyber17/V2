@@ -20,7 +20,7 @@
       status: 4
     }, {
       publishDate: 1,
-      bodyPlain: 1,
+      truncated: 1,
       title: 1,
       author: 1,
       slug: 1,
@@ -36,7 +36,7 @@
           for (i = _i = 0, _len = recent.length; _i < _len; i = ++_i) {
             article = recent[i];
             recentAr[i] = {
-              body: string(article.bodyPlain).truncate(400),
+              body: article.truncated,
               author: article.author,
               title: string(article.title).truncate(75).s,
               date: {
@@ -206,7 +206,7 @@
     }).select({
       publishDate: 1,
       body: 1,
-      bodyPlain: 1,
+      truncated: 1,
       title: 1,
       author: 1,
       bodyType: 1,
