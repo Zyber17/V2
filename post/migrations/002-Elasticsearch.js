@@ -20,7 +20,9 @@
       bodyPlain: 1,
       title: 1,
       slug: 1,
-      photos: 1
+      photos: 1,
+      author: 1,
+      publishDate: 1
     }).exec(function(err, articles) {
       var article, i, _i, _len, _results;
       if (!err) {
@@ -36,10 +38,12 @@
                   id: article._id.toString(),
                   body: {
                     title: article.title,
-                    body: article.bodyPlain,
-                    truncated: string(article.bodyPlain).truncate(400).s,
+                    author: article.author,
+                    date: article.publishDate,
                     slug: article.slug,
-                    photo: article.photos[0] ? (article.photos.length > 1 ? article.photos[article.photos.length - 2].name : article.photos[0].name) : void 0
+                    photo: article.photos[0] ? (article.photos.length > 1 ? article.photos[article.photos.length - 2].name : article.photos[0].name) : void 0,
+                    body: article.bodyPlain,
+                    truncated: string(article.bodyPlain).truncate(400).s
                   }
                 }, function(err, esresp) {
                   if (!err) {
