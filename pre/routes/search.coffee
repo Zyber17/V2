@@ -22,12 +22,9 @@ searchGet = (req,res,next) ->
 	es.search {
 		index: 'torch'
 		type: 'article'
-		query:
-			query_string:
-				feilds: ["title", "body"]
-				query: query
-		}, (err,resp) ->
-			if !err
-				res.end JSON.stringify resp
-			else
-				console.log JSON.stringify err
+		q: query
+	}, (err,resp) ->
+		if !err
+			res.end JSON.stringify resp
+		else
+			console.log JSON.stringify err
