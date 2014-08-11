@@ -52,9 +52,9 @@ exports.view = (req,res,next) ->
 							section:
 								JSON.stringify(article.section)
 							photo:
-								if article.photos[0] then "http://s3.amazonaws.com/#{bucket_name}/#{article._id}/#{article.photos[0].name}"
+								if article.photos[0] then "http://s3.amazonaws.com/#{photo_bucket_name}/#{article._id}/#{article.photos[0].name}"
 							rotator:
-								if article.photos[0] then "http://s3.amazonaws.com/#{bucket_name}/#{article._id}/#{article.photos[article.photos.length - 1].name}"
+								if article.photos[0] then "http://s3.amazonaws.com/#{photo_bucket_name}/#{article._id}/#{article.photos[article.photos.length - 1].name}"
 							isPublished:
 								2
 							isRotatable:
