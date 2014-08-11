@@ -36,12 +36,7 @@
     return es.search({
       index: 'torch',
       type: 'article',
-      query: {
-        query_string: {
-          feilds: ["title", "body"],
-          query: query
-        }
-      }
+      q: query
     }, function(err, resp) {
       if (!err) {
         return res.end(JSON.stringify(resp));
