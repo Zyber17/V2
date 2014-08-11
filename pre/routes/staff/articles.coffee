@@ -1,4 +1,5 @@
 db = require '../../db'
+es = require '../../es'
 moment = require 'moment'
 marked = require 'marked'
 string = require 'string'
@@ -168,7 +169,28 @@ exports.new_post = (req,res,next) ->
 
 					newArticle.save (err,resp) ->
 						if err == null
-							res.redirect "/staff/articles/#{resp.slug}/"
+							if resp.status == 4 && moment().toDate() > resp.publishDate
+								es.index {
+									index: 'torch',
+									type: 'article',
+									id: resp._id.toString()
+									body: {
+										title: resp.title
+										author: resp.author
+										date: resp.publishDate
+										slug: resp.slug
+										photo: if resp.photos[0] then (if resp.photos.length > 1 then resp.photos[resp.photos.length - 2].name else resp.photos[0].name)
+										body: resp.bodyPlain
+										truncated: string(resp.bodyPlain).truncate(400).s
+									}
+								}, (err,esresp) ->
+									if err
+										console.log "Error (Articles, es-add): #{err}"
+										res.end JSON.stringify err
+										return
+								res.redirect "/staff/articles/#{resp.slug}/"
+							else
+								res.redirect "/staff/articles/#{resp.slug}/"
 						else
 				        	console.log "Error (articles): #{err}"
 							res.end JSON.stringify err
@@ -295,7 +317,10 @@ exports.edit_post = (req,res,next) ->
 				if resp
 					findSection req.body.section, (err,section_resp) ->
 						if !err
-							if resp
+							if section_resp
+								oldStatus = resp.status
+								oldPublishdate = resp.publishDate
+
 								resp.title   =  req.body.title
 								resp.author  =  req.body.author
 								resp.bodyPlain	=  htmlToText.fromString(req.body.body)
@@ -334,7 +359,62 @@ exports.edit_post = (req,res,next) ->
 											moment().toDate()
 
 								resp.save (err, resp) ->
-									if err then res.end JSON.stringify err else res.redirect "/staff/articles/#{resp.slug}/"
+									if (resp.status == 4 && moment().toDate() > resp.publishDate) && (oldStatus != 4 || moment().toDate() < oldPublishdate || !oldPublishdate)
+										es.index {
+											index: 'torch',
+											type: 'article',
+											id: resp._id.toString()
+											body: {
+												title: resp.title
+												author: resp.author
+												date: resp.publishDate
+												slug: resp.slug
+												photo: if resp.photos[0] then (if resp.photos.length > 1 then resp.photos[resp.photos.length - 2].name else resp.photos[0].name)
+												body: resp.bodyPlain
+												truncated: string(resp.bodyPlain).truncate(400).s
+											}
+										}, (err,esresp) ->
+											if err
+												console.log "Error (Articles, es-add): #{err}"
+												res.end JSON.stringify err
+												return
+										res.redirect "/staff/articles/#{resp.slug}/"
+									else if resp.status == 4 && oldStatus == 4 && moment().toDate() > resp.publishDate && moment().toDate() > oldPublishdate
+										es.update {
+											index: 'torch',
+											type: 'article',
+											id: resp._id.toString(),
+											body: {
+												doc: {
+													title: resp.title
+													author: resp.author
+													date: resp.publishDate
+													slug: resp.slug
+													photo: if resp.photos[0] then (if resp.photos.length > 1 then resp.photos[resp.photos.length - 2].name else resp.photos[0].name)
+													body: resp.bodyPlain
+													truncated: string(resp.bodyPlain).truncate(400).s
+												}
+											}
+										}, (err,esresp) ->
+											if !err
+												res.redirect "/staff/articles/#{resp.slug}/"
+											else
+												console.log "Error (Articles, es-update): #{err}"
+												res.end JSON.stringify err
+									else if (oldStatus == 4 && resp.status != 4) || (moment().toDate() < resp.publishDate && oldPublishdate < moment().toDate())
+										es.delete {
+											index: 'torch',
+											type: 'article',
+											id: resp._id.toString()
+										}, (err,esresp) ->
+											if !err
+												res.redirect "/staff/articles/#{resp.slug}/"
+											else
+												console.log "Error (Articles, es-delete): #{err}"
+												res.end JSON.stringify err
+									else
+										console.log "(Articles ~400): This should never happen"
+										res.end "(Articles ~400): This should never happen"
 							else
 								res.render 'errors/404', {err: "Section not found"}
 						else
@@ -350,13 +430,27 @@ exports.edit_post = (req,res,next) ->
 
 exports.remove = (req,res,next) ->
 	if req.body.delete == "true"
-		db.Articles.findOneAndRemove {
+		db.Articles.findOne {
 			slug: req.params.slug
 		}, (err, resp) ->
 			if !err
-				res.redirect '/staff/articles/'
+				es.delete {
+					index: 'torch',
+					type: 'article',
+					id: resp._id.toString()
+				}, (err,esresp) ->
+					if !err
+						resp.remove (err,resp) ->
+							if !err
+								res.redirect "/staff/articles/"
+							else
+								console.log "Error (articles-delete): #{err}"
+								res.end JSON.stringify err
+					else
+						console.log "Error (Articles, es-delete): #{err}"
+						res.end JSON.stringify err
 			else
-				console.log "Error (articles): #{err}"
+				console.log "Error (articles-delete): #{err}"
 				res.end JSON.stringify err
 	else
 		res.redirect "/staff/articles/#{resp.slug}/"
