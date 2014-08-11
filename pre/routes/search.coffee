@@ -35,9 +35,9 @@ searchGet = (req,res,next) ->
 							string(article._source.title).truncate(75).s
 						date:
 							human:
-								moment(article._source.publishDate).format("MMM D, YYYY")
+								moment(article._source.date).format("MMM D, YYYY")
 							robot:
-								moment(article._source.publishDate).toISOString().split('T')[0]
+								moment(article._source.date).toISOString().split('T')[0]
 						slug:
 							"/articles/#{article._source.slug}/"
 						photo:
