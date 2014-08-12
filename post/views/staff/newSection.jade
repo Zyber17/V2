@@ -1,10 +1,11 @@
 extends wrapper
 
-block head
+block css
 	link(rel='stylesheet', href='/css/jquery-ui/theme.css')
 	style.
 		form input, form select, form textarea, form button { display: block; width: 40%; padding: 10px; margin: 10px; clear: both}
-	script(src="/js/jquery-ui/jquery-ui.js")
+block js_head
+	+js([['jquery-ui',1]])
 	-if (!lockHTML)
 		script.
 			$(document).ready(function() {
