@@ -28,7 +28,7 @@
 
   searchGet = function(req, res, next) {
     var query;
-    query = decodeURIComponent(req.query.q);
+    query = decodeURIComponent(req.query.q).replace(/[^\w\s]/g, '');
     return es.search({
       index: 'torch',
       type: 'article',
@@ -56,11 +56,13 @@
           }
           return res.render('articleList', {
             recentAr: articles,
-            section: "Search: " + query
+            section: "Search: " + query,
+            searchquery: "" + query
           });
         } else {
           return res.render('errors/404', {
-            _err: ["No matching articles found"]
+            _err: ["No matching articles found"],
+            searchquery: query
           });
         }
       } else {

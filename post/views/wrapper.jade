@@ -1,4 +1,5 @@
 include mixins/style
+include mixins/js
 doctype html
 html
 	head
@@ -9,11 +10,19 @@ html
 			meta(name="apple-mobile-web-app-capable", content="yes")
 			meta(name="apple-mobile-web-app-status-bar-style", content="black-translucent")
 		<link href='http://fonts.googleapis.com/css?family=Open+Sans:400italic,700italic,400,700' rel='stylesheet' type='text/css'>
-		+style([['reset',1],['wrapper',1]])
+		+style([['reset',1],['wrapper',2]])
 		<!--[if lt IE 11]>
 		<link href='/css/IE_should_die_in_a_fire.css' rel='stylesheet' type='text/css'>
 		<![endif]-->
-		block head
+		block css
+		noscript
+			style.
+				nav ul li#search {
+					width: 332px;
+				}
+		include includes/jquery
+		+js([['searchbar',1]])
+		block js_head
 		link(rel="shortcut icon",href="/images/favicon.ico")
 		<!--[if IE]>
 		<script src="http://ie7-js.googlecode.com/svn/version/2.1(beta4)/IE9.js"></script>
@@ -34,17 +43,14 @@ html
 						div.text
 							h3 Click to Read the Print Edition
 						div.triangle
-						
-				//-
-					ul
-						li
-							form
-								input(type="text", placeholder='Search…')
-								input(type='submit') Go
-						li
-							a(href='/issues/') Read the print edition online
 			nav#nav
-				ul 
+				ul
+					li#search
+						div#searchwrapper
+							div#searchicon
+							form#form(method="get", action='/search', enctype="multipart/form-data")
+								input#searchbox(type="text", name="q", placeholder='Search…', value=searchquery)
+								input#searchsubmit(type='submit', value="Go")
 					li
 						a(href='/sections/news') News
 					li
@@ -57,28 +63,12 @@ html
 						a(href='/sections/humor') Humor
 					li
 						a(href='/sections/focus') Focus
-			//- .bar
-			//- 	h2 Please pardon our dust as we remodel
 			#content
 				-if(_err)
 					each error in _err
 						h2.error= error
 				block content
 			footer#footer
-				//-
-					#login
-						ul
-							- if (logged.user)
-								- if (logged.staff)
-									li
-										a(href='/staff/') Staff Panel
-								li
-									a(href='/settings/') Settings
-								li
-									a(href='/logout/') Log out
-							- else
-								li
-									a(href='/login/') Log in
 				#copyright
 					p All content, unless otherwise noted, is the property of the Pine View Torch &copy; 
 						= new Date().getFullYear()

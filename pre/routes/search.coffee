@@ -16,7 +16,7 @@ searchView = (req,res,next) ->
 	res.render 'search'
 
 searchGet = (req,res,next) ->
-	query = decodeURIComponent(req.query.q)
+	query = decodeURIComponent(req.query.q).replace(/[^\w\s]/g,'')
 	es.search {
 		index: 'torch'
 		type: 'article'
@@ -44,9 +44,9 @@ searchGet = (req,res,next) ->
 							if article._source.photo then "#{photo_bucket_url}#{article._id}/#{article._source.photo}"
 						isPublished:
 							2
-				res.render 'articleList', {recentAr: articles, section: "Search: #{query}"}
+				res.render 'articleList', {recentAr: articles, section: "Search: #{query}", searchquery: "#{query}"}
 			else
-				res.render 'errors/404', {_err: ["No matching articles found"]}
+				res.render 'errors/404', {_err: ["No matching articles found"], searchquery: query}
 		else
 			console.log "Error (search): #{err}"
 			res.end JSON.stringify err
