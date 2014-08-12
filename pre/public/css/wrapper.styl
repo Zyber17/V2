@@ -44,8 +44,7 @@ a
 		height @height - 5
 		border-bottom none
 		text-decoration none
-		@media screen and (-webkit-min-device-pixel-ratio 1.25), (min-resolution 120dpi)
-			background-image url('/images/logo_2x.png')
+		retina('/images/logo_2x.png')
 	aside
 		position absolute
 		top 0
@@ -111,7 +110,7 @@ nav
 	color #fff
 	text-transform uppercase
 	font-weight bold
-	height 43px
+	height 44px
 	line-height 1
 	overflow hidden
 	ul
@@ -125,21 +124,67 @@ nav
 			float left
 			font-size 1.6em
 			// margin-right 36px
-			height 43px
+			height @height
 			display block
 			overflow hidden
 			borderBox()
 			a
 				display block
 				borderBox()
-				padding 10px 19px
-				height 43px
+				padding 10px 16px
+				height @height
 				&:link, &:visited, &:hover, &:active
 					color #fff
 					border none
 				&:hover
 					background darken(@background, 20%)
 					// color $darkOrange
+			&#search
+				//width 332px
+				width 36px
+				overflow hidden
+				#searchwrapper
+					width 332px
+					height @height
+					#searchicon
+						float left
+						display block
+						width 28px
+						height @width
+						margin 8px 8px 8px 0
+						hideText()
+						background-image url('/images/search.png')
+						background-size @width @height
+						background-repeat no-repeat
+						background-position center center
+					form
+						overflow hidden
+						width 296px
+						float left
+						input
+							font-family $fontSans
+							float left
+							height 30px
+							borderBox()
+							outline 0
+							outline-style none
+							background darken(@background, 20%)
+							border 1px solid darken(@background, 30%)
+							font-size 20px
+							margin 7px 0
+							color #fff
+							&#searchbox
+								width 250px
+								padding 4px
+								&:focus, &:focus + #searchsubmit
+									border-color #fff
+							&#searchsubmit
+								border-left none
+								width 46px
+								text-transform uppercase
+
+								
+						placeholder(darken(@background, 40%))
 
 #content
 	padding-bottom 56px
