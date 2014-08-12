@@ -1,0 +1,36 @@
+@import helpers
+
+#content
+	max-width 800px
+	margin 25px auto
+	padding 0 20px
+
+	h2
+		headerText(true)
+		font-size 2.2em
+		padding 20px 0
+		color $darkOrange
+
+	form
+		input
+			font-family $fontSans
+			float left
+			height 60px
+			borderBox()
+			outline 0
+			outline-style none
+			border 1px solid $lightGrey
+			font-size 32px
+			margin 7px 0
+			color $veryDarkGrey
+			&#searchpagebox
+				width 375px
+				padding 20px
+				&:focus, &:focus + #searchpagesubmit
+					border-color $darkOrange
+			&#searchpagesubmit
+				border-left none
+				width 100px
+				text-transform uppercase
+				background $darkOrange
+				color #fff

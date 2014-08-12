@@ -1,0 +1,6 @@
+#content{max-width:800px;margin:25px auto;padding:0 20px;}
+#content h2{text-transform:uppercase;font-weight:bold;font-style:italic;font-size:2.2em;padding:20px 0;color:#e97747}
+#content form input{font-family:Avenir,'Open Sans','Helvetica Neue',Helvetica,Arial,Verdana,sans-serif;float:left;height:60px;-webkit-box-sizing:border-box;-moz-box-sizing:border-box;-ms-box-sizing:border-box;-o-box-sizing:border-box;box-sizing:border-box;outline:0;outline-style:none;border:1px solid #7f7f7f;font-size:32px;margin:7px 0;color:#333;}
+#content form input#searchpagebox{width:375px;padding:20px;}
+#content form input#searchpagebox:focus,#content form input#searchpagebox:focus + #searchpagesubmit{border-color:#e97747}
+#content form input#searchpagesubmit{border-left:none;width:100px;text-transform:uppercase;background:#e97747;color:#fff}
