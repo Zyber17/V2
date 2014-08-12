@@ -2,8 +2,8 @@
 (function() {
   $(document).ready(function() {
     var iconW, searchW;
-    searchW = 332;
-    iconW = 32;
+    searchW = 340;
+    iconW = 44;
     if ($('#searchbox').val() !== '') {
       $('#search').css('width', searchW);
     }

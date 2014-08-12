@@ -17,8 +17,8 @@ html
 		block css
 		noscript
 			style.
-				nav ul li#search {
-					width: 332px;
+				nav ul li#search #searchwrapper:hover {
+					background-color: #D9531B;
 				}
 		include includes/jquery
 		+js([['searchbar',1]])
@@ -47,21 +47,24 @@ html
 				ul
 					li#search
 						div#searchwrapper
-							div#searchicon
-							form#form(method="get", action='/search', enctype="multipart/form-data")
-								input#searchbox(type="text", name="q", placeholder='Search…', value=searchquery)
-								input#searchsubmit(type='submit', value="Go")
-					li
+							div
+								a(href="/search")
+									div#searchicon
+							div
+								form#form(method="get", action='/search', enctype="multipart/form-data")
+									input#searchbox(type="text", name="q", placeholder='Search…', value=searchquery)
+									input#searchsubmit(type='submit', value="Go")
+					li.section
 						a(href='/sections/news') News
-					li
+					li.section
 						a(href='/sections/science-and-technology') Sci & Tech
-					li
+					li.section
 						a(href='/sections/entertainment') Entertainment
-					li
+					li.section
 						a(href='/sections/sports') Sports
-					li
+					li.section
 						a(href='/sections/humor') Humor
-					li
+					li.section
 						a(href='/sections/focus') Focus
 			#content
 				-if(_err)

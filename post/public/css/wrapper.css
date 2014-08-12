@@ -22,20 +22,22 @@ a:active{color:#104374;border-bottom:1px dashed #104374}
 }nav{background:#e97747;color:#fff;text-transform:uppercase;font-weight:bold;height:44px;line-height:1;overflow:hidden;}
 nav ul{margin:0 30px;display:block;width:100%;height:44px;overflow:hidden;-webkit-box-sizing:border-box;-moz-box-sizing:border-box;-ms-box-sizing:border-box;-o-box-sizing:border-box;box-sizing:border-box;}
 nav ul li{float:left;font-size:1.6em;height:44px;display:block;overflow:hidden;-webkit-box-sizing:border-box;-moz-box-sizing:border-box;-ms-box-sizing:border-box;-o-box-sizing:border-box;box-sizing:border-box;}
-nav ul li a{display:block;-webkit-box-sizing:border-box;-moz-box-sizing:border-box;-ms-box-sizing:border-box;-o-box-sizing:border-box;box-sizing:border-box;padding:10px 16px;height:44px;}
-nav ul li a:link,nav ul li a:visited,nav ul li a:hover,nav ul li a:active{color:#fff;border:none}
-nav ul li a:hover{background:#d9531a}
-nav ul li#search{width:36px;overflow:hidden;}
-nav ul li#search #searchwrapper{width:332px;height:44px;}
-nav ul li#search #searchwrapper #searchicon{float:left;display:block;width:28px;height:28px;margin:8px 8px 8px 0;text-indent:-9999px;background-image:url("/images/search.png");background-size:28px 28px;background-repeat:no-repeat;background-position:center center}
-nav ul li#search #searchwrapper form{overflow:hidden;width:296px;float:left;}
-nav ul li#search #searchwrapper form input{font-family:Avenir,'Open Sans','Helvetica Neue',Helvetica,Arial,Verdana,sans-serif;float:left;height:30px;-webkit-box-sizing:border-box;-moz-box-sizing:border-box;-ms-box-sizing:border-box;-o-box-sizing:border-box;box-sizing:border-box;outline:0;outline-style:none;background:#d9531a;border:1px solid #983a12;font-size:20px;margin:7px 0;color:#fff;}
-nav ul li#search #searchwrapper form input#searchbox{width:250px;padding:4px;}
-nav ul li#search #searchwrapper form input#searchbox:focus,nav ul li#search #searchwrapper form input#searchbox:focus + #searchsubmit{border-color:#fff}
-nav ul li#search #searchwrapper form input#searchsubmit{border-left:none;width:46px;text-transform:uppercase}
-nav ul li#search #searchwrapper form input::-webkit-input-placeholder{color:#a33e13}
-nav ul li#search #searchwrapper form input:-moz-placeholder{color:#a33e13}
-nav ul li#search #searchwrapper form input::-moz-placeholder{color:#a33e13;opacity:1}
-nav ul li#search #searchwrapper form input:-ms-input-placeholder{color:#a33e13}
+nav ul li.section a{display:block;-webkit-box-sizing:border-box;-moz-box-sizing:border-box;-ms-box-sizing:border-box;-o-box-sizing:border-box;box-sizing:border-box;padding:10px 16px;height:44px;}
+nav ul li.section a:link,nav ul li.section a:visited,nav ul li.section a:hover,nav ul li.section a:active{color:#fff;border:none}
+nav ul li.section a:hover{background:#d9531a}
+nav ul li#search{width:44px;height:44px;overflow:hidden;}
+nav ul li#search #searchwrapper{width:440px;height:44px;}
+nav ul li#search #searchwrapper div{float:left;height:44px;}
+nav ul li#search #searchwrapper div a{display:block;width:44px;height:44px;}
+nav ul li#search #searchwrapper div a #searchicon{display:block;width:28px;height:28px;margin:8px;text-indent:-9999px;background-image:url("/images/search.png");background-size:28px 28px;background-repeat:no-repeat;background-position:center center}
+nav ul li#search #searchwrapper div form{overflow:hidden;width:296px;display:block;height:44px;}
+nav ul li#search #searchwrapper div form input{font-family:Avenir,'Open Sans','Helvetica Neue',Helvetica,Arial,Verdana,sans-serif;float:left;height:30px;-webkit-box-sizing:border-box;-moz-box-sizing:border-box;-ms-box-sizing:border-box;-o-box-sizing:border-box;box-sizing:border-box;outline:0;outline-style:none;background:#d9531a;border:1px solid #983a12;font-size:20px;margin:7px 0;color:#fff;}
+nav ul li#search #searchwrapper div form input#searchbox{width:250px;padding:4px;}
+nav ul li#search #searchwrapper div form input#searchbox:focus,nav ul li#search #searchwrapper div form input#searchbox:focus + #searchsubmit{border-color:#fff}
+nav ul li#search #searchwrapper div form input#searchsubmit{border-left:none;width:46px;text-transform:uppercase}
+nav ul li#search #searchwrapper div form input::-webkit-input-placeholder{color:#a33e13}
+nav ul li#search #searchwrapper div form input:-moz-placeholder{color:#a33e13}
+nav ul li#search #searchwrapper div form input::-moz-placeholder{color:#a33e13;opacity:1}
+nav ul li#search #searchwrapper div form input:-ms-input-placeholder{color:#a33e13}
 #content{padding-bottom:56px}
 #footer{position:absolute;bottom:0;width:100%;height:56px;background:#efbc8b;padding:20px 0;text-align:center;-webkit-box-sizing:border-box;-moz-box-sizing:border-box;-ms-box-sizing:border-box;-o-box-sizing:border-box;box-sizing:border-box}
