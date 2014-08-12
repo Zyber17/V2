@@ -1,14 +1,14 @@
 extends wrapper
-include mixins/style
-include mixins/js
 include mixins/list
 include mixins/rotator
 
 
-block head
-	+style([['index','1']])
-	include includes/jquery
-	+js([['rotator','1']])
+block css
+	+style([['index',1]])
+
+block j2_head
+	+js([['rotator',1]])
+
 block content
 	#rotator
 		+rotator(recentAr)

@@ -1,7 +1,6 @@
 extends ../wrapper
 
-block head
-	script(src="/js/toS3.js")
+block css
 	style.
 		#progress_bar {
 			width: 200px;
@@ -23,7 +22,10 @@ block head
 			height: auto;
 			width: 0;
 		}
-			
+	
+block js_head
+	+js([['toS3',1]])
+
 block content
 	noscript
 		.error You must have JavaScript enabled to use this
