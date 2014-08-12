@@ -128,7 +128,7 @@ nav
 			display block
 			overflow hidden
 			borderBox()
-			a
+			&.section a
 				display block
 				borderBox()
 				padding 10px 16px
@@ -140,51 +140,56 @@ nav
 					background darken(@background, 20%)
 					// color $darkOrange
 			&#search
-				//width 332px
-				width 36px
+				width 44px
+				height 44px
 				overflow hidden
 				#searchwrapper
-					width 332px
+					width 440px
 					height @height
-					#searchicon
+					div
 						float left
-						display block
-						width 28px
-						height @width
-						margin 8px 8px 8px 0
-						hideText()
-						background-image url('/images/search.png')
-						background-size @width @height
-						background-repeat no-repeat
-						background-position center center
-					form
-						overflow hidden
-						width 296px
-						float left
-						input
-							font-family $fontSans
-							float left
-							height 30px
-							borderBox()
-							outline 0
-							outline-style none
-							background darken(@background, 20%)
-							border 1px solid darken(@background, 30%)
-							font-size 20px
-							margin 7px 0
-							color #fff
-							&#searchbox
-								width 250px
-								padding 4px
-								&:focus, &:focus + #searchsubmit
-									border-color #fff
-							&#searchsubmit
-								border-left none
-								width 46px
-								text-transform uppercase
-
-								
-						placeholder(darken(@background, 40%))
+						height @height
+						a
+							display block
+							width 44px
+							height @height
+							#searchicon
+								display block
+								width 28px
+								height @width
+								margin 8px
+								hideText()
+								background-image url('/images/search.png')
+								background-size @width @height
+								background-repeat no-repeat
+								background-position center center
+						form
+							overflow hidden
+							width 296px
+							display block
+							height @height
+							input
+								font-family $fontSans
+								float left
+								height 30px
+								borderBox()
+								outline 0
+								outline-style none
+								background darken(@background, 20%)
+								border 1px solid darken(@background, 30%)
+								font-size 20px
+								margin 7px 0
+								color #fff
+								&#searchbox
+									width 250px
+									padding 4px
+									&:focus, &:focus + #searchsubmit
+										border-color #fff
+								&#searchsubmit
+									border-left none
+									width 46px
+									text-transform uppercase
+							placeholder(darken(@background, 40%))
 
 #content
 	padding-bottom 56px
