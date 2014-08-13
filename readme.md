@@ -4,11 +4,11 @@ A [Node.js](http://nodejs.org/) hand coded from the ground up in [CoffeeScript](
 
 ## Roadmap
 
-* Add search everywhere
+* Update color scheme
+* Add related stroies to the article view
 * Add briefs
 * Add upcoming events
 * Allow stories to be marked as rotator stories
-* Allow photos to be marked as either rotator or article preview
 * Add temperature metric
 * Have staff bios
 * Allow users to change their password
