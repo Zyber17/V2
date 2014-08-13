@@ -24,18 +24,35 @@
       title: 1,
       author: 1,
       slug: 1,
-      photos: 1
+      photos: 1,
+      views: 1
     }).sort({
       'publishDate': -1,
       'lastEditDate': -1
     }).limit(6).execFind(function(err, recent) {
-      var article, i, recentAr, _i, _len;
+      var article, i, rotator, top_recent, trending, _i, _j, _len, _len1;
       if (!err) {
         if (recent.length) {
-          recentAr = [];
+          rotator = [];
           for (i = _i = 0, _len = recent.length; _i < _len; i = ++_i) {
             article = recent[i];
-            recentAr[i] = {
+            if (article.photos[0]) {
+              rotator[i] = {
+                body: article.truncated,
+                title: string(article.title).truncate(75).s,
+                slug: "/articles/" + article.slug + "/",
+                rotator: photo_bucket_url + article._id + '/' + article.photos[article.photos.length - 1].name
+              };
+            }
+          }
+          rotator.slice(0, 3);
+          top_recent = recent.sort(function(a, b) {
+            return b.views - a.views;
+          });
+          trending = [];
+          for (i = _j = 0, _len1 = top_recent.length; _j < _len1; i = ++_j) {
+            article = top_recent[i];
+            trending[i] = {
               body: article.truncated,
               author: article.author,
               title: string(article.title).truncate(75).s,
@@ -46,13 +63,12 @@
               slug: "/articles/" + article.slug + "/",
               section: JSON.stringify(article.section),
               photo: article.photos[0] ? photo_bucket_url + article._id + '/' + (article.photos.length > 1 ? article.photos[article.photos.length - 2].name : article.photos[0].name) : void 0,
-              rotator: article.photos[0] ? photo_bucket_url + article._id + '/' + article.photos[article.photos.length - 1].name : void 0,
-              isPublished: 2,
-              isRotatable: article.photos[0] ? true : false
+              isPublished: 2
             };
           }
           return res.render('index', {
-            recentAr: recentAr
+            rotator: rotator,
+            trending: trending
           });
         } else {
           return res.render('errors/404', {

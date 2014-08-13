@@ -1,16 +1,9 @@
 mixin rotator(items)
-	-var usableItems = [];
-	-items.forEach(function(canidate) {
-	-	if (canidate.isRotatable == true) {
-	-		usableItems.push(canidate);
-	-	}
-	-})
-	-(usableItems.length > 3 ? usableItems = usableItems.slice(0,3) : null)
-	input(type="hidden",class="rotatorCount",value=usableItems.length)
+	input(type="hidden",class="rotatorCount",value=items.length)
 	.outside
 		.img
 			ul
-				for item, i in usableItems
+				for item, i in items
 					li(id="ritem#{i}", data-index=i, class=(i == 0 ? 'selected' : ''))
 						div
 							a(href=item.slug)
@@ -21,7 +14,7 @@ mixin rotator(items)
 		.recentPre
 			h2 Featured Stories
 			ul
-				for item, i in usableItems
+				for item, i in items
 					li(id="sitem#{i}", data-index=i, class=(i == 0 ? 'selected' : ''))
 						a(href=item.slug)
 							div.content

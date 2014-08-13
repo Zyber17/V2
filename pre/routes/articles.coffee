@@ -22,6 +22,8 @@ exports.index = (req,res,next) ->
 		slug:
 			1
 		photos:
+			1
+		views:
 			1}
 	).sort({'publishDate':-1, 'lastEditDate': -1}
 	).limit(6
@@ -29,9 +31,23 @@ exports.index = (req,res,next) ->
 		(err, recent) ->
 			if !err
 				if recent.length
-					recentAr = []
+					rotator = []
 					for article, i in recent
-						recentAr[i] =
+						if article.photos[0]
+							rotator[i] =
+								body:
+									article.truncated
+								title:
+									string(article.title).truncate(75).s
+								slug:
+									"/articles/#{article.slug}/"
+								rotator:
+									photo_bucket_url + article._id + '/' + article.photos[article.photos.length - 1].name
+					rotator.slice(0,3)
+					top_recent = recent.sort (a,b) -> return b.views - a.views # http://stackoverflow.com/a/979289
+					trending = []
+					for article, i in top_recent
+						trending[i] =
 							body:
 								article.truncated
 							author:
@@ -49,14 +65,9 @@ exports.index = (req,res,next) ->
 								JSON.stringify(article.section)
 							photo:
 								if article.photos[0] then (photo_bucket_url + article._id + '/' + if article.photos.length > 1 then article.photos[article.photos.length - 2].name else article.photos[0].name)
-							rotator:
-								if article.photos[0] then photo_bucket_url + article._id + '/' + article.photos[article.photos.length - 1].name
 							isPublished:
 								2 #harcoded becase all artices returned this way will be pushed, which is a status of 2
-							isRotatable:
-								if article.photos[0] then yes else no
-
-					res.render 'index', {recentAr: recentAr}
+					res.render 'index', {rotator: rotator, trending: trending}
 
 					# This will happen late when I have time and stuff yeah that jazzy
 					# db.Articles.find(
