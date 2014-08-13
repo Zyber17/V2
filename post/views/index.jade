@@ -11,13 +11,13 @@ block js_head
 
 block content
 	#rotator
-		+rotator(recentAr)
+		+rotator(rotator)
 	#lists
 		#recent
-			h2 Recent Stories
+			h2 Trending Stories
 				//-
 					a.rss(href='/rss') Subscribe
-			+list(recentAr)
+			+list(trending)
 		//- .c2
 		//- 	.c_title
 		//- 		h2 Popular
