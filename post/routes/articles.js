@@ -36,23 +36,23 @@
           rotator = [];
           for (i = _i = 0, _len = recent.length; _i < _len; i = ++_i) {
             article = recent[i];
-            if (article.photos[0]) {
-              rotator[i] = {
+            if ((article.photos != null) && (article.photos[0] != null)) {
+              rotator.push({
                 body: article.truncated,
                 title: string(article.title).truncate(75).s,
                 slug: "/articles/" + article.slug + "/",
                 rotator: photo_bucket_url + article._id + '/' + article.photos[article.photos.length - 1].name
-              };
+              });
             }
           }
-          rotator.slice(0, 3);
+          rotator = rotator.slice(0, 3);
           top_recent = recent.sort(function(a, b) {
             return b.views - a.views;
           });
           trending = [];
           for (i = _j = 0, _len1 = top_recent.length; _j < _len1; i = ++_j) {
             article = top_recent[i];
-            trending[i] = {
+            trending.push({
               body: article.truncated,
               author: article.author,
               title: string(article.title).truncate(75).s,
@@ -64,8 +64,9 @@
               section: JSON.stringify(article.section),
               photo: article.photos[0] ? photo_bucket_url + article._id + '/' + (article.photos.length > 1 ? article.photos[article.photos.length - 2].name : article.photos[0].name) : void 0,
               isPublished: 2
-            };
+            });
           }
+          console.log(JSON.stringify(trending));
           return res.render('index', {
             rotator: rotator,
             trending: trending

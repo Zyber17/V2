@@ -33,8 +33,8 @@ exports.index = (req,res,next) ->
 				if recent.length
 					rotator = []
 					for article, i in recent
-						if article.photos[0]
-							rotator[i] =
+						if article.photos? && article.photos[0]?
+							rotator.push
 								body:
 									article.truncated
 								title:
@@ -43,11 +43,12 @@ exports.index = (req,res,next) ->
 									"/articles/#{article.slug}/"
 								rotator:
 									photo_bucket_url + article._id + '/' + article.photos[article.photos.length - 1].name
-					rotator.slice(0,3)
+					rotator = rotator.slice(0,3)
+
 					top_recent = recent.sort (a,b) -> return b.views - a.views # http://stackoverflow.com/a/979289
 					trending = []
 					for article, i in top_recent
-						trending[i] =
+						trending.push
 							body:
 								article.truncated
 							author:
@@ -67,6 +68,7 @@ exports.index = (req,res,next) ->
 								if article.photos[0] then (photo_bucket_url + article._id + '/' + if article.photos.length > 1 then article.photos[article.photos.length - 2].name else article.photos[0].name)
 							isPublished:
 								2 #harcoded becase all artices returned this way will be pushed, which is a status of 2
+					console.log JSON.stringify trending
 					res.render 'index', {rotator: rotator, trending: trending}
 
 					# This will happen late when I have time and stuff yeah that jazzy
