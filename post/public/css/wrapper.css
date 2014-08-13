@@ -34,7 +34,7 @@ nav ul li#search #searchwrapper div form{overflow:hidden;width:296px;display:blo
 nav ul li#search #searchwrapper div form input{font-family:Avenir,'Open Sans','Helvetica Neue',Helvetica,Arial,Verdana,sans-serif;float:left;height:30px;-webkit-box-sizing:border-box;-moz-box-sizing:border-box;-ms-box-sizing:border-box;-o-box-sizing:border-box;box-sizing:border-box;outline:0;outline-style:none;background:#d9531a;border:1px solid #983a12;font-size:20px;margin:7px 0;color:#fff;}
 nav ul li#search #searchwrapper div form input#searchbox{width:250px;padding:4px;}
 nav ul li#search #searchwrapper div form input#searchbox:focus,nav ul li#search #searchwrapper div form input#searchbox:focus + #searchsubmit{border-color:#fff}
-nav ul li#search #searchwrapper div form input#searchsubmit{border-left:none;width:46px;text-transform:uppercase}
+nav ul li#search #searchwrapper div form input#searchsubmit{border-left:none;width:46px;text-transform:uppercase;-webkit-appearance:none;-moz-appearance:none}
 nav ul li#search #searchwrapper div form input::-webkit-input-placeholder{color:#a33e13}
 nav ul li#search #searchwrapper div form input:-moz-placeholder{color:#a33e13}
 nav ul li#search #searchwrapper div form input::-moz-placeholder{color:#a33e13;opacity:1}
