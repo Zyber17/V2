@@ -113,6 +113,7 @@ nav
 	height 44px
 	line-height 1
 	overflow hidden
+	position relative
 	ul
 		margin 0 30px
 		display block
@@ -190,6 +191,24 @@ nav
 									width 46px
 									text-transform uppercase
 							placeholder(darken(@background, 40%))
+	#gradient
+		/*background-color: #e97747;*/
+		background-image: -webkit-gradient(linear, left center, right center, from(rgba(233, 119, 71, 0.00)), to(rgba(233, 119, 71, 1.00)));
+		background-image: -webkit-linear-gradient(left, rgba(233, 119, 71, 0.00), rgba(233, 119, 71, 1.00));
+		background-image: -moz-linear-gradient(left, rgba(233, 119, 71, 0.00), rgba(233, 119, 71, 1.00));
+		background-image: -o-linear-gradient(left, rgba(233, 119, 71, 0.00), rgba(233, 119, 71, 1.00));
+		background-image: -ms-linear-gradient(left, rgba(233, 119, 71, 0.00), rgba(233, 119, 71, 1.00));
+		background-image: linear-gradient(left, rgba(233, 119, 71, 0.00), rgba(233, 119, 71, 1.00));
+		width 30px
+		height @height
+		position absolute
+		right 0
+		top 0
+@css {
+	nav #gradient {
+		filter: progid:DXImageTransform.Microsoft.gradient(GradientType=1,StartColorStr='#e97747', EndColorStr='#e97747');
+	}
+}
 
 #content
 	padding-bottom 56px
