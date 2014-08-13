@@ -63,7 +63,7 @@
           });
         } else {
           return res.render('errors/404', {
-            _err: ["Article not found"]
+            _err: "No articles found"
           });
         }
       } else {
@@ -475,7 +475,7 @@
             });
           } else {
             return res.render('errors/404', {
-              err: "Not found"
+              err: "Article not found"
             });
           }
         } else {

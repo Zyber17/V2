@@ -121,7 +121,7 @@ exports.index = (req,res,next) ->
 					# 			res.end JSON.stringify err
 					# )
 				else
-					res.render 'errors/404', {_err: ["Article not found"]}
+					res.render 'errors/404', {_err: ["No articles found"]}
 			else
 				console.log "Error (articles): #{err}"
 				res.end JSON.stringify err
@@ -160,7 +160,7 @@ exports.json = (req,res,next) ->
 						recent[i].body.slice(0)
 					res.json recent
 				else
-					res.render 'errors/404', {_err: ["Article not found"]}
+					res.render 'errors/404', {_err: ["No articles found"]}
 			else
 				console.log "Error (articles): #{err}"
 				res.end JSON.stringify err
@@ -252,9 +252,9 @@ exports.view = (req,res,next) ->
 						options.msg = "This article is not yet released, you’re seeing it because you’#{if req.session.user.isStaff then "re on staff" else "ve been granted early access"}." #req.session.isStaff not true
 						res.render 'article', options
 					else
-						res.render 'errors/404', {err: "Article not found"}
+						res.render 'errors/404', {err: "No article found"}
 			else
-				res.render 'errors/404', {err: "Article not found"}
+				res.render 'errors/404', {err: "No article found"}
 		else
 			console.log "Error (articles): #{err}"
 			res.end JSON.stringify err

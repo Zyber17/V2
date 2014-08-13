@@ -61,7 +61,7 @@
           });
         } else {
           return res.render('errors/404', {
-            _err: ["No matching articles found"],
+            _err: ["No articles matched that search"],
             searchquery: query
           });
         }

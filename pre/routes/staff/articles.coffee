@@ -69,7 +69,7 @@ exports.index = (req,res,next) ->
 					res.render 'articleList', {recentAr: recentAr, section: "All Stories"}
 
 				else
-					res.render 'errors/404', {_err: ["Article not found"]}
+					res.render 'errors/404', {_err: "No articles found"}
 			else
 				console.log "Error (staff/articles): #{err}"
 				res.end JSON.stringify err
@@ -472,7 +472,7 @@ exports.removePhotos = (req,res,next) ->
 							res.end JSON.stringify err
 
 				else
-					res.render 'errors/404', {err: "Not found"}	
+					res.render 'errors/404', {err: "Article not found"}	
 			else
 				console.log "Error (articles): #{err}"
 				res.end JSON.stringify err

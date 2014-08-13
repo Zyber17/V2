@@ -46,7 +46,7 @@ searchGet = (req,res,next) ->
 							2
 				res.render 'articleList', {recentAr: articles, section: "Search: #{query}", searchquery: "#{query}"}
 			else
-				res.render 'errors/404', {_err: ["No matching articles found"], searchquery: query}
+				res.render 'errors/404', {_err: ["No articles matched that search"], searchquery: query}
 		else
 			console.log "Error (search): #{err}"
 			res.end JSON.stringify err
