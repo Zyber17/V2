@@ -139,7 +139,7 @@
             });
           } else {
             return res.render('errors/404', {
-              err: "Article not found"
+              err: "Issue not found"
             });
           }
         } else {

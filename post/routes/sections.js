@@ -57,7 +57,7 @@
           });
         } else {
           return res.render('errors/404', {
-            _err: ["Article not found"]
+            _err: "This section does not have any articles"
           });
         }
       } else {

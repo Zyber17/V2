@@ -55,7 +55,7 @@
           return res.end(feed.xml());
         } else {
           return res.render('errors/404', {
-            err: "Articles not found"
+            err: "Page not found"
           });
         }
       } else {

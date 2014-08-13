@@ -1,0 +1,5 @@
+#content h2{text-transform:uppercase;font-weight:bold;font-style:italic;padding:20px 0 0 0;color:#e97747;}
+#content h2.alert{font-size:3.6em}
+#content h2.message{font-size:2em}
+#content #searchsuggestion{padding:40px 0;}
+#content #searchsuggestion h3{text-transform:uppercase;font-weight:bold;padding:20px 0;color:#e97747;font-size:1.5em}

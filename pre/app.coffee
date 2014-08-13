@@ -94,6 +94,8 @@ else if process.env.NODE_ENV != 'setup'
 		app.set 'port', process.env.PORT || 8000
 
 		app.use app.router
+		app.use (req,res,next) -> res.render 'errors/404', 404
+
 		app.use express.csrf()
 
 		true # CoffeeScript automatically returns the last line of every function. So, we're returning true when eveything works (last line excuted).

@@ -78,7 +78,7 @@ module.exports = (req,res,next) ->
 
 					res.end feed.xml()
 				else
-					res.render 'errors/404', {err: "Articles not found"}
+					res.render 'errors/404', {err: "Page not found"}
 			else
 				console.log "Error (rss): #{err}"
 				res.end JSON.stringify err

@@ -123,7 +123,7 @@
             });
           } else {
             return res.render('errors/404', {
-              _err: "Article not found"
+              _err: "Section not found"
             });
           }
         } else {

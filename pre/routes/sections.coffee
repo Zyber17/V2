@@ -62,7 +62,7 @@ exports.view = (req,res,next) ->
 
 					res.render 'articleList', {recentAr: recentAr, section: recent[0].section.title}
 				else
-					res.render 'errors/404', {_err: ["Article not found"]}
+					res.render 'errors/404', {_err: "This section does not have any articles"}
 			else
 				console.log "Error (articles): #{err}"
 				res.end JSON.stringify err

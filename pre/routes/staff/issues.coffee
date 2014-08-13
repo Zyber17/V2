@@ -126,7 +126,7 @@ exports.edit_post = (req,res,next) ->
 						else
 							res.redirect "/staff/issues/"
 				else
-					res.render 'errors/404', {err: "Article not found"}
+					res.render 'errors/404', {err: "Issue not found"}
 			else
 				console.log "Error (issues): #{err}"
 				res.end JSON.stringify err

@@ -62,6 +62,9 @@
       app.disable('x-powered-by');
       app.set('port', process.env.PORT || 8000);
       app.use(app.router);
+      app.use(function(req, res, next) {
+        return res.render('errors/404', 404);
+      });
       app.use(express.csrf());
       return true;
     });

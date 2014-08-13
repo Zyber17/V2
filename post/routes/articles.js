@@ -73,7 +73,7 @@
           });
         } else {
           return res.render('errors/404', {
-            _err: ["Article not found"]
+            _err: ["No articles found"]
           });
         }
       } else {
@@ -112,7 +112,7 @@
           return res.json(recent);
         } else {
           return res.render('errors/404', {
-            _err: ["Article not found"]
+            _err: ["No articles found"]
           });
         }
       } else {
@@ -198,13 +198,13 @@
               return res.render('article', options);
             } else {
               return res.render('errors/404', {
-                err: "Article not found"
+                err: "No article found"
               });
             }
           }
         } else {
           return res.render('errors/404', {
-            err: "Article not found"
+            err: "No article found"
           });
         }
       } else {
