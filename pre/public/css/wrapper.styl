@@ -190,15 +190,17 @@ nav
 									border-left none
 									width 46px
 									text-transform uppercase
+									-webkit-appearance none
+									-moz-appearance none
 							placeholder(darken(@background, 40%))
 	#gradient
 		/*background-color: #e97747;*/
-		background-image: -webkit-gradient(linear, left center, right center, from(rgba(233, 119, 71, 0.00)), to(rgba(233, 119, 71, 1.00)));
-		background-image: -webkit-linear-gradient(left, rgba(233, 119, 71, 0.00), rgba(233, 119, 71, 1.00));
-		background-image: -moz-linear-gradient(left, rgba(233, 119, 71, 0.00), rgba(233, 119, 71, 1.00));
-		background-image: -o-linear-gradient(left, rgba(233, 119, 71, 0.00), rgba(233, 119, 71, 1.00));
-		background-image: -ms-linear-gradient(left, rgba(233, 119, 71, 0.00), rgba(233, 119, 71, 1.00));
-		background-image: linear-gradient(left, rgba(233, 119, 71, 0.00), rgba(233, 119, 71, 1.00));
+		background-image: -webkit-gradient(linear, left center, right center, from(rgba(red($darkOrange), green($darkOrange), blue($darkOrange), 0.00)), to(rgba(red($darkOrange), green($darkOrange), blue($darkOrange), 1.00)));
+		background-image: -webkit-linear-gradient(left, rgba(red($darkOrange), green($darkOrange), blue($darkOrange), 0.00), rgba(red($darkOrange), green($darkOrange), blue($darkOrange), 1.00));
+		background-image: -moz-linear-gradient(left, rgba(red($darkOrange), green($darkOrange), blue($darkOrange), 0.00), rgba(red($darkOrange), green($darkOrange), blue($darkOrange), 1.00));
+		background-image: -o-linear-gradient(left, rgba(red($darkOrange), green($darkOrange), blue($darkOrange), 0.00), rgba(red($darkOrange), green($darkOrange), blue($darkOrange), 1.00));
+		background-image: -ms-linear-gradient(left, rgba(red($darkOrange), green($darkOrange), blue($darkOrange), 0.00), rgba(red($darkOrange), green($darkOrange), blue($darkOrange), 1.00));
+		background-image: linear-gradient(left, rgba(red($darkOrange), green($darkOrange), blue($darkOrange), 0.00), rgba(red($darkOrange), green($darkOrange), blue($darkOrange), 1.00));
 		width 30px
 		height @height
 		position absolute
