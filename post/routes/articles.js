@@ -66,7 +66,6 @@
               isPublished: 2
             });
           }
-          console.log(JSON.stringify(trending));
           return res.render('index', {
             rotator: rotator,
             trending: trending
