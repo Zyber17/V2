@@ -129,7 +129,6 @@
     }
     return findArticle(req.params.slug, update, function(err, resp) {
       var comment, comments, galleryUrls, i, isGallery, now, options, photo, revbody, revision, versions, _i, _j, _k, _len, _len1, _len2, _ref, _ref1, _ref2;
-      res.end('hi');
       if (!err) {
         if (resp) {
           versions = [];
