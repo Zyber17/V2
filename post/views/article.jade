@@ -61,7 +61,7 @@ block content
 			.metrics
 				ul
 					-if (staff)
-						li #{resp.views} view#{resp.views != 1 ? 's' : ''}
+						li(title="total, not unique") #{resp.views} view#{resp.views != 1 ? 's' : ''}
 
 					//-
 						li.tempature
