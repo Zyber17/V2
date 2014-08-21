@@ -170,7 +170,6 @@ exports.view = (req,res,next) ->
 	update = true
 	if req.session.isUser == true then update = false
 	findArticle req.params.slug, update, (err, resp) ->
-		res.end 'hi'
 		if !err
 			if resp
 				versions = []
