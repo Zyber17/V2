@@ -31,7 +31,7 @@
 #recent ul li a:link,#recent ul li a:visited{display:block;color:#fff;border-bottom:none;}
 #recent ul li a:link .top,#recent ul li a:visited .top{background:#11334d;padding-left:30px;height:150px;overflow-y:hidden;}
 #recent ul li a:link .top.draft,#recent ul li a:visited .top.draft{background:#7f7f7f}
-#recent ul li a:link .top.queued,#recent ul li a:visited .top.queued{background:#1f5b8a;color:#333}
+#recent ul li a:link .top.queued,#recent ul li a:visited .top.queued{background:#1f5b8a}
 #recent ul li a:link .top .sixty,#recent ul li a:visited .top .sixty{float:left;width:60%;margin-top:15px;margin-bottom:10px;overflow:hidden;}
 #recent ul li a:link .top .sixty h3,#recent ul li a:visited .top .sixty h3{font-weight:bold;font-style:italic;font-size:17px;margin-bottom:5px;overflow:hidden}
 #recent ul li a:link .top .sixty article p,#recent ul li a:visited .top .sixty article p{line-height:1.5;height:100px;overflow:hidden}
@@ -43,7 +43,7 @@
 #recent ul li a:link .bottom .floatfix div.info,#recent ul li a:visited .bottom .floatfix div.info{margin-top:10px}
 #recent ul li a:link .bottom .floatfix div.more,#recent ul li a:visited .bottom .floatfix div.more{margin-left:20px;color:#fff;background:#11334d;text-transform:uppercase;padding:10px;}
 #recent ul li a:link .bottom .floatfix div.more.draft,#recent ul li a:visited .bottom .floatfix div.more.draft{background:#7f7f7f}
-#recent ul li a:link .bottom .floatfix div.more.queued,#recent ul li a:visited .bottom .floatfix div.more.queued{background:#1f5b8a;color:#333}
+#recent ul li a:link .bottom .floatfix div.more.queued,#recent ul li a:visited .bottom .floatfix div.more.queued{background:#1f5b8a}
 #recent ul li a:hover .top{background:#0e293e;}
 #recent ul li a:hover .top.draft{background:#666}
 #recent ul li a:hover .top.queued{background:#19496e}
@@ -56,7 +56,7 @@
 #recent ul li a:link,#recent ul li a:visited{display:block;color:#fff;border-bottom:none;}
 #recent ul li a:link .top,#recent ul li a:visited .top{background:#11334d;padding-left:30px;height:150px;overflow-y:hidden;}
 #recent ul li a:link .top.draft,#recent ul li a:visited .top.draft{background:#7f7f7f}
-#recent ul li a:link .top.queued,#recent ul li a:visited .top.queued{background:#1f5b8a;color:#333}
+#recent ul li a:link .top.queued,#recent ul li a:visited .top.queued{background:#1f5b8a}
 #recent ul li a:link .top .sixty,#recent ul li a:visited .top .sixty{float:left;width:60%;margin-top:15px;margin-bottom:10px;overflow:hidden;}
 #recent ul li a:link .top .sixty h3,#recent ul li a:visited .top .sixty h3{font-weight:bold;font-style:italic;font-size:17px;margin-bottom:5px;overflow:hidden}
 #recent ul li a:link .top .sixty article p,#recent ul li a:visited .top .sixty article p{line-height:1.5;height:100px;overflow:hidden}
@@ -68,7 +68,7 @@
 #recent ul li a:link .bottom .floatfix div.info,#recent ul li a:visited .bottom .floatfix div.info{margin-top:10px}
 #recent ul li a:link .bottom .floatfix div.more,#recent ul li a:visited .bottom .floatfix div.more{margin-left:20px;color:#fff;background:#11334d;text-transform:uppercase;padding:10px;}
 #recent ul li a:link .bottom .floatfix div.more.draft,#recent ul li a:visited .bottom .floatfix div.more.draft{background:#7f7f7f}
-#recent ul li a:link .bottom .floatfix div.more.queued,#recent ul li a:visited .bottom .floatfix div.more.queued{background:#1f5b8a;color:#333}
+#recent ul li a:link .bottom .floatfix div.more.queued,#recent ul li a:visited .bottom .floatfix div.more.queued{background:#1f5b8a}
 #recent ul li a:hover .top{background:#0e293e;}
 #recent ul li a:hover .top.draft{background:#666}
 #recent ul li a:hover .top.queued{background:#19496e}
