@@ -422,6 +422,25 @@
     }
   };
 
+  exports.stats = function(req, res, next) {
+    return findArticle(req.params.slug, false, function(err, resp) {
+      if (!err) {
+        if (resp) {
+          return res.end(JSON.stringify({
+            views: resp.views
+          }));
+        } else {
+          return res.render('errors/404', {
+            err: "No article found"
+          });
+        }
+      } else {
+        console.log("Error (articles): " + err);
+        return res.end(JSON.stringify(err));
+      }
+    });
+  };
+
   exports.remove = function(req, res, next) {
     if (req.body["delete"] === "true") {
       return db.Articles.findOne({

@@ -168,6 +168,8 @@ else if process.env.NODE_ENV != 'setup'
 
 	app.get '/staff/articles/:slug', auth.requireStaff, articles.view # Middleware for auth? Update: No. Just check for session in article.view. WAIT. I MEAN YES. Just make sure the user in reference exists. Add later
 
+	app.get '/staff/articles/:slug/stats.json', auth.requireStaff, staff.articles.stats
+
 	app.post '/staff/articles/:slug/comment', auth.requireStaff, staff.articles.comment
 
 	app.get '/staff/articles/:slug/edit', auth.requireStaff, staff.articles.edit_get

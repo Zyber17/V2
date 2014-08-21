@@ -427,6 +427,16 @@ exports.edit_post = (req,res,next) ->
 				res.end JSON.stringify err
 			
 
+exports.stats = (req,res,next) ->
+	findArticle req.params.slug, false, (err, resp) ->
+		if !err
+			if resp
+				res.end JSON.stringify {views: resp.views}
+			else
+				res.render 'errors/404', {err: "No article found"}
+		else
+			console.log "Error (articles): #{err}"
+			res.end JSON.stringify err
 
 exports.remove = (req,res,next) ->
 	if req.body.delete == "true"
