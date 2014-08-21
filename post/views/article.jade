@@ -60,6 +60,9 @@ block content
 		.metaBottom
 			.metrics
 				ul
+					-if (staff)
+						li #{resp.views} view#{resp.views != 1 ? 's' : ''}
+
 					//-
 						li.tempature
 							i.flame

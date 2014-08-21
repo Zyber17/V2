@@ -99,6 +99,7 @@
     app.get('/staff/articles/new', auth.requireStaff, staff.articles.new_get);
     app.post('/staff/articles/new', auth.requireStaff, staff.articles.new_post);
     app.get('/staff/articles/:slug', auth.requireStaff, articles.view);
+    app.get('/staff/articles/:slug/stats.json', auth.requireStaff, staff.articles.stats);
     app.post('/staff/articles/:slug/comment', auth.requireStaff, staff.articles.comment);
     app.get('/staff/articles/:slug/edit', auth.requireStaff, staff.articles.edit_get);
     app.post('/staff/articles/:slug/edit', auth.requireStaff, staff.articles.edit_post);
