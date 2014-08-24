@@ -59,7 +59,7 @@ else if process.env.NODE_ENV != 'setup'
 	app.configure ->
 		app.use express.cookieParser('***REMOVED***')
 		app.use express.static(path.join(__dirname, 'public'))
-		app.use express.favicon(path.join(__dirname, 'public/images/favicon.ico'))
+		app.use express.favicon(path.join(__dirname, 'public/images/favicon.ico?version=2'))
 		app.use express.bodyParser()
 		app.use(
 			express.session
