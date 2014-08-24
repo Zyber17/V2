@@ -35,10 +35,10 @@ nav ul li#search #searchwrapper div form input{font-family:Avenir,'Open Sans','H
 nav ul li#search #searchwrapper div form input#searchbox{width:250px;padding:4px;}
 nav ul li#search #searchwrapper div form input#searchbox:focus,nav ul li#search #searchwrapper div form input#searchbox:focus + #searchsubmit{border-color:#fff}
 nav ul li#search #searchwrapper div form input#searchsubmit{border-left:none;width:46px;text-transform:uppercase;-webkit-appearance:none;-moz-appearance:none}
-nav ul li#search #searchwrapper div form input::-webkit-input-placeholder{color:#0a1f2e}
-nav ul li#search #searchwrapper div form input:-moz-placeholder{color:#0a1f2e}
-nav ul li#search #searchwrapper div form input::-moz-placeholder{color:#0a1f2e;opacity:1}
-nav ul li#search #searchwrapper div form input:-ms-input-placeholder{color:#0a1f2e}
+nav ul li#search #searchwrapper div form input::-webkit-input-placeholder{color:#338dd2}
+nav ul li#search #searchwrapper div form input:-moz-placeholder{color:#338dd2}
+nav ul li#search #searchwrapper div form input::-moz-placeholder{color:#338dd2;opacity:1}
+nav ul li#search #searchwrapper div form input:-ms-input-placeholder{color:#338dd2}
 nav #gradient{background-image:-webkit-gradient(linear,left center,right center,from(rgba(17,51,77,0)),to(#11334d));background-image:-webkit-linear-gradient(left,rgba(17,51,77,0),#11334d);background-image:-moz-linear-gradient(left,rgba(17,51,77,0),#11334d);background-image:-o-linear-gradient(left,rgba(17,51,77,0),#11334d);background-image:-ms-linear-gradient(left,rgba(17,51,77,0),#11334d);background-image:linear-gradient(left,rgba(17,51,77,0),#11334d);width:30px;height:44px;position:absolute;right:0;top:0}
 nav #gradient {
 		filter: progid:DXImageTransform.Microsoft.gradient(GradientType=1,StartColorStr='#e97747', EndColorStr='#e97747');
