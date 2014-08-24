@@ -7,8 +7,8 @@ a:hover{border-bottom:1px dashed #eeccb2}
 a:active{color:#e0a475;border-bottom:1px dashed #e0a475}
 #wrapper{position:relative;max-width:1024px;margin:0 auto;min-height:100%}
 #header{background:#1f5b8a;height:168px;padding:10px 0;position:relative;}
-#header h1 a{display:block;text-indent:-9999px;background-image:url("/images/logo.png");background-size:465px 139px;background-repeat:no-repeat;background-position:center center;height:163px;border-bottom:none;text-decoration:none;}
-@media (min--moz-device-pixel-ratio: 1.25), (-o-min-device-pixel-ratio: 5/4), (-webkit-min-device-pixel-ratio: 1.25), (min-device-pixel-ratio: 1.25), (min-resolution: 1.25dppx){#header h1 a{background-image:url("/images/logo_2x.png")}
+#header h1 a{display:block;text-indent:-9999px;background-image:url("/images/logo.png?version=2");background-size:465px 139px;background-repeat:no-repeat;background-position:center center;height:163px;border-bottom:none;text-decoration:none;}
+@media (min--moz-device-pixel-ratio: 1.25), (-o-min-device-pixel-ratio: 5/4), (-webkit-min-device-pixel-ratio: 1.25), (min-device-pixel-ratio: 1.25), (min-resolution: 1.25dppx){#header h1 a{background-image:url("/images/logo_2x.png?version=2")}
 }#header aside{position:absolute;top:0;right:0;z-index:10;}
 @media screen and (max-width $readOnlineWidth){#header aside{position:relative;margin-top:-32px}
 }#header aside a:link,#header aside a:visited,#header aside a:hover,#header aside a:active{display:block;position:relative;width:180px;height:180px;border-bottom:none;text-align:right;border-bottom:none;color:#fff;font-size:20px;text-transform:uppercase;font-weight:bold;}
@@ -29,7 +29,7 @@ nav ul li#search{width:44px;height:44px;overflow:hidden;}
 nav ul li#search #searchwrapper{width:440px;height:44px;}
 nav ul li#search #searchwrapper div{float:left;height:44px;}
 nav ul li#search #searchwrapper div a{display:block;width:44px;height:44px;}
-nav ul li#search #searchwrapper div a #searchicon{display:block;width:28px;height:28px;margin:8px;text-indent:-9999px;background-image:url("/images/search.png");background-size:28px 28px;background-repeat:no-repeat;background-position:center center}
+nav ul li#search #searchwrapper div a #searchicon{display:block;width:28px;height:28px;margin:8px;text-indent:-9999px;background-image:url("/images/search.png?version=2");background-size:28px 28px;background-repeat:no-repeat;background-position:center center}
 nav ul li#search #searchwrapper div form{overflow:hidden;width:296px;display:block;height:44px;}
 nav ul li#search #searchwrapper div form input{font-family:Avenir,'Open Sans','Helvetica Neue',Helvetica,Arial,Verdana,sans-serif;float:left;height:30px;-webkit-box-sizing:border-box;-moz-box-sizing:border-box;-ms-box-sizing:border-box;-o-box-sizing:border-box;box-sizing:border-box;outline:0;outline-style:none;background:#0e293e;border:1px solid #0a1d2b;font-size:20px;margin:7px 0;color:#fff;}
 nav ul li#search #searchwrapper div form input#searchbox{width:250px;padding:4px;}
