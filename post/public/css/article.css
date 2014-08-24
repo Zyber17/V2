@@ -1,4 +1,4 @@
-#content{max-width:800px;margin:25px auto;padding:0 20px 56px;}
+#content{max-width:800px;margin:25px auto 0;padding:0 20px 56px;}
 #content .meta .metaTop ul{margin-bottom:10px;height:16px;}
 #content .meta .metaTop ul li{float:left;padding-right:10px;display:block;color:#838383;font-weight:500;}
 #content .meta .metaTop ul li h2.author:before,#content .meta .metaTop ul li h2.pubdate:before{content:"•";padding-right:10px}
