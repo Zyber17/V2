@@ -1,0 +1,14 @@
+extends ../wrapper
+
+block css
+	+style([['search',1],['error',1]])
+
+block content
+	h2.alert 400
+	h2.message= (_err ? _err : 'Bad request')
+	div#searchsuggestion
+		h3= 'Maybe try a' + (_err == "Please eneter a vaild search query" ? ' valid' : '') + ' search?'
+		form#form(method="get", action='/search', enctype="multipart/form-data")
+			input#searchpagebox(type="text", placeholder="Search…", name="q")
+
+			input#searchpagesubmit(type="submit", value="Go")

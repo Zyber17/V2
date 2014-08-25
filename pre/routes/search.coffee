@@ -17,36 +17,39 @@ searchView = (req,res,next) ->
 
 searchGet = (req,res,next) ->
 	query = decodeURIComponent(req.query.q).replace(/[^\w\s]/g,'')
-	es.search {
-		index: 'torch'
-		type: 'article'
-		q: query
-	}, (err,resp) ->
-		if !err
-			if resp && resp.hits.hits.length
-				articles = []
-				for article, i in resp.hits.hits
-					articles[i] =
-						body:
-							article._source.truncated
-						author:
-							article._source.author
-						title:
-							string(article._source.title).truncate(75).s
-						date:
-							human:
-								moment(article._source.date).format("MMM D, YYYY")
-							robot:
-								moment(article._source.date).toISOString().split('T')[0]
-						slug:
-							"/articles/#{article._source.slug}/"
-						photo:
-							if article._source.photo then "#{photo_bucket_url}#{article._id}/#{article._source.photo}"
-						isPublished:
-							2
-				res.render 'articleList', {recentAr: articles, section: "Search: #{query}", searchquery: "#{query}"}
+	if query.length > 1
+		es.search {
+			index: 'torch'
+			type: 'article'
+			q: query
+		}, (err,resp) ->
+			if !err
+				if resp && resp.hits.hits.length
+					articles = []
+					for article, i in resp.hits.hits
+						articles[i] =
+							body:
+								article._source.truncated
+							author:
+								article._source.author
+							title:
+								string(article._source.title).truncate(75).s
+							date:
+								human:
+									moment(article._source.date).format("MMM D, YYYY")
+								robot:
+									moment(article._source.date).toISOString().split('T')[0]
+							slug:
+								"/articles/#{article._source.slug}/"
+							photo:
+								if article._source.photo then "#{photo_bucket_url}#{article._id}/#{article._source.photo}"
+							isPublished:
+								2
+					res.render 'articleList', {recentAr: articles, section: "Search: #{query}", searchquery: "#{query}"}
+				else
+					res.render 'errors/404', {_err: ["No articles matched that search"], searchquery: query}
 			else
-				res.render 'errors/404', {_err: ["No articles matched that search"], searchquery: query}
-		else
-			console.log "Error (search): #{err}"
-			res.end JSON.stringify err
+				console.log "Error (search): #{err}"
+				res.end JSON.stringify err
+	else
+		res.render 'errors/400', {_err: "Please eneter a vaild search query", searchquery: query}

@@ -29,47 +29,54 @@
   searchGet = function(req, res, next) {
     var query;
     query = decodeURIComponent(req.query.q).replace(/[^\w\s]/g, '');
-    return es.search({
-      index: 'torch',
-      type: 'article',
-      q: query
-    }, function(err, resp) {
-      var article, articles, i, _i, _len, _ref;
-      if (!err) {
-        if (resp && resp.hits.hits.length) {
-          articles = [];
-          _ref = resp.hits.hits;
-          for (i = _i = 0, _len = _ref.length; _i < _len; i = ++_i) {
-            article = _ref[i];
-            articles[i] = {
-              body: article._source.truncated,
-              author: article._source.author,
-              title: string(article._source.title).truncate(75).s,
-              date: {
-                human: moment(article._source.date).format("MMM D, YYYY"),
-                robot: moment(article._source.date).toISOString().split('T')[0]
-              },
-              slug: "/articles/" + article._source.slug + "/",
-              photo: article._source.photo ? "" + photo_bucket_url + article._id + "/" + article._source.photo : void 0,
-              isPublished: 2
-            };
+    if (query.length > 1) {
+      return es.search({
+        index: 'torch',
+        type: 'article',
+        q: query
+      }, function(err, resp) {
+        var article, articles, i, _i, _len, _ref;
+        if (!err) {
+          if (resp && resp.hits.hits.length) {
+            articles = [];
+            _ref = resp.hits.hits;
+            for (i = _i = 0, _len = _ref.length; _i < _len; i = ++_i) {
+              article = _ref[i];
+              articles[i] = {
+                body: article._source.truncated,
+                author: article._source.author,
+                title: string(article._source.title).truncate(75).s,
+                date: {
+                  human: moment(article._source.date).format("MMM D, YYYY"),
+                  robot: moment(article._source.date).toISOString().split('T')[0]
+                },
+                slug: "/articles/" + article._source.slug + "/",
+                photo: article._source.photo ? "" + photo_bucket_url + article._id + "/" + article._source.photo : void 0,
+                isPublished: 2
+              };
+            }
+            return res.render('articleList', {
+              recentAr: articles,
+              section: "Search: " + query,
+              searchquery: "" + query
+            });
+          } else {
+            return res.render('errors/404', {
+              _err: ["No articles matched that search"],
+              searchquery: query
+            });
           }
-          return res.render('articleList', {
-            recentAr: articles,
-            section: "Search: " + query,
-            searchquery: "" + query
-          });
         } else {
-          return res.render('errors/404', {
-            _err: ["No articles matched that search"],
-            searchquery: query
-          });
+          console.log("Error (search): " + err);
+          return res.end(JSON.stringify(err));
         }
-      } else {
-        console.log("Error (search): " + err);
-        return res.end(JSON.stringify(err));
-      }
-    });
+      });
+    } else {
+      return res.render('errors/400', {
+        _err: "Please eneter a vaild search query",
+        searchquery: query
+      });
+    }
   };
 
 }).call(this);
