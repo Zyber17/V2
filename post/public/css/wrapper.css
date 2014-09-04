@@ -15,15 +15,15 @@ body {
 }
 a:link,
 a:visited {
-  color: #11334d;
+  color: #1f5b8a;
   text-decoration: none;
 }
 a:hover {
-  border-bottom: 1px dashed #11334d;
+  border-bottom: 1px dashed #1f5b8a;
 }
 a:active {
-  color: #1f5b8a;
-  border-bottom: 1px dashed #1f5b8a;
+  color: #11334d;
+  border-bottom: 1px dashed #11334d;
 }
 #wrapper {
   position: relative;
