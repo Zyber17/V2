@@ -27,12 +27,12 @@
         });
       }
     });
-    return $('#entertainment a .hide').mouseenter(function() {
-      return $(this).stop().animate({
+    return $('#entertainment').mouseenter(function() {
+      return $('#entertainment a .hide').stop().animate({
         width: entFullW
       });
     }).mouseleave(function() {
-      return $(this).stop().animate({
+      return $('#entertainment a .hide').stop().animate({
         width: entSmallW
       });
     });

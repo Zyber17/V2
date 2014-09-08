@@ -25,12 +25,12 @@ $(document).ready ->
 				width: iconW
 			}
 
-	$('#entertainment a .hide')
+	$('#entertainment')
 		.mouseenter () ->
-			$(@).stop().animate {
+			$('#entertainment a .hide').stop().animate {
 				width: entFullW
 			}
 		.mouseleave () ->
-			$(@).stop().animate {
+			$('#entertainment a .hide').stop().animate {
 				width: entSmallW
 			}
