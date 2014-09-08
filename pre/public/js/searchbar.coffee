@@ -2,6 +2,9 @@ $(document).ready ->
 	searchW = 340
 	iconW = 44
 
+	entFullW = 208
+	entSmallW = 53
+
 	if($('#searchbox').val() != '')
 		$('#search').css('width', searchW)
 
@@ -20,4 +23,14 @@ $(document).ready ->
 		if $('#searchbox').val() == '' && !$('#search').is(':hover')
 			$('#search').stop().animate {
 				width: iconW
+			}
+
+	$('#entertainment a .hide')
+		.mouseenter () ->
+			$(@).stop().animate {
+				width: entFullW
+			}
+		.mouseleave () ->
+			$(@).stop().animate {
+				width: entSmallW
 			}
