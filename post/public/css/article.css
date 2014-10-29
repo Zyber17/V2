@@ -23,7 +23,12 @@
 #content .meta .metaTop ul li.twitter {
   margin-top: -3px;
   float: right;
+}
+#content .meta .metaTop ul li.facebook {
   width: 124px;
+}
+#content .meta .metaTop ul li.twitter {
+  width: 81px;
 }
 #content .meta .metaBottom h1 {
   display: inline;

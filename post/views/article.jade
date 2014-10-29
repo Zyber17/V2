@@ -5,7 +5,7 @@ extends wrapper
 
 
 block css
-	+style([['article',2]])
+	+style([['article',3]])
 
 block js_head
 	-if (isGallery && !isVideo)
@@ -55,10 +55,10 @@ block content
 						h2.pubdate
 							| on 
 							time(datetime=date.robot)= date.human
-				li.twitter
-					include includes/twitter
 				li.facebook
 					include includes/fb
+				li.twitter
+					include includes/twitter
 		.metaBottom
 			.metrics
 				ul
