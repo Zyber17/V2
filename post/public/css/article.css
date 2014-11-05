@@ -52,7 +52,7 @@
   height: 16px;
 }
 #content .meta .metaBottom .metrics li.tempature {
-  margin-bottom: 3px;
+  margin: 3px 0;
 }
 #content .meta .metaBottom .metrics li .flame,
 #content .meta .metaBottom .metrics li span {

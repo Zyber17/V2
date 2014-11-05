@@ -45,7 +45,10 @@ exports.index = (req,res,next) ->
 									photo_bucket_url + article._id + '/' + article.photos[article.photos.length - 1].name
 					rotator = rotator.slice(0,3)
 
-					top_recent = recent.sort (a,b) -> return b.views - a.views # http://stackoverflow.com/a/979289
+					# moment().toDate().subtract(moment(a.publishDate)).days()
+					# top_recent = recent.sort (a,b) -> return b.views - a.views # http://stackoverflow.com/a/979289
+					top_recent = recent.sort (a,b) -> heat(b) - heat(a)
+
 					trending = []
 					for article, i in top_recent
 						trending.push
@@ -205,7 +208,7 @@ exports.view = (req,res,next) ->
 					galleryUrls = []
 					for photo in resp.photos
 						galleryUrls.push photo_bucket_url + resp._id + '/' + photo.name
-				
+
 				options = 
 					body:
 						resp.body[0].body
@@ -230,6 +233,8 @@ exports.view = (req,res,next) ->
 						if resp.photos[0] then (photo_bucket_url + resp._id + '/' + if resp.photos.length > 1 then resp.photos[resp.photos.length - 2].name else resp.photos[0].name)
 					section:
 						resp.section
+					heat:
+						Math.floor((heat(resp)*10)).toString()
 					isGallery:
 						if isGallery then resp.isGallery else false
 					galleryItems:
@@ -238,6 +243,7 @@ exports.view = (req,res,next) ->
 						if resp.isVideo then resp.isVideo else false
 					videoEmebed:
 						if resp.videoEmebed then resp.videoEmebed else null
+					
 
 				if resp.publishDate
 					options.resp.date = moment(resp.publishDate).format("MMMM D, YYYY")
@@ -308,3 +314,6 @@ findArticle = (slug, update = false, callback) ->
 		else
 			callback(err,resp)
 	)
+
+heat = (item) ->
+	item.views/(moment.duration(moment().toDate() - item.publishDate).days()+1)

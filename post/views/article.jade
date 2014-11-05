@@ -5,7 +5,7 @@ extends wrapper
 
 
 block css
-	+style([['article',3]])
+	+style([['article',4]])
 
 block js_head
 	-if (isGallery && !isVideo)
@@ -64,11 +64,9 @@ block content
 				ul
 					-if (staff)
 						li(title="total, not unique") #{resp.views} view#{resp.views != 1 ? 's' : ''}
-
-					//-
 						li.tempature
 							i.flame
-							span 212&deg;
+							span #{heat}
 					li.time
 			h1= resp.title
 			
