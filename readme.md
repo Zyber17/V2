@@ -9,7 +9,6 @@ A [Node.js](http://nodejs.org/) hand coded from the ground up in [CoffeeScript](
 * Add briefs
 * Add upcoming events
 * Allow stories to be marked as rotator stories
-* Add temperature metric
 * Have staff bios
 * Allow users to change their password
 	* Add a force–change password upon login function
