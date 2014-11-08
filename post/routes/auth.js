@@ -61,6 +61,7 @@
         }
       });
     } else {
+      req.session.goto = req.url;
       return res.redirect('/login');
     }
   };
@@ -100,10 +101,20 @@
                   req.session.isUser = true;
                   if (resp.isStaff) {
                     req.session.isStaff = true;
-                    return res.redirect('/staff/');
+                    if (req.session.goto) {
+                      res.redirect(req.session.goto);
+                      return req.session.goto = null;
+                    } else {
+                      return res.redirect('/staff/');
+                    }
                   } else {
                     req.session.isStaff = false;
-                    return res.redirect('/');
+                    if (req.session.goto) {
+                      res.redirect(req.session.goto);
+                      return req.session.goto = null;
+                    } else {
+                      return res.redirect('/');
+                    }
                   }
                 } else {
                   req.session.message = req.body;

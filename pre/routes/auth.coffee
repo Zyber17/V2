@@ -37,7 +37,9 @@ exports.requireStaff = (req,res,next) ->
 				console.log "Error (auth): #{err}"
 				res.end JSON.stringify err
 	else
+		req.session.goto = req.url
 		res.redirect '/login'
+
 
 
 exports.login_get = (req,res,next) ->
@@ -70,13 +72,21 @@ exports.login_post = (req,res,next) ->
 									if isMatch
 										req.session.user = resp
 										req.session.isUser = true
-										
+
 										if resp.isStaff
 											req.session.isStaff = true
-											res.redirect '/staff/'
+											if (req.session.goto)
+												res.redirect req.session.goto
+												req.session.goto = null
+											else
+												res.redirect '/staff/'
 										else
 											req.session.isStaff = false
-											res.redirect '/'
+											if (req.session.goto)
+												res.redirect req.session.goto
+												req.session.goto = null
+											else
+												res.redirect '/'
 										
 									else
 										req.session.message = req.body
