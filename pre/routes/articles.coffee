@@ -316,4 +316,4 @@ findArticle = (slug, update = false, callback) ->
 	)
 
 heat = (item) ->
-	item.views/(moment.duration(moment().toDate() - item.publishDate).days()+1)
+	item.views/(moment.duration(moment().toDate() - item.publishDate).asDays()+1)
