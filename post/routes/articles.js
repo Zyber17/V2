@@ -249,7 +249,7 @@
   };
 
   heat = function(item) {
-    return item.views / (moment.duration(moment().toDate() - item.publishDate).days() + 1);
+    return item.views / (moment.duration(moment().toDate() - item.publishDate).asDays() + 1);
   };
 
 }).call(this);
