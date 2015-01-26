@@ -129,7 +129,7 @@ else if process.env.NODE_ENV != 'setup'
 	# app.get '/issues', issues.list
 
 	app.get '/issues/current', (req,res,next) ->
-		res.redirect "http://pdf.pineviewtorch.com/14-15/#{if moment() < moment("2014-11-21") then 'october_2014' else 'november_2014'}.pdf"
+		res.redirect "http://pdf.pineviewtorch.com/14-15/january_2015.pdf" ##{if moment() < moment("2014-11-21") then 'october_2014' else 'november_2014'}
 
 	# app.get '/issues/:id', issues.edit_get
 
