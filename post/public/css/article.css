@@ -133,6 +133,11 @@
   height: 452px;
   display: inline-block;
   cursor: pointer;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  -ms-box-sizing: border-box;
+  -o-box-sizing: border-box;
+  box-sizing: border-box;
 }
 #content article #gallery .galleryControl#prevPhoto {
   margin-right: 10px;
