@@ -158,7 +158,7 @@
   list-style-type: none;
   display: none;
   position: relative;
-  max-width: 674px;
+  max-width: 680px;
   -webkit-box-sizing: border-box;
   -moz-box-sizing: border-box;
   -ms-box-sizing: border-box;
@@ -170,8 +170,8 @@
 }
 #content article #gallery ul li img {
   display: block;
-  max-width: 674px;
-  max-height: 449px;
+  max-width: 680px;
+  max-height: 455px;
   -webkit-box-sizing: border-box;
   -moz-box-sizing: border-box;
   -ms-box-sizing: border-box;
