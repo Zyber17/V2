@@ -2,7 +2,7 @@ $(document).ready ->
 	searchW = 340
 	iconW = 44
 
-	entFullW = 208
+	entFullW = 220
 	entSmallW = 53
 
 	if($('#searchbox').val() != '')
