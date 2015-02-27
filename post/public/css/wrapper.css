@@ -182,9 +182,10 @@ nav ul li {
   -o-box-sizing: border-box;
   box-sizing: border-box;
 }
-nav ul li#entertainment a .hide {
+nav ul li#ent_focus a .hide {
   width: 53px;
   overflow: hidden;
+  float: left;
 }
 nav ul li.section a {
   display: block;
