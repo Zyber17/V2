@@ -183,10 +183,13 @@ nav ul li {
   box-sizing: border-box;
 }
 nav ul li#ent_focus .hidewrapper {
-  width: 87px;
+  width: 69px;
   overflow: hidden;
 }
-nav ul li#ent_focus .hidewrapper a {
+nav ul li#ent_focus .hidewrapper .hideinnerwrapper {
+  width: 376px;
+}
+nav ul li#ent_focus .hidewrapper .hideinnerwrapper a {
   float: left;
 }
 nav ul li.section a {

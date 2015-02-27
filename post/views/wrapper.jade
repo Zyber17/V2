@@ -10,7 +10,7 @@ html
 			meta(name="apple-mobile-web-app-capable", content="yes")
 			meta(name="apple-mobile-web-app-status-bar-style", content="black-translucent")
 		<link href='http://fonts.googleapis.com/css?family=Open+Sans:400italic,700italic,400,700' rel='stylesheet' type='text/css'>
-		+style([['reset',1],['wrapper',12]])
+		+style([['reset',1],['wrapper',13]])
 		<!--[if lt IE 11]>
 		<link href='/css/IE_should_die_in_a_fire.css?version=2' rel='stylesheet' type='text/css'>
 		<![endif]-->
@@ -21,7 +21,7 @@ html
 					background-color: #D9531B;
 				}
 		include includes/jquery
-		+js([['animate',1],['searchbar',6]])
+		+js([['animate',1],['searchbar',7]])
 		block js_head
 		link(rel="shortcut icon",href="/images/favicon.ico?version=2")
 		<!--[if IE]>
@@ -60,10 +60,11 @@ html
 						a(href='/sections/science-and-technology') Sci & Tech
 					li#ent_focus.section
 						.hidewrapper
-							a(href='/sections/entertainment')
-								div.hide Entertainment
-							a(href='/sections/focus')
-								div.hide Focus
+							.hideinnerwrapper
+								a(href='/sections/entertainment')
+									div.hide Entertainment
+								a(href='/sections/focus')
+									div.hide Focus
 					li.section
 						a(href='/sections/sports') Sports
 					li.section
