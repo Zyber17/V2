@@ -4,7 +4,7 @@
     var entFullW, entSmallW, iconW, searchW;
     searchW = 340;
     iconW = 44;
-    entFullW = 376;
+    entFullW = 359;
     entSmallW = 69;
     if ($('#searchbox').val() !== '') {
       $('#search').css('width', searchW);
