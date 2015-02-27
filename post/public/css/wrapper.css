@@ -184,6 +184,7 @@ nav ul li {
 }
 nav ul li#ent_focus .hidewrapper {
   width: 69px;
+  margin-right: 17px;
   overflow: hidden;
 }
 nav ul li#ent_focus .hidewrapper .hideinnerwrapper {
