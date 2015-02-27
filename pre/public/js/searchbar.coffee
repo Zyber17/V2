@@ -2,8 +2,9 @@ $(document).ready ->
 	searchW = 340
 	iconW = 44
 
-	entFullW = 359
+	entFullW = 376
 	entSmallW = 69
+	margin: 17
 
 	if($('#searchbox').val() != '')
 		$('#search').css('width', searchW)
@@ -28,9 +29,15 @@ $(document).ready ->
 	$('#ent_focus')
 		.mouseenter () ->
 			$('#ent_focus .hidewrapper').stop().animate {
-				width: entFullW
+				width:
+					entFullW
+				"margin-right":
+					0
 			}
 		.mouseleave () ->
 			$('#ent_focus .hidewrapper').stop().animate {
-				width: entSmallW
+				width:
+					entSmallW
+				"margin-right":
+					margin
 			}
