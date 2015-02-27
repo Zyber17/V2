@@ -3,7 +3,7 @@ $(document).ready ->
 	iconW = 44
 
 	entFullW = 220
-	entSmallW = 53
+	entSmallW = 87
 
 	if($('#searchbox').val() != '')
 		$('#search').css('width', searchW)
