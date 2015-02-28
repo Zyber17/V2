@@ -4,7 +4,7 @@ $(document).ready ->
 
 	entFullW = 376
 	entSmallW = 69
-	margin: 17
+	margin = 17
 
 	if($('#searchbox').val() != '')
 		$('#search').css('width', searchW)
