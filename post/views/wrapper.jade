@@ -39,11 +39,11 @@ html
 				h1
 					a(href="/") The Torch
 				aside
-					-if (section == "Match")
-							a(href="/issues/currentmatch")
-								div.text
-									h3 Click to Read the Print Match
-								div.triangle
+					-if(section == "Match")
+						a(href="/issues/currentmatch")
+							div.text
+								h3 Click to Read the Print Match
+							div.triangle
 					-else
 						a(href="/issues/current")
 							div.text
