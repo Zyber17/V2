@@ -81,7 +81,7 @@
     */
 
     app.get('/issues/current', function(req, res, next) {
-      return res.redirect("http://pdf.pineviewtorch.com/14-15/january_2015.pdf");
+      return res.redirect("http://pdf.pineviewtorch.com/14-15/feburary_2015.pdf");
     });
     app.get('/login', auth.login_get);
     app.post('/login', auth.login_post);
