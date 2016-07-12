@@ -57,7 +57,7 @@ else if process.env.NODE_ENV != 'setup'
 
 
 	app.configure ->
-		app.use express.cookieParser('***REMOVED***')
+		app.use express.cookieParser('**REMOVED**')
 		app.use express.static(path.join(__dirname, 'public'))
 		app.use express.favicon(path.join(__dirname, 'public/images/favicon.ico'))
 		app.use express.bodyParser()
@@ -66,7 +66,7 @@ else if process.env.NODE_ENV != 'setup'
 				store:
 					new RedisStore
 				secret:
-					'***REMOVED***'
+					'**REMOVED**'
 		)
 
 		moment.lang('en'
@@ -85,7 +85,7 @@ else if process.env.NODE_ENV != 'setup'
 		        "Dec."
 		    ]
 		)
-		
+
 		app.set 'views', __dirname + '/views'
 		app.set 'view engine', 'jade'
 

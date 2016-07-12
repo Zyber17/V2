@@ -9,7 +9,7 @@
     dummy = {
       name: "Webmaster Smith",
       username: "webby",
-      password: "***REMOVED***"
+      password: "**REMOVED**"
     };
     return db.Users.findOne({
       username: dummy.username

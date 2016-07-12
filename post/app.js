@@ -46,13 +46,13 @@
     staff.users = require('./routes/staff/users');
     app = express();
     app.configure(function() {
-      app.use(express.cookieParser('***REMOVED***'));
+      app.use(express.cookieParser('**REMOVED**'));
       app.use(express["static"](path.join(__dirname, 'public')));
       app.use(express.favicon(path.join(__dirname, 'public/images/favicon.ico')));
       app.use(express.bodyParser());
       app.use(express.session({
         store: new RedisStore,
-        secret: '***REMOVED***'
+        secret: '**REMOVED**'
       }));
       moment.lang('en', {
         monthsShort: ["Jan.", "Feb.", "March", "April", "May", "June", "July", "Aug.", "Sept.", "Oct.", "Nov.", "Dec."]

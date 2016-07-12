@@ -8,7 +8,7 @@ module.exports = (callback) ->
 		username:
 			"webby"
 		password:
-			"***REMOVED***"
+			"**REMOVED**"
 
 	db.Users.findOne(
 		{username:dummy.username},

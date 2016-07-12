@@ -53,8 +53,8 @@
       }
       if (go) {
         S3_BUCKET_NAME = 'torch_photos';
-        S3_ACCESS_KEY = '***REMOVED***';
-        S3_SECRET_KEY = '***REMOVED***';
+        S3_ACCESS_KEY = '**REMOVED**';
+        S3_SECRET_KEY = '**REMOVED**';
         if (process.env.NODE_ENV === 'dev') {
           S3_BUCKET_NAME = 'torch_test';
         }
