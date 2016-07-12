@@ -95,4 +95,8 @@ exports.addToDB = (req,res,next) ->
 		else
 			console.log "Error (photos): #{err}"
 			res.send 403, err
+<<<<<<< HEAD
 	)
+=======
+	)
+>>>>>>> 4e4c2956bba7e091078caae246578277a4ea1108
